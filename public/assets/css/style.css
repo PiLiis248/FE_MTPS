@@ -1,0 +1,275 @@
+@import url('/assets/css/fonts.css');
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+strong {
+    font-family: pnb;
+}
+
+a {
+    text-decoration: none;
+    outline: 0;
+}
+
+sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+html {
+    font-size: 62.5%;
+    font-family: 'pnr', sans-serif;
+
+}
+
+body {
+    width: 100%;
+    margin: auto;
+    scroll-behavior: smooth;
+    font-family: pnr;
+    line-height: normal;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    max-width: var(--container-max-width);
+    padding-right: var(--gap);
+    padding-left: var(--gap);
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+}
+#root{
+
+    --main-color: #FBF9F5;
+    --content-color: #000000;
+    --text-color: #fff;
+    --color-btn: #FF0000;
+        
+    --color-tan: #bea67c;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray: #464646;
+
+    --fs-h1: 7.4rem;
+    --lh-h1: normal;
+    --lsp-h1: 0.5rem;
+    
+    --fs-h2: 4.6rem;
+    --lh-h2: 5.6rem;
+    --lsp-h2: 0.3rem;
+    
+    --fs-h3: 2.8rem;
+    --lh-h3: 2.4rem;
+    --lsp-h3: 0.072rem;
+
+    --fs-body: 2.5rem;
+    --lh-body: 2.5rem;
+    --lsp: 0.036rem;
+
+    --fs-medium: 2.2rem;
+    --lsp-medium: 0.036rem;
+
+    --fs-small: 1.9rem;
+    --lh-small: normal;
+    --lsp-small: 0.056rem;
+
+    --text-trans: uppercase;
+
+
+    --width-fixed: 310px;
+    --height-fixed: 65.5px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    display: block;
+    outline: 0;
+    object-fit: contain;
+}
+
+img.--center {
+    margin: 0 auto;
+    display: block;
+}
+/* main{
+    margin-left: var(--width-fixed);
+    margin-top: var(--height-fixed);
+    height: 100%;
+} */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.btn {
+    font-family: pnb;
+    line-height: var(--lh-btn);
+    letter-spacing: var(--lsp-btn);
+    padding: 15px 30px;
+    border-radius: 20px;
+    transition: 0.4s;
+    border: 1px solid;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.btn a,
+.btn .btn-text {
+    font-size: 20px;
+    text-transform: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button {
+    background: none;
+}
+.form{
+    margin-top: 50px;
+}
+.form-error {
+    margin-top: 10px;
+    font-size: 12px;
+    color: white;
+    margin-left: 5px;
+}
+
+.form .inputgroup {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.form .inputgroup input {
+    font-size: 22px;
+    padding-bottom: 100px;
+}
+
+.form .inputgroup .form-control {
+    height: 50px;
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px 20px 10px 50px;
+    border: 1px solid;
+}
+
+.form .inputgroup i {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, calc(-50% - 17px));
+    left: 25px;
+}
+
+.form .inputgroup i img {
+    height: 30px;
+    width: 30px;
+}
+/* Login page */
+.loginpage{
+    padding-top: 100px;
+}
+.loginpage .loginpage__wrapper{
+    display: flex;
+    justify-content: center;
+}
+.loginpage .loginpage__wrapper .loginpage__wrapper-form .textbox .title{
+    font-size: var(--fs-h1);
+}
+.loginpage .loginpage__wrapper .loginpage__wrapper-form .logo{
+    display: flex;
+    justify-content: center;
+}
+.loginpage .loginpage__wrapper .loginpage__wrapper-form .logo img{
+    max-width: 400px; /* Đặt kích thước mới cho ảnh */
+    height: auto;
+}
+/* .loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox{
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    justify-content: center;
+}
+.loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox .listbox-item{
+    border: 1px solid white;
+    padding: 30px;
+    font-size: var(--fs-small);
+    color: white;
+}
+.loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox .listbox-item:nth-child(1){
+    background: rgb(191, 149, 156);
+}
+.loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox .listbox-item:nth-child(2) {
+    background: rgb(47, 139, 81);
+}
+.loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox .listbox-item:nth-child(3) {
+    background: rgb(151, 124, 193);
+} */
