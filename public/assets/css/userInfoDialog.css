@@ -1,0 +1,154 @@
+/* src/components/UserInfoDialog/styles.css */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .change-password-btn, .cancel-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .change-password-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .cancel-btn {
+    background-color: grey;
+    color: white;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Horizontally centers the text */
+    justify-content: center; /* Vertically centers the text, useful if the container's height is adjusted */
+    text-align: center; /* Ensures the text itself is centered, especially if it wraps */
+    width: 100%; /* Ensures the container takes up the full width */
+    padding: 10px 0; /* Optional: Adds some padding above and below the text */
+}
+
+
+.username {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.email {
+    font-size: 25px;
+    color: #666; /* You can adjust the color as needed */
+    margin-bottom: 20px;
+}
+
+.change-password-btn {
+    display: block; /* Make the button fill the container width */
+    width: 100%; /* Full width */
+    padding: 10px 0; /* Adequate padding for touch targets */
+    margin: 20px 0; /* Spacing above and below */
+    font-size: 20px; /* Readable text size */
+    color: white; /* Text color */
+    background-color: #007bff; /* A pleasant blue, you can choose any color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.change-password-btn:hover {
+    background-color: #0056b3; /* Darker shade on hover for feedback */
+}
+
+/* ChangePasswordComponent.css */
+
+.change-password-button {
+  padding: 10px 20px;
+  background-color: #0568fc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 1.6rem;
+}
+
+.change-password-modal {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Adjust as needed */
+  margin: 0 auto;
+}
+
+.change-password-modal h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.change-password-modal input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 2.3rem;
+}
+
+.change-password-modal .error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.change-password-modal button {
+  padding: 10px 20px;
+  background-color: #9fc5fd;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 1.6rem;
+}
+
+.change-password-modal button:hover {
+  background-color: #48ff00;
+}
+
+.change-password-modal button:last-child {
+  margin-right: 0;
+  background-color: rgb(14, 13, 13);
+}
+
+.change-password-modal button:last-child:hover {
+  background-color: red;
+}

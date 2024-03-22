@@ -1,0 +1,70 @@
+.posts-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow posts to wrap into multiple rows */
+    gap: 20px; /* Space between posts */
+    margin: 20px; /* Adjust margin as needed */
+}
+
+.post-wrapper {
+    background-color: #f9f9f9; /* Light grey background */
+    border-radius: 8px; /* Rounded corners for the post */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow: hidden;
+    transition: box-shadow 0.2s ease-in-out;
+    flex: 1 0 calc(50% - 20px); /* Two posts per row with a gap of 20px */
+    max-width: calc(50% - 20px); /* Two posts per row with a gap of 20px */
+    margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.post-wrapper:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover for a lifting effect */
+}
+
+.post-item {
+    padding: 20px; /* Spacing inside each post */
+}
+
+.post-item h3 {
+    background-color: black;
+    color: white;
+    padding: 10px; /* Adjust padding as needed */
+    font-size: 2rem; /* Adjust font size as needed */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.post-item p {
+    background-color: white; /* White background for descriptions */
+    padding: 10px; /* Adjust padding as needed */
+    font-size: 2rem; /* Adjust font size as needed */
+    margin-bottom: 20px; /* Space below each paragraph */
+}
+
+.post-item .date-time {
+    color: white;
+    font-size: 1.0rem; /* Adjust font size as needed */
+}
+
+.post-item .location,
+.post-item .join-btn {
+    background-color: #ecec75; /* Green color for the join button */
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    float: right; /* Align to the right */
+    margin: 10px 0; /* Adjust margin as needed */
+    font-size: 2.0rem;
+}
+
+.post-item .join-btn:hover {
+    color: white;
+    background-color: #45a049; /* Slightly darker on hover */
+}
+
+.post-item:after {
+    content: "";
+    display: table;
+    clear: both;
+}

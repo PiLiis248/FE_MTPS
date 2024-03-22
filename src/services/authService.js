@@ -1,7 +1,11 @@
-import React from 'react';
+// import axiosIntance from "../utils/axiosIntance";
 
-export const authService = {
-     
-}
-
-export default authService;
+// export const authService = {
+//   login(payload = {}) {
+//     return axiosIntance.post(`/login`, payload);
+//   },
+//   logout() {
+//     return axiosIntance.post(`/logout`);
+//   },
+  
+// };
