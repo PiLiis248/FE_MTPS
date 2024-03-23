@@ -373,7 +373,7 @@ button {
 
 .main-content {
     flex: 5; /* Cột phải chiếm 2 phần */
-    background-color: #9fc5fd;
+    background-color: #dce9fc;
     position: relative;
     border: 2px solid black;
 }
@@ -411,36 +411,3 @@ button {
 
 
 
-.training-point-detail {
-    margin: 20px;
-  }
-  
-  .training-point-detail h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .training-point-detail table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ccc;
-  }
-  
-  .training-point-detail th,
-  .training-point-detail td {
-    padding: 8px;
-    border: 1px solid #ccc;
-  }
-  
-  .training-point-detail th {
-    background-color: #f2f2f2;
-  }
-  
-  .training-point-detail tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .training-point-detail tbody tr:hover {
-    background-color: #e5e5e5;
-  }
-  

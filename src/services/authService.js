@@ -1,11 +1,14 @@
-// import axiosIntance from "../utils/axiosIntance";
+import axiosInstance from "../utils/axiosInstance";
 
-// export const authService = {
-//   login(payload = {}) {
-//     return axiosIntance.post(`/login`, payload);
-//   },
-//   logout() {
-//     return axiosIntance.post(`/logout`);
-//   },
+
+export const authService = {
+  login(payload = {}) {
+    return axiosInstance.post(`/login`, payload);
+  },
+  logout() {
+    return axiosInstance.post(`/logout`);
+  },
   
-// };
+};
+
+export default authService;

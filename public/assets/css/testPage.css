@@ -1,26 +1,75 @@
-/* src/components/TestPage.css */
+.info-item {
+    margin-bottom: 20px; /* Adjust the value as needed */
+}
+
+.required-star {
+    color: red;
+    margin-left: 5px;
+}
+
+
 .test-container {
-    max-width: 600px;
-    margin: 20px auto;
+    max-width: 50%;
+    margin: 50px auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 10px solid #fbe8fb;
     border-radius: 8px;
+    background-color: #ffffff;
+    font-size: 2.3rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Add this line */
 }
 
-.question-block {
-    margin-bottom: 20px;
+.test-container h2 {
+    font-size: 32px; /* Increased font size */
+    margin-bottom: 30px; /* Increased margin */
 }
 
-.option {
+.test-container p {
+    font-size: 20px; /* Increased font size for paragraphs */
+}
+
+.test-container .question-block p {
+    font-size: 24px; /* Increased font size for question paragraphs */
+    margin-bottom: 20px; /* Increased margin */
+    margin-top: 40px;
+}
+
+.test-container .option label {
+    font-size: 22px; /* Increased font size for options */
     display: block;
-    margin: 10px 0;
+    margin-bottom: 20px;
+    margin-right: 20px; /* Increased margin-right */
 }
 
-.submit-btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.test-container .option input[type="radio"] {
+    transform: scale(1.5); /* Scale up the radio button */
+    accent-color: #673ab7; /* Deep Purple 500 */
+    margin-right: 20px; /* Add more space between the radio button and its label text */
 }
+
+.test-container .submit-button {
+    padding: 12px 24px; /* Increased padding */
+    font-size: 18px; /* Increased font size */
+    background-color: #92c0f1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+
+}
+
+.test-container .submit-button:hover {
+    background-color: #7a00b3;
+}
+
+
+/* Adding a bit of responsiveness */
+@media (max-width: 768px) {
+    .test-container {
+        margin: 20px;
+    }
+}
+
+

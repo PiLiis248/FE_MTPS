@@ -1,40 +1,44 @@
-import React from 'react';
-import '../../../public/assets/css/style.css'; // Import your CSS file for styling
-import Sidebar from '../../component/SideBar'; // Adjust the import path as necessary
-import Post from '../../component/PostForm'; // Adjust the import path for your Post component
+import React, { useState, useEffect } from 'react';
+import '../../../public/assets/css/style.css'; // Adjust paths as necessary
+import Sidebar from '../../component/SideBar';
+import Post from '../../component/PostForm';
 import useQuery from '../../hooks/useQuery';
 import postService from '../../services/postService';
 import '../../../public/assets/css/post.css';
 
-
-// Simulated mock data for posts
-
 const StudentHomePage = () => {
-    const {
-        data: postData,
-        refetch: postRefetch,
-        loading: postLoading,
-        error: postError,
-      } = useQuery(postService.getPost);
-      const posts = postData?.post || [];
-      console.log(posts);
+    const { data: postData, refetch: postRefetch, loading: postLoading, error: postError } = useQuery(postService.getPost);
+    const posts = postData?.post || [];
+
+    const [studentData, setStudentData] = useState({});
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        const mockStudentData = {
+            id: "001001",
+            name: "Jacob Garcia",
+            email: "001001@gmail.com",
+            trainingPoint: 50
+        };
+        setStudentData(mockStudentData);
+        setProgress((mockStudentData.trainingPoint / 100) * 100);
+    }, []);
+
+    if (postLoading) return <div>Loading...</div>;
+    if (postError) return <div>Error loading posts</div>;
 
     return (
         <div className="homepage-container">
-            <Sidebar /> {/* Use the Sidebar component */}
+            <Sidebar username={studentData.name} email={studentData.email} progress={progress} />
             <div className="main-content">
                 <div className="progress-box">
                     <div className="progress-bar">
-                        {/* Progress bar */}
-                        <div className="progress"></div>
+                        <div className="progress" style={{ width: `${progress}%` }}></div>
                     </div>
                     <div className="progress-text">
-                        {/* Progress text */}
-                        50% {/* This value can be dynamically set */}
+                        {Math.round(progress)}% {/* Rounded value displayed */}
                     </div>
                 </div>
-                {/* Main content including posts */}
-
                 <div className="posts-container">
                     {!!posts ? posts.map((post) => (
                         <div key={post.id} className="post-wrapper">

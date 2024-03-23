@@ -1,0 +1,74 @@
+/* Enhanced Styling for the Training Points Table */
+.training-point-detail {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+.training-point-detail h2 {
+  text-align: center;
+  color: #333;
+}
+
+.training-point-detail table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-radius: 8px;
+  overflow: hidden; /* Ensures the border-radius applies to table rows as well */
+}
+
+.training-point-detail th, .training-point-detail td {
+  font-size: 2.5rem;
+  text-align: left;
+  padding: 12px 15px; /* Increased padding for better spacing */
+  border-bottom: 1px solid #f0f0f0; /* Lighter line for separation */
+}
+
+.training-point-detail th {
+  background-color: #1a1b1d; /* Change as needed */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Zebra striping for rows */
+.training-point-detail tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* .training-point-detail tr:hover {
+  background-color: #f1f1f1; /* Hover effect 
+  cursor: pointer;
+} */
+
+.training-point-detail td {
+  position: relative;
+}
+
+.training-point-detail td::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: #b4f5bb; /* Animated underline color */
+  transition: width 0.3s;
+}
+
+.training-point-detail td:hover::after {
+  width: 100%; /* Full width on hover */
+}
+
+/* Styling for the total points row */
+.training-point-detail tr:last-child td {
+  font-weight: bold;
+}
+
+/* Ensure the last row doesn't have a border-bottom */
+.training-point-detail tr:last-child td {
+  border-bottom: none;
+}
+
+/* Responsive adjustments can be added as needed */
