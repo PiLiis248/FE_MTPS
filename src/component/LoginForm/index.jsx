@@ -148,22 +148,31 @@ import { MESSAGE } from "../../utils/validate";
 import { useForm } from "react-hook-form";
 import authService from "../../services/authService";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { useAuthContext } from "../../context/AuthContext";
+
+
 
 const LoginForm = () => {
+const { handleLogin } = useAuthContext();
+const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  // const navigate = useNavigate(); // Initialize useNavigate hook
 
   const onSubmit = async (data) => {
     try {
-      const { id, password } = data;
-      const loginData = await authService.login(id, password);
-      console.log("Login successful:", loginData);
+      
+      const loginData = await handleLogin(data);
+      if (!!loginData) {
+        navigate ("/home")
+      }
+      // console.log("Login successful:", loginData);
       // Assuming login is successful and you've handled token storage etc.
-      navigate("/"); // Redirect to homepage
+      // navigate("/"); // Redirect to homepage
     } catch (error) {
       console.error("Login error:", error);
       // Handle login errors here
@@ -181,11 +190,11 @@ const LoginForm = () => {
         </div>
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <Input
-            name="id"
-            placeholder="Student ID"
+            name="email"
+            placeholder="User email"
             image="/assets/images/user-login.svg"
-            {...register("id", { required: MESSAGE.required })}
-            error={errors?.id?.message || ""}
+            {...register("email", { required: MESSAGE.required })}
+            error={errors?.email?.message || ""}
           />
           <Input
             type="password"
