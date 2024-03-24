@@ -24,7 +24,15 @@ const StudentHomePage = () => {
         setProgress((mockStudentData.trainingPoint / 100) * 100);
     }, []);
 
-    if (postLoading) return <div>Loading...</div>;
+    // if (postLoading) return <div className='loading'>Loading...</div>;
+    if (postLoading) {
+        return (
+            <div className="loading">
+                <div className="spinner"></div>
+                <div className="loading-text">Loading...</div>
+            </div>
+        );
+    }
     if (postError) return <div>Error loading posts</div>;
 
     return (

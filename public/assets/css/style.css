@@ -286,6 +286,46 @@ button {
     padding: 20px;
 }
 
+/* Add this CSS to your existing stylesheet or create a new one */
+.loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px; /* Adjust the font size as needed */
+    font-weight: bold; /* Make the text bold */
+    color: yellow; /* Set the color to yellow */
+}
+
+.spinner {
+    position: absolute; /* Position the spinner */
+    top: 50%; /* Align it vertically */
+    left: 50%; /* Align it horizontally */
+    transform: translate(-50%, -50%);
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 5px solid #ffffff;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: yellow;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 /* Side bar styling */
 .sidebar {
     flex: 1; /* Cột trái chiếm 1 phần*/
