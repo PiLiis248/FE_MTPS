@@ -1,9 +1,6 @@
-
-// const PROFILE_PATH = "/profile";
-// export const PATHS = {
-//   HOME: "/",
-//   MAIN: "/dashboard",
-//   LOGIN: "/login",
-  
-//   MY_PROFILE: PROFILE_PATH + "/myprofile",
-// };
+const home_path = "/home"
+export const PATHS = {
+    LOGIN: "/login",
+    HOME: home_path,
+    DETAIL: home_path + "/detail"
+}

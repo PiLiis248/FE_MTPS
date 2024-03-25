@@ -5,65 +5,78 @@ import Post from '../../component/PostForm';
 import useQuery from '../../hooks/useQuery';
 import postService from '../../services/postService';
 import '../../../public/assets/css/post.css';
+import { useAuthContext } from '../../context/AuthContext';
 
 const StudentHomePage = () => {
-    const { data: postData, refetch: postRefetch, loading: postLoading, error: postError } = useQuery(postService.getPost);
-    const posts = postData?.post || [];
+    const { profile } = useAuthContext();
+ 
+    const [post, setPost] = useState(null);
 
-    const [studentData, setStudentData] = useState({});
-    const [progress, setProgress] = useState(0);
+    // Fetch posts using useQuery hook
+    const { data: postData, loading: postLoading, error: postError } = useQuery(
+        postService.getPost
+    );
 
+  
     useEffect(() => {
-        const mockStudentData = {
-            id: "001001",
-            name: "Jacob Garcia",
-            email: "001001@gmail.com",
-            trainingPoint: 50
-        };
-        setStudentData(mockStudentData);
-        setProgress((mockStudentData.trainingPoint / 100) * 100);
-    }, []);
-
-    // if (postLoading) return <div className='loading'>Loading...</div>;
-    if (postLoading) {
-        return (
-            <div className="loading">
-                <div className="spinner"></div>
-                <div className="loading-text">Loading...</div>
-            </div>
-        );
-    }
-    if (postError) return <div>Error loading posts</div>;
-
+        if (postData && postData.post) {
+            // Initialize an array to store filtered posts
+            let filteredPosts = [];
+            let facultyId = null; // Declare facultyId variable outside the if-else block
+    
+            if (!!profile) {
+                facultyId = profile.facultyId; // Assign value to facultyId if profile exists
+            }
+    
+            // Iterate over each post in postData.post
+            postData.post.forEach(pt => {
+                // Check if pt and pt.facultyId exist before accessing pt.facultyId
+                if (pt.status === true || pt.status === false && pt.facultyId === facultyId) {
+                    // If facultyId matches, add the post to filteredPosts
+                    filteredPosts.push(pt);
+                }
+            });
+    
+            // Update the state to reflect the filtered posts
+            setPost(filteredPosts.length > 0 ? filteredPosts : null);
+        }
+    }, [postData, profile]);
+    
     return (
         <div className="homepage-container">
-            <Sidebar username={studentData.name} email={studentData.email} progress={progress} />
+            <Sidebar  />
             <div className="main-content">
                 <div className="progress-box">
                     <div className="progress-bar">
-                        <div className="progress" style={{ width: `${progress}%` }}></div>
+                        {!!profile ? (<div className="progress" style={{ width: `${profile.trainingPoint}%` }}></div>):(<div className="progress"></div>)}
+                        
                     </div>
-                    <div className="progress-text">
-                        {Math.round(progress)}% {/* Rounded value displayed */}
-                    </div>
+                    {!!profile ? (
+                        <div className="progress-text">
+                            {profile.trainingPoint}% {/* Rounded value displayed */}
+                        </div>
+                    ) : (
+                        <div className="progress-text"></div>
+                    )}
+                    
                 </div>
                 <div className="posts-container">
-                    {!!posts ? posts.map((post) => (
-                        <div key={post.id} className="post-wrapper">
+                    {post && post.map(pt => (
+                        <div key={pt.id} className="post-wrapper">
                             <div className="post-item">
                                 <Post
-                                     key={post.id}
-                                     name={post.name}
-                                     desc={post.desc}
-                                     startTime={post.startTime}
-                                     endTime={post.endTime}
-                                     location={post.location}
-                                     numberParticipants={post.numberParticipants}
-                                     testId={post.testId}
+                                     key={pt.id}
+                                     name={pt.name}
+                                     desc={pt.desc}
+                                     startTime={pt.startTime}
+                                     endTime={pt.endTime}
+                                     location={pt.location}
+                                     numberParticipants={pt.numberParticipants}
+                                     testId={pt.testId}
                                 />
                             </div>
                         </div>
-                    )): ""}
+                    ))}
                 </div>
             </div>
         </div>
