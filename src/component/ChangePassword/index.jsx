@@ -14,7 +14,7 @@ const ChangePasswordComponent = ({ onClose }) => {
         if (newPassword !== confirmPassword) {
             setError('The new passwords do not match.');
             return;
-        }N
+        }
         // Here, integrate the actual change password logic,
         // for example, calling an API to change the password.
         // On success:

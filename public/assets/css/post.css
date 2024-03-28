@@ -3,7 +3,9 @@
     flex-wrap: wrap; /* Allow posts to wrap into multiple rows */
     gap: 20px; /* Space between posts */
     margin: 20px; /* Adjust margin as needed */
+    padding: 20px;
 }
+
 
 .post-wrapper {
     background-color: #f9f9f9; /* Light grey background */
@@ -16,26 +18,44 @@
     margin-bottom: 20px; /* Adjust margin as needed */
 }
 
+
 .post-wrapper:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover for a lifting effect */
 }
+
 
 .post-item {
     padding: 20px; /* Spacing inside each post */
 }
 
-.post-item h3 {
-    background-color: black;
+
+.post-title {
+    background-color: rgb(255, 128, 0);
     color: white;
-    padding: 10px; /* Adjust padding as needed */
-    font-size: 2rem; /* Adjust font size as needed */
-    margin-bottom: 20px; /* Space below the title */
+    padding: 10px;
+    font-size: 2.4rem;
+    text-align: center;
+    margin-bottom: 20px;
 }
+
+
+.post-faculty {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 
 .post-item p {
     background-color: white; /* White background for descriptions */
     padding: 10px; /* Adjust padding as needed */
-    font-size: 2rem; /* Adjust font size as needed */
+    font-size: 2.4rem; /* Adjust font size as needed */
     margin-bottom: 20px; /* Space below each paragraph */
 }
 
@@ -46,7 +66,7 @@
 
 .post-item .location,
 .post-item .join-btn {
-    background-color: #ecec75; /* Green color for the join button */
+    background-color: #759fec; /* Green color for the join button */
     color: rgb(0, 0, 0);
     padding: 10px 15px;
     border: none;
@@ -60,7 +80,7 @@
 
 .post-item .join-btn:hover {
     color: white;
-    background-color: #45a049; /* Slightly darker on hover */
+    background-color: #2c1992; /* Slightly darker on hover */
 }
 
 .post-item:after {
@@ -68,3 +88,5 @@
     display: table;
     clear: both;
 }
+
+/* ----------------------------------------- */

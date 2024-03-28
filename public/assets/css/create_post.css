@@ -1,0 +1,121 @@
+/* CSS for the sidebar */
+.sidebar {
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+/* CSS for the create post container */
+.create-post-container {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+}
+
+/* CSS for the status options */
+.status-options {
+    display: flex;
+    margin-top: 20px;
+}
+
+.status-options label {
+    margin: 0 20px; /* Adjust spacing between radio buttons and labels */
+    font-size: 2rem;
+}
+
+.status-options input[type="radio"] {
+    margin-right: 5px; /* Adjust spacing between radio buttons */
+    width: 20px;
+    height: 20px;
+}
+
+/* CSS for the sidebar-create */
+.sidebar-create {
+    flex: 1;
+}
+
+/* CSS for the create post content */
+.form-create {
+    padding: 20px;
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-post-container h2 {
+    margin-top: 0;
+    padding: 20px;
+    font-size: 5rem; /* Adjust font size as needed */
+    color: #333; /* Adjust color as needed */
+    text-align: center;
+    font-weight: bold;
+}
+
+/* CSS for the create post form */
+.create-post-container form {
+    padding: 20px;
+    background-color: #ffffff; /* Set background color for the form */
+    border-radius: 10px; /* Add some border-radius for rounded corners */
+    box-shadow: 0 0 10px rgb(150, 153, 232); /* Add a subtle shadow for depth */
+    width: 80%;
+}
+
+.create-post-container .form-group {
+    margin-bottom: 30px; /* Increase margin between form groups */
+}
+
+.create-post-container label {
+    font-size: 24px; /* Increase font size for labels */
+    color: #333; /* Adjust color for labels */
+}
+
+.create-post-container input[type="text"],
+.create-post-container input[type="datetime-local"],
+.create-post-container textarea,
+.create-post-container input[type="number"] {
+    width: 100%;
+    padding: 15px; /* Increase padding for inputs */
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Round the input corners */
+    box-sizing: border-box;
+    font-size: 20px; /* Adjust font size for inputs */
+    color: #555;
+    transition: border-color 0.3s ease; /* Add transition for input border color */
+}
+
+.create-post-container textarea {
+    resize: vertical; /* Allow vertical resizing for textarea */
+}
+
+/* Button styles */
+.create-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.create-buttons button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 2.3rem;
+    margin: 0 10px; /* Adjust spacing between buttons */
+}
+
+.create-buttons button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.create-activity-button {
+    background-color: #4CAF50; /* Green */
+}
+
+.create-test-button {
+    background-color: #f44336; /* Red */
+}

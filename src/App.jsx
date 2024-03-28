@@ -6,6 +6,7 @@ import MainLayout from "./layout/MainLayout";
 import LoginPage from "./pages/LoginPage";
 import StudentHomePage from "./pages/StudentHomePage"; // Your existing HomePage
 import TrainingPointDetail from "./pages/TrainingPointDetail"; // Import the Profile Page component, adjust the path as needed
+import CreatePost from "./pages/CreatePost";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route element={<MainLayout />}>
             <Route path={PATHS.HOME} element={<StudentHomePage />} />
             <Route path={PATHS.DETAIL} element={<TrainingPointDetail />} />
+            <Route path={PATHS.CREATE_POST} element={<CreatePost />} />
 
           </Route>
         </Route>
