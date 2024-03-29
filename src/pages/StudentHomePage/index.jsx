@@ -35,6 +35,7 @@ const StudentHomePage = () => {
                         }
                     });
                     setPost(filteredPosts.length > 0 ? filteredPosts : null);
+                    console.log(postData);
 
                     // Calculate total points
                     let calculatedTotalPoints = 0;
@@ -45,18 +46,19 @@ const StudentHomePage = () => {
                         }
                     });
                     setTotalPoints(calculatedTotalPoints);
+                    
 
                     // Update training point on the backend
                     if (profile.role === 'student') {
-                        updateTrainingPointOnBackend(profile.id, calculatedTotalPoints);
+                        updateTrainingPoint(profile.id, calculatedTotalPoints);
                     }
                 }
             }
         }
     }, [postData, profile]);
-
+    
     // Function to update training point on the backend
-    const updateTrainingPointOnBackend = async (userId, totalPoints) => {
+    const updateTrainingPoint = async (userId, totalPoints) => {
         try {
             const response = await profileService.updateTrainingPoint(userId, totalPoints);
             console.log(response.data.message);

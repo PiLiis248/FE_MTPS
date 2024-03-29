@@ -7,6 +7,8 @@ import LoginPage from "./pages/LoginPage";
 import StudentHomePage from "./pages/StudentHomePage"; // Your existing HomePage
 import TrainingPointDetail from "./pages/TrainingPointDetail"; // Import the Profile Page component, adjust the path as needed
 import CreatePost from "./pages/CreatePost";
+import CreateTest from "./pages/TestCreationPage";
+import TestPage from "./pages/TestPage";
 
 const App = () => {
   return (
@@ -18,7 +20,9 @@ const App = () => {
           <Route element={<MainLayout />}>
             <Route path={PATHS.HOME} element={<StudentHomePage />} />
             <Route path={PATHS.DETAIL} element={<TrainingPointDetail />} />
+            <Route path={PATHS.TEST} element={<TestPage />} />
             <Route path={PATHS.CREATE_POST} element={<CreatePost />} />
+            <Route path={PATHS.CREATE_TEST} element={<CreateTest />} />
 
           </Route>
         </Route>

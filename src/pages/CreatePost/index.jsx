@@ -1,8 +1,10 @@
 // CreatePost.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../../public/assets/css/create_post.css'; // Ensure you create this CSS file for styling
 import SideBar from '../../component/SideBar'; // Import AssistantSidebar component
+import { PATHS } from '../../constants/path';
 import { useAuthContext } from '../../context/AuthContext'; // Import useAuthContext hook
 
 const CreatePost = () => {
@@ -52,13 +54,7 @@ const CreatePost = () => {
     };
 
     // Function to handle test creation
-    const handleCreateTest = () => {
-        setFormData(prevState => ({
-            ...prevState,
-            status: 'test' // Set status to 'test' for test creation
-        }));
-        handleSubmit(); // Call handleSubmit to handle form submission
-    };
+    
 
     return (
         <div className="create-post-container">
@@ -96,16 +92,15 @@ const CreatePost = () => {
                         <label htmlFor="numberParticipants">Number of Participants:</label>
                         <input type="number" id="numberParticipants" name="numberParticipants" value={formData.numberParticipants} onChange={handleChange} />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="testId">Test ID:</label>
-                        <input type="text" id="testId" name="testId" value={formData.testId} onChange={handleChange} />
-                    </div>
+                   
                    
                 </form>
                 {/* Create buttons for activity and test */}
                 <div className="create-buttons">
                     <button className="create-activity-button" onClick={handleCreateActivity}>Create Activity</button>
-                    <button className="create-test-button" onClick={handleCreateTest}>Create Test</button>
+                    <Link to={PATHS.CREATE_TEST} className="create-test-link">
+                        <button className="create-test-button">Create Test</button>
+                    </Link>
                 </div>
             </div>
         </div>

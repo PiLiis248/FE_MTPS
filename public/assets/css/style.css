@@ -328,7 +328,7 @@ button {
 
 /* Side bar styling */
 .sidebar {
-    flex: 1; /* Cột trái chiếm 1 phần*/
+    flex: 1;
     background-color: white;
     padding: 20px;
     border: 2px solid black;
@@ -416,6 +416,7 @@ button {
     background-color: #dce9fc;
     position: relative;
     border: 2px solid black;
+    margin-left: 388px;
 }
 
 .progress-box {

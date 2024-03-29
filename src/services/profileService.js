@@ -6,7 +6,7 @@ export const profileService = {
         return axiosInstance.put(`/change_password/${userId}`, { currentPassword, newPassword });
     },
     updateTrainingPoint(id, totalPoints) {
-        return axiosInstance.put(`/update_training_point/${id}`, { totalPoints });
+        return axiosInstance.put(`/update_training_point`, { id, totalPoints });
     }
 };
 

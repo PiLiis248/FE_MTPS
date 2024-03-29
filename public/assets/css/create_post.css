@@ -2,6 +2,7 @@
 .sidebar {
     background-color: #f0f0f0;
     padding: 20px;
+    position: fixed;
 }
 
 /* CSS for the create post container */
@@ -28,10 +29,6 @@
     height: 20px;
 }
 
-/* CSS for the sidebar-create */
-.sidebar-create {
-    flex: 1;
-}
 
 /* CSS for the create post content */
 .form-create {
@@ -41,6 +38,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 388px;
 }
 
 .create-post-container h2 {
@@ -70,7 +68,10 @@
     color: #333; /* Adjust color for labels */
 }
 
-.create-post-container input[type="text"],
+
+input#name,
+input#location,
+input#facultyName,
 .create-post-container input[type="datetime-local"],
 .create-post-container textarea,
 .create-post-container input[type="number"] {
