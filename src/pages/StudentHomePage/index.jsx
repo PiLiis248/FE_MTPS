@@ -93,7 +93,9 @@ const StudentHomePage = () => {
                                     facultyName={pt.facultyName}
                                     desc={pt.desc}
                                     startTime={pt.startTime}
+                                    startDate={pt.startDate}
                                     endTime={pt.endTime}
+                                    endDate={pt.endDate}
                                     location={pt.location}
                                     numberParticipants={pt.numberParticipants}
                                     testId={pt.testId}
