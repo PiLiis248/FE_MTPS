@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import '../../../public/assets/css/style.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from React Router
+import '../../../public/assets/css/userInfoDialog.css';
 import { profileService } from '../../services/profileService'; // Import profileService for API calls
 import { useAuthContext } from '../../context/AuthContext';
+import { PATHS } from '../../constants/path';
 
 const ChangePasswordComponent = ({ onClose }) => {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -9,6 +11,7 @@ const ChangePasswordComponent = ({ onClose }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const { profile } = useAuthContext();
+    const navigate = useNavigate(); // Initialize the navigate function
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,10 +27,10 @@ const ChangePasswordComponent = ({ onClose }) => {
             }
             // On success
             alert('Password successfully changed.');
-            onClose(); // Close the modal/dialog
+            navigate(PATHS.LOGIN);
         } catch (error) {
             // On failure
-            setError('Current password or Confirmation not correct. Please try again.');
+            setError('Current password is not correct. Please try again.');
             console.error('Error changing password:', error.response.data.error);
         }
     };
