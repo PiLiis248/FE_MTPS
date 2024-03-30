@@ -1,13 +1,14 @@
-// ChangePasswordComponent.jsx
-
 import React, { useState } from 'react';
-import '../../../public/assets/css/style.css'
+import '../../../public/assets/css/style.css';
+import { profileService } from '../../services/profileService'; // Import profileService for API calls
+import { useAuthContext } from '../../context/AuthContext';
 
 const ChangePasswordComponent = ({ onClose }) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+    const { profile } = useAuthContext();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -15,13 +16,20 @@ const ChangePasswordComponent = ({ onClose }) => {
             setError('The new passwords do not match.');
             return;
         }
-        // Here, integrate the actual change password logic,
-        // for example, calling an API to change the password.
-        // On success:
-        alert('Password successfully changed.');
-        onClose(); // Close the modal/dialog
-        // On failure:
-        // setError('An error occurred. Please try again.');
+        
+        try {
+            if(!!profile) {
+                // Call the API to change password
+                await profileService.changePassword(profile.id, currentPassword, newPassword);
+            }
+            // On success
+            alert('Password successfully changed.');
+            onClose(); // Close the modal/dialog
+        } catch (error) {
+            // On failure
+            setError('Current password or Confirmation not correct. Please try again.');
+            console.error('Error changing password:', error.response.data.error);
+        }
     };
 
     return (
