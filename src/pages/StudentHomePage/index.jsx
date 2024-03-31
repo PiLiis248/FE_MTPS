@@ -6,6 +6,7 @@ import postService from '../../services/postService';
 import profileService from '../../services/profileService'; // Import profileService
 import { useAuthContext } from '../../context/AuthContext';
 import Sidebar from '../../component/SideBar';
+import { message } from 'antd';
 
 const StudentHomePage = () => {
     const { profile } = useAuthContext();
@@ -67,6 +68,66 @@ const StudentHomePage = () => {
         }
     };
 
+    const [joined, setJoined] = useState(false); 
+    
+    const handleJoinActivity = async (postId, stuId) => {
+        try {
+            const postToUpdate = post.find(pt => pt.id === postId);
+            
+            // Check if profile.id already exists in pt.stdJoin
+            if (postToUpdate.stdJoin && postToUpdate.stdJoin.includes(profile.id)) {
+                message.info("You have already joined this activity.");
+                return; // Exit the function early if user has already joined
+            }
+    
+            // Call the API to update stdJoin
+            const response = await postService.updatePost(postId, { stdJoin: [...postToUpdate.stdJoin, stuId] });
+            message.success("Joined activity !");
+    
+            // Decrease numberParticipants in the backend
+            const updatedPostData = { numberParticipants: postToUpdate.numberParticipants - 1 };
+            await postService.updatePost(postId, updatedPostData);
+    
+            // Update the post state to reflect the changes
+            setPost(prevPosts => prevPosts.map(prevPost => {
+                if (prevPost.id === postId) {
+                    return { ...prevPost, numberParticipants: prevPost.numberParticipants - 1 };
+                }
+                return prevPost;
+            }));
+    
+            // Update joined status for the specific post
+            setJoined(prevState => ({
+                ...prevState,
+                [postId]: true // Set joined status to true for this post
+            }));
+        } catch (error) {
+            if (error.response && error.response.data) {
+                console.error('Error updating post:', error.response.data.error);
+            } else {
+                console.error('Error updating post:', error.message);
+            }
+        }
+    };
+    
+    useEffect(() => {
+        // Check if profile and postData are available
+        if (profile && postData && postData.post) {
+            // Loop through each post in postData.post array
+            postData.post.forEach(pt => {
+                // Check if profile.id exists in the stdJoin array of the post
+                if (pt.stdJoin && pt.stdJoin.includes(profile.id)) {
+                    // If profile.id exists in stdJoin, set joined state to true for that post
+                    setJoined(prevState => ({
+                        ...prevState,
+                        [pt.id]: true
+                    }));
+                }
+            });
+        }
+    }, [profile, postData]);
+
+
     return (
         <div className="homepage-container">
             <Sidebar />
@@ -99,6 +160,8 @@ const StudentHomePage = () => {
                                     location={pt.location}
                                     numberParticipants={pt.numberParticipants}
                                     testId={pt.testId}
+                                    onJoinActivity={() => handleJoinActivity(pt.id, profile.id)}
+                                    statusJoined={joined}
                                 />
                             </div>
                         </div>
