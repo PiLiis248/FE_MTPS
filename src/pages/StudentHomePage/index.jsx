@@ -68,7 +68,7 @@ const StudentHomePage = () => {
         }
     };
 
-    const [joined, setJoined] = useState(false); 
+    const [joined, setJoined] = useState({}); // Use an object to store joined status for each post
     
     const handleJoinActivity = async (postId, stuId) => {
         try {
@@ -117,7 +117,7 @@ const StudentHomePage = () => {
             postData.post.forEach(pt => {
                 // Check if profile.id exists in the stdJoin array of the post
                 if (pt.stdJoin && pt.stdJoin.includes(profile.id)) {
-                    // If profile.id exists in stdJoin, set joined state to true for that post
+                    // If profile.id exists in stdJoin, set joined status to true for that post
                     setJoined(prevState => ({
                         ...prevState,
                         [pt.id]: true
@@ -161,7 +161,7 @@ const StudentHomePage = () => {
                                     numberParticipants={pt.numberParticipants}
                                     testId={pt.testId}
                                     onJoinActivity={() => handleJoinActivity(pt.id, profile.id)}
-                                    statusJoined={joined}
+                                    statusJoined={joined[pt.id] || false} // Use the joined state for the specific post
                                 />
                             </div>
                         </div>

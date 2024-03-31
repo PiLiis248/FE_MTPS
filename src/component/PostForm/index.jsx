@@ -7,10 +7,6 @@ import { Button, Popconfirm, message } from 'antd'; // Import Popconfirm and mes
 const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, endDate, location, numberParticipants, testId, onJoinActivity, statusJoined }) => {
     const isActivity = !testId;
 
-    // const confirm = (e) => {
-    //     console.log(e);
-    //     message.success('Click on Yes');
-    // };
     const cancel = (e) => {
         console.log(e);
         message.error('Click on No');
@@ -37,7 +33,6 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
                 <p>Number of Participants: {numberParticipants}</p>
             </div>
             {isActivity ? (
-                // <button className="join-btn" onClick={handleJoinActivity}>Join Activity</button>
                 <Popconfirm
                     title="Confirmation"
                     description="Are you sure to join this activity?"
