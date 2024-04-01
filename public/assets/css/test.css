@@ -1,36 +1,53 @@
-/* CSS for QuestionCard component */
+
+ /* CSS for QuestionCard component */
 
 .question-card {
-    width: fit-content;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    width: 80%; /* Set width to 100% to fit its container */
+    background-color: #ffffff;
+    border: 5px solid #dbef9b;
     border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding-top: 22px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin: 16px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .question-card h2 {
-    font-size: 1.2rem;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #333; /* Darken the heading color */
+    font-weight: bold;
+}
+
+.options {
+    display:inline;
+    flex-direction: column;
+}
+
+.option {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically */
     margin-bottom: 10px;
 }
 
-.form-group {
-    margin-bottom: 12px;
+.option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer; /* Show pointer cursor on hover */
+    margin-bottom: 10px;
 }
 
-.form-group label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 6px;
+.option label {
+    font-size: 2.2rem;
+    cursor: pointer; /* Show pointer cursor on hover */
+    color: #333; /* Darken the text color */
+    margin-bottom: 10px;
 }
 
-.form-group input[type="text"] {
-    width: fit-content;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+/* Additional style for hidden input */
+input[type="hidden"] {
+    display: none;
 }
-
-

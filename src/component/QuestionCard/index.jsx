@@ -1,35 +1,37 @@
-// QuestionCard.js
 import React from 'react';
-import "../../../public/assets/css/test.css"
+import '../../../public/assets/css/test.css'; // Import the test.css file
 
-const QuestionCard = ({ index, handleChange }) => {
+const QuestionCard = ({ question, index, handleChange }) => {
+    const { question: questionText, options, correctAnswer } = question;
+
+    const handleOptionChange = (event) => {
+        const { name, value } = event.target;
+        handleChange(name, value);
+    };
+
     return (
         <div className="question-card">
-            <h2>Question {index + 1}</h2>
-            <div className="form-group">
-                <label htmlFor={`question-${index}`}></label>
-                <input type="text" id={`question-${index}`} name={`question-${index}`} onChange={(e) => handleChange(e, index)} />
+            <h2>{questionText}</h2>
+            <div className="options">
+                {Object.entries(options).map(([key, option]) => (
+                    <div key={key} className="option">
+                        <input
+                            type="radio"
+                            id={`option-${key}`}
+                            name={`question-${index}`}
+                            value={option.text}
+                            onChange={handleOptionChange}
+                        />
+                        <label htmlFor={`option-${key}`}>{option.text}</label>
+                    </div>
+                ))}
             </div>
-            <div className="form-group">
-                <label htmlFor={`option-a-${index}`}>Option A:</label>
-                <input type="text" id={`option-a-${index}`} name={`option-a-${index}`} onChange={(e) => handleChange(e, index)} />
-            </div>
-            <div className="form-group">
-                <label htmlFor={`option-b-${index}`}>Option B:</label>
-                <input type="text" id={`option-b-${index}`} name={`option-b-${index}`} onChange={(e) => handleChange(e, index)} />
-            </div>
-            <div className="form-group">
-                <label htmlFor={`option-c-${index}`}>Option C:</label>
-                <input type="text" id={`option-c-${index}`} name={`option-c-${index}`} onChange={(e) => handleChange(e, index)} />
-            </div>
-            <div className="form-group">
-                <label htmlFor={`option-d-${index}`}>Option D:</label>
-                <input type="text" id={`option-d-${index}`} name={`option-d-${index}`} onChange={(e) => handleChange(e, index)} />
-            </div>
-            <div className="form-group">
-                <label htmlFor={`correct-answer-${index}`}>Correct Answer:</label>
-                <input type="text" id={`correct-answer-${index}`} name={`correct-answer-${index}`} onChange={(e) => handleChange(e, index)} />
-            </div>
+            <input
+                type="hidden"
+                name={`correct-answer-${index}`}
+                value={correctAnswer}
+                onChange={(e) => handleChange(`correct-answer-${index}`, e.target.value)}
+            />
         </div>
     );
 };
