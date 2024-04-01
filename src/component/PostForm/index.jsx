@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../../public/assets/css/post.css'; 
 import { PATHS } from '../../constants/path';
 import { Button, Popconfirm, message } from 'antd'; // Import Popconfirm and message from antd
 
-const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, endDate, location, numberParticipants, testId, onJoinActivity, statusJoined }) => {
+const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, endDate, location, numberParticipants, testId, onJoinActivity, statusJoined, onTakeTest, statusTake }) => {
     const isActivity = !testId;
-
+    // const navigate = useNavigate()
     const cancel = (e) => {
         console.log(e);
         message.error('Click on No');
@@ -16,6 +16,13 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
         // Call the function passed from the parent component
         if (onJoinActivity) {
             onJoinActivity(); // Pass the post ID to the parent component
+        }
+    };
+    
+    const handleTakeTest = () => {
+        // Call the function passed from the parent component
+        if (onTakeTest) {
+            onTakeTest(); // Pass the post ID to the parent component
         }
     };
 
@@ -44,7 +51,7 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
                     <Button className="join-btn">{statusJoined ? "Joined" : "Join Activity"}</Button>
                 </Popconfirm>
             ) : (
-                <Link to={PATHS.TEST} className="join-btn">Take Test</Link>
+                <Button onClick={handleTakeTest} className="join-btn">{statusTake ? "Already done" : "Take test"}</Button>
             )}
         </div>
     );

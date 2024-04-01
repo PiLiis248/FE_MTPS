@@ -3,14 +3,19 @@ import '../../../public/assets/css/style.css'; // Adjust paths as necessary
 import Post from '../../component/PostForm';
 import useQuery from '../../hooks/useQuery';
 import postService from '../../services/postService';
+import testService from '../../services/testService';
 import profileService from '../../services/profileService'; // Import profileService
 import { useAuthContext } from '../../context/AuthContext';
 import Sidebar from '../../component/SideBar';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { PATHS } from '../../constants/path';
 
 const StudentHomePage = () => {
     const { profile } = useAuthContext();
     const [post, setPost] = useState(null);
+    const navigate = useNavigate();
+
     const [totalPoints, setTotalPoints] = useState(0); // State to store total points
 
     // Fetch posts using useQuery hook
@@ -69,6 +74,7 @@ const StudentHomePage = () => {
     };
 
     const [joined, setJoined] = useState({}); // Use an object to store joined status for each post
+    const [toke, setToke] = useState({}); // Use an object to store joined status for each post
     
     const handleJoinActivity = async (postId, stuId) => {
         try {
@@ -128,6 +134,9 @@ const StudentHomePage = () => {
     }, [profile, postData]);
 
 
+    const handleTakeTest = async (testId) => {
+        navigate(`${PATHS.TEST}/${testId}`)
+    }
     return (
         <div className="homepage-container">
             <Sidebar />
@@ -162,6 +171,8 @@ const StudentHomePage = () => {
                                     testId={pt.testId}
                                     onJoinActivity={() => handleJoinActivity(pt.id, profile.id)}
                                     statusJoined={joined[pt.id] || false} // Use the joined state for the specific post
+                                    onTakeTest={() => handleTakeTest(pt.testId, profile.id)}
+                                    statusTake={toke[pt.id] || false} // Use the joined state for the specific post
                                 />
                             </div>
                         </div>

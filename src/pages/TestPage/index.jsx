@@ -3,16 +3,28 @@ import { useParams } from 'react-router-dom';
 import { testService } from '../../services/testService'; // Import your test service
 
 import '../../../public/assets/css/testPage.css'; // Ensure this path is correct for your project
+import useQuery from '../../hooks/useQuery';
 
 const TestPage = () => {
     const { testId } = useParams(); // Get the testId from the URL params
     const [currentTest, setCurrentTest] = useState(null);
+    // const {
+    //   data: testData,
+    //   loading: testLoading,
+    //   error: testError,
+    //   refetch: testRefetch,
+    // } = useQuery(testService.getSpecificTest(testId));
+    // if(!testLoading){
+    //     console.log(testData);
 
+    // }
     useEffect(() => {
         const fetchTest = async () => {
             try {
-                const response = await testService.getTest(testId); // Fetch test data using testId
+                console.log(testId);
+                const response = await testService.getSpecificTest(testId); // Fetch test data using testId
                 setCurrentTest(response.data); // Set the fetched test data to state
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching test data:', error);
                 // Handle error if necessary
@@ -20,7 +32,7 @@ const TestPage = () => {
         };
 
         fetchTest(); // Call fetchTest function when component mounts
-    }, [testId]); // Run useEffect when testId changes
+    }, [currentTest]); // Run useEffect when testId changes
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -30,17 +42,17 @@ const TestPage = () => {
 
     return (
         <div className="test-container">
-            {currentTest ? (
-                <>
-                    <h2>{currentTest.name}</h2>
+            {/* <h2>{currentTest.name}</h2>
                     <div className="info-item"><strong>Description:</strong> {currentTest.desc}</div>
                     <div className="info-item"><strong>Start Time:</strong> {currentTest.startTime}</div>
                     <div className="info-item"><strong>End Time:</strong> {currentTest.endTime}</div>
-                    <div className="info-item"><strong>Location:</strong> {currentTest.location}</div>
-
+                    <div className="info-item"><strong>Location:</strong> {currentTest.location}</div> */}
+            {!!testData ? (
+                <>
+                    
                     <hr />
                     <form onSubmit={handleSubmit}>
-                        {currentTest.questions.map((question, index) => (
+                        {testData.questions.map((question, index) => (
                             <div key={question.questionId} className="question-block">
                                 <p>
                                     <strong>Question {index + 1}:</strong> {question.question}

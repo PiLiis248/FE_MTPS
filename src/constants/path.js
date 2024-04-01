@@ -3,7 +3,7 @@ export const PATHS = {
     LOGIN: "/",
     HOME: home_path,
     DETAIL: home_path + "/detail",
-    TEST: home_path + "/test",
+    TEST:  "/specific_test",
     CREATE_POST: home_path + "/create_post",
     CREATE_TEST: home_path + "/create_post/test_creation_page"
 }

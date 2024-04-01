@@ -20,7 +20,7 @@ const App = () => {
           <Route element={<MainLayout />}>
             <Route path={PATHS.HOME} element={<StudentHomePage />} />
             <Route path={PATHS.DETAIL} element={<TrainingPointDetail />} />
-            <Route path={PATHS.TEST} element={<TestPage />} />
+            <Route path={`${PATHS.TEST}/:testId`} element={<TestPage />} />
             <Route path={PATHS.CREATE_POST} element={<CreatePost />} />
             <Route path={PATHS.CREATE_TEST} element={<CreateTest />} />
 
