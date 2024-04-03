@@ -6,13 +6,22 @@ const QuestionCard = ({ question, index, handleChange, counter }) => {
     const { question: questionText, options, correctAnswer } = question;
     const [selectedOption, setSelectedOption] = useState('');
 
+    // useEffect(() => {
+    //     const saveAnswer = localStorage.getItem(`answer-${index}`);
+    //     if (saveAnswer) {
+    //         handleChange(`question-${index}`, saveAnswer);
+    //         setSelectedOption(saveAnswer);
+    //     }
+    // }, [index, handleChange]);
+
     useEffect(() => {
         const saveAnswer = localStorage.getItem(`answer-${index}`);
         if (saveAnswer) {
             handleChange(`question-${index}`, saveAnswer);
             setSelectedOption(saveAnswer);
         }
-    }, [index, handleChange]);
+    }, []);
+    
 
     const handleOptionChange = (event) => {
         const { value } = event.target;
