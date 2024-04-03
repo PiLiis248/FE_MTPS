@@ -1,6 +1,7 @@
 /* CSS for the sidebar */
 .sidebar {
-    background-color: #f0f0f0;
+    width: 400px;
+    background-color: rgba(144, 101, 176, 0.08);
     padding: 20px;
     position: fixed;
 }

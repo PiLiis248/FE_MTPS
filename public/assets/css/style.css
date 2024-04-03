@@ -329,7 +329,8 @@ button {
 /* Side bar styling */
 .sidebar {
     flex: 1;
-    background-color: white;
+    width: 400px;
+    background-color: rgba(144, 101, 176, 0.08);
     padding: 20px;
     border: 2px solid black;
     position: sticky;
@@ -413,7 +414,7 @@ button {
 
 .main-content {
     flex: 5; /* Cột phải chiếm 2 phần */
-    background-color: #dce9fc;
+    background-color: rgba(144, 101, 176, 0.08);
     position: relative;
     border: 2px solid black;
     margin-left: 425px;
