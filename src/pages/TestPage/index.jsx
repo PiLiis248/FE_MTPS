@@ -57,28 +57,38 @@ const TestPage = () => {
         alert("Form submitted successfully!");
     };
 
+    
     const handleAnswerChange = (questionId, optionId) => {
+        console.log('Handle Answer Change:', questionId, optionId);
+        
         // Save the selected option ID to localStorage
         localStorage.setItem(`answer-${questionId}`, optionId);
-    
+        
         // Find the question object corresponding to the provided questionId
         const question = currentTest.questions.find(q => q.question === questionId);
         if (question) {
             // Find the selected option object corresponding to the provided optionId
             const selectedOption = question.options.find(o => o.id === optionId);
             if (selectedOption) {
-                // Format the selected option in the desired format (1 - A, 2 - B, etc.)
-                const optionIndex = question.options.indexOf(selectedOption);
-                const formattedOption = `${optionIndex + 1} - ${optionId}`;
-    
+                // Get the index of the selected option
+                const optionIndex = question.options.findIndex(o => o.id === optionId);
+                
+                // Convert the option index to a letter (e.g., 0 -> A, 1 -> B, 2 -> C, ...)
+                const optionLetter = String.fromCharCode(65 + optionIndex);
+                
+                // Format the selected option (e.g., "1 - D", "2 - C", "3 - B", ...)
+                const formattedOption = `${optionIndex + 1} - ${optionLetter}`;
+        
                 // Update the answers state
                 setAnswers(prevAnswers => ({ ...prevAnswers, [questionId]: formattedOption }));
-    
+        
                 // Log the selected option
                 console.log(`Selected option for question ${questionId}: ${formattedOption}`);
             }
         }
     };
+    
+    
     
 
     const handleClearAll = () => {

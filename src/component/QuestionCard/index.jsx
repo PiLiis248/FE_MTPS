@@ -6,14 +6,6 @@ const QuestionCard = ({ question, index, handleChange, counter }) => {
     const { question: questionText, options, correctAnswer } = question;
     const [selectedOption, setSelectedOption] = useState('');
 
-    // useEffect(() => {
-    //     const saveAnswer = localStorage.getItem(`answer-${index}`);
-    //     if (saveAnswer) {
-    //         handleChange(`question-${index}`, saveAnswer);
-    //         setSelectedOption(saveAnswer);
-    //     }
-    // }, [index, handleChange]);
-
     useEffect(() => {
         const saveAnswer = localStorage.getItem(`answer-${index}`);
         if (saveAnswer) {
@@ -21,14 +13,19 @@ const QuestionCard = ({ question, index, handleChange, counter }) => {
             setSelectedOption(saveAnswer);
         }
     }, []);
-    
 
     const handleOptionChange = (event) => {
         const { value } = event.target;
         setSelectedOption(value);
+        
+        const selectedOptionIndex = options.findIndex(option => option.id === value);
+        const optionLetter = String.fromCharCode(65 + selectedOptionIndex);
+        
         handleChange(`question-${index}`, value);
         localStorage.setItem(`answer-${index}`, value);
     };
+    
+    
 
     const handleClearAnswer = () => {
         setSelectedOption('');
@@ -46,8 +43,8 @@ const QuestionCard = ({ question, index, handleChange, counter }) => {
                             type="radio"
                             id={`option-${key}`}
                             name={`question-${index}`}
-                            value={option.text}
-                            checked={selectedOption === option.text}
+                            value={option.id}
+                            checked={selectedOption === option.id}
                             onChange={handleOptionChange}
                         />
                         <label 
