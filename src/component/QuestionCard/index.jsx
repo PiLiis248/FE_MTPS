@@ -1,4 +1,5 @@
 // QuestionCard.js
+
 import React, { useEffect, useState } from 'react';
 import '../../../public/assets/css/test.css'; // Import the test.css file
 
@@ -7,9 +8,9 @@ const QuestionCard = ({ question, index, handleChange, counter }) => {
     const [selectedOption, setSelectedOption] = useState('');
 
     useEffect(() => {
-        const saveAnswer = localStorage.getItem(`answer-${index}`);
+        const saveAnswer = localStorage.getItem(`question_${index}`);
         if (saveAnswer) {
-            handleChange(`question-${index}`, saveAnswer);
+            handleChange(`question_${index}`, saveAnswer);
             setSelectedOption(saveAnswer);
         }
     }, []);
@@ -18,20 +19,16 @@ const QuestionCard = ({ question, index, handleChange, counter }) => {
         const { value } = event.target;
         setSelectedOption(value);
         
-        const selectedOptionIndex = options.findIndex(option => option.id === value);
-        const optionLetter = String.fromCharCode(65 + selectedOptionIndex);
-        
-        handleChange(`question-${index}`, value);
-        localStorage.setItem(`answer-${index}`, value);
+        handleChange(`question_${index}`, value);
+        localStorage.setItem(`question_${index}`, value);
     };
-    
-    
 
-    const handleClearAnswer = () => {
+    const handleClearAnswer = (event) => {
+        event.preventDefault();
         setSelectedOption('');
-        handleChange(`question-${index}`, '');
-        localStorage.removeItem(`answer-${index}`);
-    }
+        handleChange(`question_${index}`, '');
+        localStorage.removeItem(`question_${index}`);
+    };
 
     return (
         <div className="question-card">
@@ -56,12 +53,6 @@ const QuestionCard = ({ question, index, handleChange, counter }) => {
                     </div>
                 ))}
             </div>
-            <input
-                type="hidden"
-                name={`correct-answer-${index}`}
-                value={correctAnswer}
-                onChange={(e) => handleChange(`correct-answer-${index}`, e.target.value)}
-            />
             <button onClick={handleClearAnswer} className='clear-button'>Clear Answer</button>
         </div>
     );
