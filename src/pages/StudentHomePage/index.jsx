@@ -136,6 +136,13 @@ const StudentHomePage = () => {
 
     const handleTakeTest = async (testId) => {
         navigate(`${PATHS.TEST}/${testId}`)
+
+        // Update the state to indicate that the test has been taken
+        setToke(prevState => ({
+            ...prevState,
+            [testId]: true
+        }));
+
     }
     return (
         <div className="homepage-container">

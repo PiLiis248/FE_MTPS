@@ -9,7 +9,7 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
     // const navigate = useNavigate()
     const cancel = (e) => {
         console.log(e);
-        message.error('Click on No');
+        // message.error('Click on No');
     };
     
     const handleJoinActivity = () => {

@@ -1,7 +1,7 @@
 // TestPage.js
 
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { testService } from '../../services/testService';
 import QuestionCard from '../../component/QuestionCard';
 import { PATHS } from '../../constants/path';
@@ -13,6 +13,7 @@ const TestPage = () => {
     const [currentTest, setCurrentTest] = useState(null);
     const [answers, setAnswers] = useState({});
     const [allAnswersCleared, setAllAnswersCleared] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTest = async () => {
@@ -39,34 +40,7 @@ const TestPage = () => {
         setAnswers(savedAnswers);
     }, [currentTest]);
 
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-
-    //     const totalQuestions = currentTest.questions.length;
-    //     const answeredQuestions = Object.keys(answers).length;
-
-    //     if (answeredQuestions < totalQuestions) {
-    //         alert("Please answer all questions.");
-    //         return;
-    //     }
-
-    //     currentTest.questions.forEach(question => {
-    //         const questionId = question.question;
-    //         const correctAnswer = question.correctOption;   
-    //         console.log("Question ID:", questionId);
-    //         console.log("Correct Answer:", correctAnswer);
-    //     });
-
-    //     console.log("Items in localStorage:");
-    //     for (let i = 0; i < localStorage.length; i++) {
-    //         const key = localStorage.key(i);
-    //         const value = localStorage.getItem(key);
-    //         console.log(key, value);
-    //     }
-
-    //     alert("Form submitted successfully!");
-    // };
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
       
@@ -89,6 +63,8 @@ const TestPage = () => {
             testId,
             profile.id // Add profileId to the request body
           );
+
+          navigate(PATHS.HOME);
           // Handle the response
         } catch (error) {
           console.error('Error submitting test:', error);
