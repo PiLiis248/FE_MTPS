@@ -1,14 +1,16 @@
 // CreatePost.js
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../../public/assets/css/create_post.css'; // Ensure you create this CSS file for styling
 import SideBar from '../../component/SideBar'; // Import AssistantSidebar component
 import { PATHS } from '../../constants/path';
 import { useAuthContext } from '../../context/AuthContext'; // Import useAuthContext hook
+import { postService } from '../../services/postService';
 
 const CreatePost = () => {
     const { profile } = useAuthContext(); // Get the profile from the authentication context
+    const navigate = useNavigate();
 
     // Load facultyName from localStorage if available, otherwise use the one from profile
     const initialFacultyName = localStorage.getItem('facultyName') || (profile ? profile.facultyName : '');
@@ -17,12 +19,15 @@ const CreatePost = () => {
         name: '',
         facultyName: initialFacultyName,
         desc: '',
-        status: '', // New status field
+        status: true,
+        startDate: '',
         startTime: '',
+        endDate: '',
         endTime: '',
+        point: '',
         location: '',
-        numberParticipants: 0,
-        testId: ''
+        numberParticipants: '',
+        testId: null,
     });
 
     useEffect(() => {
@@ -32,76 +37,95 @@ const CreatePost = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
+        setFormData((prevState) => ({
             ...prevState,
-            [name]: value
+            [name]: value,
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleCreateActivity = async (e) => {
         e.preventDefault();
-        // Add logic to handle form submission, such as sending data to a server
-        console.log(formData);
+        try {
+            const response = await postService.createPost(formData);
+            navigate(PATHS.HOME);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error creating post:', error);
+        }
     };
 
-    // Function to handle activity creation
-    const handleCreateActivity = () => {
-        setFormData(prevState => ({
-            ...prevState,
-            status: 'activity' // Set status to 'activity' for activity creation
-        }));
-        handleSubmit(); // Call handleSubmit to handle form submission
-    };
-
-    // Function to handle test creation
-    
+   
 
     return (
         <div className="create-post-container">
             <SideBar className="sidebar-create" />
             <div className="form-create">
-                {/* <h2>Create New Post</h2> */}
-                <form onSubmit={handleSubmit}>
+                <h2>Post Form</h2>
+                <form onSubmit={handleCreateActivity}>
                     <div className="form-group">
-                        <label htmlFor="name">Name:</label>
+                        <label htmlFor="name"><strong>Topic event:</strong></label>
                         <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="facultyName">Faculty Name:</label>
+                        <label htmlFor="facultyName"><strong>Faculty:</strong></label>
                         <input type="text" id="facultyName" name="facultyName" value={formData.facultyName} onChange={handleChange} readOnly={!!profile} />
-                        {/* Make the facultyName field readOnly if profile exists */}
                     </div>
                     <div className="form-group">
-                        <label htmlFor="desc">Description:</label>
+                        <label htmlFor="desc"><strong>Content:</strong></label>
                         <textarea id="desc" name="desc" value={formData.desc} onChange={handleChange}></textarea>
                     </div>
+                    <div className="form-group">
+                        <label htmlFor="startDate"><strong>Open Form Date:</strong></label>
+                        <input type="date" id="startDate" name="startDate" value={formData.startDate} onChange={handleChange} />
+    
+                        <label htmlFor="startTime"><strong>Open Form Time:</strong></label>
+                        <input type="time" id="startTime" name="startTime" value={formData.startTime} onChange={handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="endDate"><strong>Close Form Date:</strong></label>
+                        <input type="date" id="endDate" name="endDate" value={formData.endDate} onChange={handleChange} />
                     
-                    <div className="form-group">
-                        <label htmlFor="startTime">Start Time:</label>
-                        <input type="datetime-local" id="startTime" name="startTime" value={formData.startTime} onChange={handleChange} />
+                        <label htmlFor="endTime"><strong>Close Form Time:</strong></label>
+                        <input type="time" id="endTime" name="endTime" value={formData.endTime} onChange={handleChange} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="endTime">End Time:</label>
-                        <input type="datetime-local" id="endTime" name="endTime" value={formData.endTime} onChange={handleChange} />
+                        <label htmlFor="location"><strong>Event information:</strong></label>
+                        <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} placeholder='<place> _ <date> _ <time>'/>
+                    </div>
+                    {/* Dropdown for Training Point */}
+                    <div className="form-group">
+                        <label htmlFor="point"><strong>Training Point:</strong></label>
+                        <select id="point" name="point" value={formData.point} onChange={handleChange}>
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="location">Location:</label>
-                        <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="numberParticipants">Number of Participants:</label>
+                        <label htmlFor="numberParticipants"><strong>Number of Participants:</strong></label>
                         <input type="number" id="numberParticipants" name="numberParticipants" value={formData.numberParticipants} onChange={handleChange} />
                     </div>
-                   
-                   
+                    <div className="form-group">
+                        <label htmlFor="status"><strong>Post Status:</strong></label>
+                        <div className="switch-container">
+                            <span className={formData.status ? 'private' : 'public'}>Private</span>
+                            <label className="switch">
+                                <input type="checkbox" name="status" checked={formData.status} onChange={() => setFormData(prevState => ({ ...prevState, status: !formData.status }))} />
+                                <span className="slider round"></span>
+                            </label>
+                            <span className={formData.status ? 'public' : 'private'}>Public</span>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="create-buttons">
+                            <button className="create-activity-button" onClick={handleCreateActivity}>Create Activity</button>
+                            <Link to={PATHS.CREATE_TEST} className="create-test-link">
+                                <button className="create-test-button">Create Test</button>
+                            </Link>
+                        </div>
+                    </div>
                 </form>
-                {/* Create buttons for activity and test */}
-                <div className="create-buttons">
-                    <button className="create-activity-button" onClick={handleCreateActivity}>Create Activity</button>
-                    <Link to={PATHS.CREATE_TEST} className="create-test-link">
-                        <button className="create-test-button">Create Test</button>
-                    </Link>
-                </div>
             </div>
         </div>
     );

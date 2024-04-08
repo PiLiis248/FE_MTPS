@@ -30,7 +30,6 @@
     height: 20px;
 }
 
-
 /* CSS for the create post content */
 .form-create {
     padding: 20px;
@@ -39,7 +38,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 388px;
+    margin-left: 400px; /* Adjust margin-left to accommodate the sidebar width */
 }
 
 .create-post-container h2 {
@@ -54,10 +53,11 @@
 /* CSS for the create post form */
 .create-post-container form {
     padding: 20px;
-    background-color: #ffffff; /* Set background color for the form */
+    background-color: rgb(255, 255, 255); /* Set background color for the form */
     border-radius: 10px; /* Add some border-radius for rounded corners */
     box-shadow: 0 0 10px rgb(150, 153, 232); /* Add a subtle shadow for depth */
     width: 80%;
+    margin-bottom: 100px;
 }
 
 .create-post-container .form-group {
@@ -66,17 +66,21 @@
 
 .create-post-container label {
     font-size: 24px; /* Increase font size for labels */
-    color: #333; /* Adjust color for labels */
+    color: #000000; /* Adjust color for labels */
 }
 
+.create-post-container .form-group label[for="startTime"],
+.create-post-container .form-group label[for="endTime"] {
+    margin-left: 200px; 
+}
 
 input#name,
 input#location,
 input#facultyName,
-.create-post-container input[type="datetime-local"],
 .create-post-container textarea,
 .create-post-container input[type="number"] {
     width: 100%;
+    height: 50px;
     padding: 15px; /* Increase padding for inputs */
     border: 1px solid #ccc;
     border-radius: 8px; /* Round the input corners */
@@ -84,6 +88,26 @@ input#facultyName,
     font-size: 20px; /* Adjust font size for inputs */
     color: #555;
     transition: border-color 0.3s ease; /* Add transition for input border color */
+    margin-top: 15px;
+}
+
+/* Additional styling for registry date and time inputs */
+.create-post-container input[type="date"] {
+    border-radius: 8px;
+    font-size: 2.3rem;
+    width: 20%;
+    height: 50px;
+    margin-bottom: 10px; /* Add some margin below the inputs */
+    margin-left: 30px;
+}
+
+.create-post-container input[type="time"] {
+    border-radius: 8px;
+    font-size: 2.3rem;
+    width: 20%;
+    height: 50px;
+    margin-bottom: 10px; /* Add some margin below the inputs */
+    margin-left: 30px;
 }
 
 .create-post-container textarea {
@@ -92,32 +116,149 @@ input#facultyName,
 
 /* Button styles */
 .create-buttons {
+    margin-top: 100px;
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    gap: 300px;
 }
 
 .create-buttons button {
-    background-color: #007bff;
-    color: #fff;
+    width: 300px;
+    background-color: rgb(210, 205, 205);
+    color: black;
     padding: 15px 30px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
     font-size: 2.3rem;
-    margin: 0 10px; /* Adjust spacing between buttons */
 }
 
-.create-buttons button:hover {
-    background-color: #0056b3;
+
+.create-activity-button:hover {
     transform: translateY(-2px);
+    background-color: #4cde3f; 
+    color: white;
 }
 
-.create-activity-button {
-    background-color: #4CAF50; /* Green */
+.create-test-button:hover {
+    transform: translateY(-2px);
+    background-color: #e6e634;
+    color: white; 
 }
 
-.create-test-button {
-    background-color: #f44336; /* Red */
+
+/* CSS for the status switch */
+.switch-container {
+    display: flex;
+    align-items: center;
+}
+
+.switch-container span {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    transition: color 0.3s;
+    font-size: 2.5rem;
+    margin-right: 20px;
+}
+
+.switch-container .public {
+    color: #ffea00; /* Highlight color for public */
+}
+
+.switch-container .private {
+    color: #969696; /* Highlight color for private */
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    width: 80%; /* Set the width to 100% to cover the switch */
+    height: 34px;
+    background-color: #ccc;
+    transition: background-color 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: rgb(255, 255, 255);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #4eafeb;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #e221f3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+/* Styling for the select dropdown */
+.form-group select {
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    font-size: 2rem;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Styling for the dropdown arrow */
+.form-group select::after {
+    content: '\25BC';  /* Unicode character for down arrow */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #666;
+}
+
+/* Styling for the dropdown options */
+.form-group select option {
+    font-size: 2rem;
+    background-color: #fff;
+    color: #333;
 }
