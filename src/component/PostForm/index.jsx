@@ -1,80 +1,20 @@
-// import React from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
-// import '../../../public/assets/css/post.css'; 
-// import { PATHS } from '../../constants/path';
-// import { Button, Popconfirm, message } from 'antd'; // Import Popconfirm and message from antd
-// import { useAuthContext } from '../../context/AuthContext';
-
-// const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, endDate, location, numberParticipants, testId, onJoinActivity, statusJoined, onTakeTest, statusTake }) => {
-//     const isActivity = !testId;
-//     const { profile } = useAuthContext();
-
-//     // const navigate = useNavigate()
-//     const cancel = (e) => {
-//         console.log(e);
-//         // message.error('Click on No');
-//     };
-    
-//     const handleJoinActivity = () => {
-//         // Call the function passed from the parent component
-//         if (onJoinActivity) {
-//             onJoinActivity(); // Pass the post ID to the parent component
-//         }
-//     };
-    
-//     const handleTakeTest = () => {
-//         // Call the function passed from the parent component
-//         if (onTakeTest) {
-//             onTakeTest(); // Pass the post ID to the parent component
-//         }
-//     };
-
-//     return (
-//         <div className="post-container">
-//             <div className="post-faculty">
-//                 <span>{facultyName}</span>
-//             </div>
-//             <h3 className="post-title">{name}</h3>
-//             <p className="post-description">{desc}</p>
-//             <div className="post-details">
-//                 <p>Start Event: {startTime}, {startDate}</p>
-//                 <p>End Event: {endTime}, {endDate}</p>
-//                 <p>Location: {location}</p>
-//                 <p>Number of Participants: {numberParticipants}</p>
-//             </div>
-//             {isActivity ? (
-//                 <Popconfirm
-//                     title="Confirmation"
-//                     description="Are you sure to join this activity?"
-//                     onConfirm={handleJoinActivity}
-//                     onCancel={cancel}
-//                     okText="Yes"
-//                     cancelText="No"
-//                 >
-//                     <Button className="join-btn">{statusJoined ? "Joined" : "Join Activity"}</Button>
-//                 </Popconfirm>
-//             ) : (
-//                 <Button onClick={handleTakeTest} className="join-btn">{statusTake ? "Already done" : "Take test"}</Button>
-//             )}
-//         </div>
-//     );
-// };
-
-// export default PostForm;
-
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { CloseOutlined } from '@ant-design/icons';
 import '../../../public/assets/css/post.css'; 
 import { PATHS } from '../../constants/path';
-import { Button, Popconfirm, message } from 'antd'; // Import Popconfirm and message from antd
+import { Button, Popconfirm, message, Input } from 'antd'; // Import Popconfirm and message from antd
 import { useAuthContext } from '../../context/AuthContext';
 
-const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, endDate, location, numberParticipants, testId, onJoinActivity, statusJoined, onTakeTest, statusTake, onDeletePost }) => {
+const { Search } = Input;
+
+const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, endDate, location, numberParticipants, testId, onJoinActivity, statusJoined, onTakeTest, statusTake }) => {
     const { profile } = useAuthContext();
     const isStudent = profile?.role === 'student';
-    const isActivity = !testId;
+    
 
+    const [showAttendanceInput, setShowAttendanceInput] = useState(false);
+    const [attendanceCode, setAttendanceCode] = useState('');
     const cancel = (e) => {
         console.log(e);
     };
@@ -91,11 +31,31 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
         }
     };
 
-    const handleDeletePost = () => {
-        if (onDeletePost) {
-            onDeletePost(id);
+    const handleCheckAttendance = () => {
+        setShowAttendanceInput(true);
+    };
+
+    const handleAttendanceInputChange = (event) => {
+        setAttendanceCode(event.target.value);
+    };
+
+    const handleSubmitAttendance = () => {
+        console.log("Attendance Code:", attendanceCode);
+        setAttendanceCode('');
+        setShowAttendanceInput(true);
+    };
+
+    const handleCloseAttendanceInput = () => {
+        setShowAttendanceInput(false);
+    };
+
+    const handleInputKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent default form submission behavior
+            handleSubmitAttendance();
         }
     };
+    
 
     return (
         <div className="post-container">
@@ -110,37 +70,50 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
                 <p>Location: {location}</p>
                 <p>Number of Participants: {numberParticipants}</p>
             </div>
-            {isStudent && isActivity ? (
-                <Popconfirm
-                    title="Confirmation"
-                    description="Are you sure to join this activity?"
-                    onConfirm={handleJoinActivity}
-                    onCancel={cancel}
-                    okText="Yes"
-                    cancelText="No"
-                >
-                    <Button className="join-btn">{statusJoined ? "Joined" : "Join Activity"}</Button>
-                </Popconfirm>
-            ) : isStudent && !isActivity ? (
-                <Button onClick={handleTakeTest} className="join-btn">{statusTake ? "Already done" : "Take test"}</Button>
-            ) : (
-                <>
-                    <div className="button-container">
+            <div className="button-container">
+                {!isStudent && (
+                    <>
                         <Button className='list-attend-btn'>List Attendees</Button>
                         <Button className='edit-btn'>Edit</Button>
+                    </>
+                )}
+                {testId ? (
+                    isStudent && <Button onClick={handleTakeTest} className="join-btn">{statusTake ? "Already done" : "Take test"}</Button>
+                ) : (
+                    isStudent && (
                         <Popconfirm
                             title="Confirmation"
-                            description="Are you sure to delete this post?"
-                            onConfirm={handleDeletePost}
+                            description="Are you sure to join this activity?"
+                            onConfirm={handleJoinActivity}
                             onCancel={cancel}
                             okText="Yes"
                             cancelText="No"
                         >
-                            <Button className='delete-btn' onClick={() => onDeletePost(id)}>Delete</Button>
+                            <Button className="join-btn">{statusJoined ? "Joined" : "Join Activity"}</Button>
                         </Popconfirm>
-                    </div>
-                </>
-            )}
+                    )
+                )}
+                {!isStudent && !testId && (
+                    <React.Fragment>
+                        {showAttendanceInput && (
+                            <div className="attendance-input">
+                                <Search
+                                    placeholder="Student ID"
+                                    value={attendanceCode}
+                                    maxLength={8}
+                                    onChange={handleAttendanceInputChange}
+                                    onSearch={handleSubmitAttendance}
+                                    onPressEnter={handleInputKeyPress}
+                                />
+                                <Button className='close-btn' onClick={handleCloseAttendanceInput}><CloseOutlined /></Button>
+                            </div>
+                        )}
+                        {!showAttendanceInput && (
+                            <Button className='check-attendance-btn' onClick={handleCheckAttendance}>Check Attendance</Button>
+                        )}
+                    </React.Fragment>
+                )}
+            </div>
         </div>
     );
 };

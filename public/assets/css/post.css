@@ -112,9 +112,9 @@
 }
 
 .edit-btn,
-.delete-btn,
+.check-attendance-btn,
 .list-attend-btn {
-    width: 150px;
+    width: 190px;
     height: 40px;
     text-align: center;
     background-color: #007bff;
@@ -131,16 +131,45 @@
 }
 
 .edit-btn:hover,
-.delete-btn:hover,
+.check-attendance-btn:hover,
 .list-attend-btn:hover {
     background-color: #0056b3;
 }
 
-.delete-btn {
+.check-attendance-btn {
     background-color: #f44336; /* Red */
 }
 
 .list-attend-btn {
     background-color: #70c44f; /* Yellow */
+}
+
+.attendance-input {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.attendance-input input[type="text"] {
+    width: 160px;
+    height: 40px;
+    padding: 10px;
+    font-size: 1.6rem;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
+.attendance-input .ant-input-search-button {
+    margin-bottom: 20px;
+}
+
+.attendance-input .close-btn {
+    margin-left: 5px;
+    margin-right: 10px;
+    margin-bottom: 20px;
 }
 
