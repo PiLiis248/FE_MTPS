@@ -24,7 +24,7 @@ const App = () => {
             <Route path={`${PATHS.TEST}/:testId`} element={<TestPage />} />
             <Route path={PATHS.CREATE_POST} element={<CreatePost />} />
             <Route path={PATHS.CREATE_TEST} element={<CreateTest />} />
-            <Route path={`${PATHS.LIST_ATTENDEES}/:postId`} element={<ListAttendeesPage />} />
+            <Route path={`${PATHS.LIST_ATTENDEES}/:id`} element={<ListAttendeesPage />} />
 
           </Route>
         </Route>

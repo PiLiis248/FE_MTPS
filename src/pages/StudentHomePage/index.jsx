@@ -149,7 +149,7 @@ const StudentHomePage = () => {
 
    
     const handleListAttendees = async (id) => {
-        navigate(`${PATHS.LIST_ATTENDEES}/${id}`)
+        navigate(`${PATHS.LIST_ATTENDEES}/${String(id)}`)
     }
 
     return (

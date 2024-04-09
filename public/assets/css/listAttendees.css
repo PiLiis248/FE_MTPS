@@ -1,31 +1,56 @@
-/* attendeesList.css */
+/* listAttendees.css */
 
-.attendees-container {
-    margin-top: 20px;
-  }
-  
-  .attendees-container h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .attendees-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .attendees-table th,
-  .attendees-table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .attendees-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .attendees-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
+body {
+  padding: 20px;
+  background-color: rgb(236, 251, 194);
+}
+/* Container styling */
+.list-container {
+  max-width: 800px;
+  margin: 10px auto;
+  padding: 20px;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header styling */
+thead {
+  background-color: #f2f2f2;
+}
+
+/* Table header cell styling */
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Table body cell styling */
+td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 12px;
+  font-size: 14px;
+  background-color: #ffffff;
+}
+
+Alternating row background color
+tbody tr {
+  background-color: #f8f8f8;
+}
+
+/* Hover effect */
+tbody tr:hover {
+  background-color: #f0f0f0;
+}
