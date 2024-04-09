@@ -73,7 +73,14 @@
     display: inline-block;
     margin: 0 auto; 
 }
-
+.disabled-button {
+    pointer-events: none;
+    /* Vô hiệu hóa các sự kiện chuột */
+    opacity: 0.6;
+    /* Giảm độ mờ của nút */
+    cursor: not-allowed;
+    /* Thay đổi chỉ mục chuột thành kiểu không cho phép */
+}
 .join-btn:hover {
     background-color: #4926b5;
 }
@@ -178,4 +185,7 @@
     margin-right: 10px;
     margin-bottom: 20px;
 }
-
+:where(.css-dev-only-do-not-override-djtmh8).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover{
+    background: rgb(10, 190, 91);
+    color: white;
+}

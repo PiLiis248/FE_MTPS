@@ -14,7 +14,6 @@ const TestPage = () => {
   const [answers, setAnswers] = useState({});
   const [allAnswersCleared, setAllAnswersCleared] = useState(false);
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchTest = async () => {
       try {
@@ -26,10 +25,10 @@ const TestPage = () => {
     };
 
     fetchTest(testId);
+    localStorage.clear();
   }, [testId]);
 
   useEffect(() => {
-    // Load saved answers from localStorage
     const savedAnswers = {};
     Object.keys(currentTest?.questions || {}).forEach((questionId, index) => {
       const savedAnswer = localStorage.getItem(`question_${index}`);
@@ -52,17 +51,9 @@ const TestPage = () => {
     });
 
     try {
-    //   console.log(answers);
-    //   console.log(testId);
-    //   console.log(profile.id);
-      const response = await testService.doTest(
-        answers,
-        testId,
-        profile.id // Add profileId to the request body
-      );
+      const response = await testService.doTest(answers, testId, profile.id);
 
       navigate(PATHS.HOME);
-      // Handle the response
     } catch (error) {
       console.error("Error submitting test:", error);
     }

@@ -11,7 +11,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../../public/assets/css/create_post.css"; 
+import "../../../public/assets/css/create_post.css";
 import SideBar from "../../component/SideBar";
 import { PATHS } from "../../constants/path";
 import { useAuthContext } from "../../context/AuthContext";
@@ -19,7 +19,7 @@ import { postService } from "../../services/postService";
 import testService from "../../services/testService";
 import { message } from "antd";
 const CreatePost = () => {
-  const { profile } = useAuthContext(); 
+  const { profile } = useAuthContext();
   const navigate = useNavigate();
   const [testId, setTestId] = useState();
   const [open, setOpen] = useState(false);
@@ -177,11 +177,10 @@ const CreatePost = () => {
     const numQuestions = Object.keys(formValues).filter((key) =>
       key.startsWith("question-")
     ).length;
-
     for (let i = 0; i < numQuestions; i++) {
       const question = formValues[`question-${i}`];
       const correctAnswer0 = formValues[`correct-answer-${i}`];
-      const correctAnswer = correctAnswer0 ? correctAnswer0.slice(-1) : "";
+      const correctOption = correctAnswer0 ? correctAnswer0.slice(-1) : "";
       const options = [];
       for (let j = 0; j < 4; j++) {
         const optionId = String.fromCharCode(65 + j);
@@ -189,7 +188,7 @@ const CreatePost = () => {
         options.push({ id: optionId, text: optionText });
       }
 
-      questions.push({ question, correctAnswer, options });
+      questions.push({ question, correctOption, options });
     }
 
     return questions;
