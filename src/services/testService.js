@@ -9,6 +9,9 @@ export const testService = {
   doTest(answers, testId, profileId) {
     return axiosInstance.put("/test_answer", { answers, testId, profileId });
   },
+  createTest(questions, target) {
+    return axiosInstance.post("/createtest", { questions, target });
+  },
 };
 
 export default testService;

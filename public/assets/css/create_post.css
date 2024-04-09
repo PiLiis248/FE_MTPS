@@ -123,6 +123,7 @@ input#facultyName,
 }
 
 .create-buttons button {
+    height: 70px;
     width: 300px;
     background-color: rgb(210, 205, 205);
     color: black;
@@ -262,3 +263,28 @@ input:checked + .slider:before {
     background-color: #fff;
     color: #333;
 }
+/* START DRAWER AND QUESTION FORM */
+.ant-drawer-content-wrapper{
+    width: 800px !important;
+}
+.ant-form-item.form-question.css-dev-only-do-not-override-djtmh8 label {
+    color: red;
+    font-size: 20px;
+    font-family: 'pnb';
+}
+
+.ant-form-item.form-answer.css-dev-only-do-not-override-djtmh8 label,
+.ant-form-item.form-correct.css-dev-only-do-not-override-djtmh8 label {
+    font-size: 17px;
+    font-family: 'pnb';
+}
+
+.ant-divider.css-dev-only-do-not-override-djtmh8.ant-divider-horizontal.form__divider {
+    height: 1.5px;
+    background-color: rgb(178, 171, 171);
+}
+.ant-select.ant-select-outlined.ant-select-in-form-item.css-dev-only-do-not-override-djtmh8.ant-select-single.ant-select-show-arrow{
+    width: 40%;
+}
+
+/* END DRAWER AND QUESTION FORM */
