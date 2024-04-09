@@ -9,6 +9,7 @@ import TrainingPointDetail from "./pages/TrainingPointDetail"; // Import the Pro
 import CreatePost from "./pages/CreatePost";
 import CreateTest from "./pages/TestCreationPage";
 import TestPage from "./pages/TestPage";
+import ListAttendeesPage from "./pages/ListAttendeesPage";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path={`${PATHS.TEST}/:testId`} element={<TestPage />} />
             <Route path={PATHS.CREATE_POST} element={<CreatePost />} />
             <Route path={PATHS.CREATE_TEST} element={<CreateTest />} />
+            <Route path={`${PATHS.LIST_ATTENDEES}/:postId`} element={<ListAttendeesPage />} />
 
           </Route>
         </Route>

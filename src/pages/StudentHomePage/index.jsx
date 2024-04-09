@@ -37,7 +37,9 @@ const StudentHomePage = () => {
 
                     postData.post.forEach(pt => {
                         if (pt.status === true || pt.status === false && pt.facultyName === facultyName) {
-                            filteredPosts.push(pt);
+                            if (!profile.activities.includes(pt.id)) {
+                                filteredPosts.push(pt);
+                            }
                         }
                     });
                     setPost(filteredPosts.length > 0 ? filteredPosts : null);
@@ -145,25 +147,10 @@ const StudentHomePage = () => {
 
     }
 
-    const handleDeletePost = async (postId) => {
-        try {
-            // Call the deletePost function from the postService
-            console.log(postId);
-            await postService.deletePost(postId);
-            
-            // Update the post state to remove the deleted post
-            setPost(prevPosts => prevPosts.filter(post => post.id !== postId));
-            
-            // Show success message
-            message.success("Post deleted successfully");
-            // window.location.reload();
-        } catch (error) {
-            // Show error message
-            message.error("Failed to delete post");
-            console.error("Error deleting post:", error);
-        }
-    };
-
+   
+    const handleListAttendees = async (id) => {
+        navigate(`${PATHS.LIST_ATTENDEES}/${id}`)
+    }
 
     return (
         <div className="homepage-container">
@@ -182,11 +169,11 @@ const StudentHomePage = () => {
                     )}
                 </div>
                 <div className="posts-container">
-                    {post && post.map(pt => (
+                    {post && post.reverse().map(pt => (
                         <div key={pt.id} className="post-wrapper">
                             <div className="post-item">
                                 <Post
-                                    key={pt.id}
+                                    id={pt.id}
                                     name={pt.name}
                                     facultyName={pt.facultyName}
                                     desc={pt.desc}
@@ -201,7 +188,7 @@ const StudentHomePage = () => {
                                     statusJoined={joined[pt.id] || false} // Use the joined state for the specific post
                                     onTakeTest={() => handleTakeTest(pt.testId, profile.id)}
                                     statusTake={toke[pt.id] || false} // Use the joined state for the specific post
-                                    onDeletePost={handleDeletePost} // Pass onDeletePost function to the PostForm component
+                                    onListAttendees={() => handleListAttendees(pt.id)}
                                 />
                             </div>
                         </div>

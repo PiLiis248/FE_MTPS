@@ -5,5 +5,6 @@ export const PATHS = {
     DETAIL: home_path + "/detail",
     TEST:  "/specific_test",
     CREATE_POST: home_path + "/create_post",
-    CREATE_TEST: home_path + "/create_post/test_creation_page"
+    CREATE_TEST: home_path + "/create_post/test_creation_page",
+    LIST_ATTENDEES: "/list_attendees"
 }
