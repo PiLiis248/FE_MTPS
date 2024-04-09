@@ -5,12 +5,14 @@ import '../../../public/assets/css/post.css';
 import { PATHS } from '../../constants/path';
 import { Button, Popconfirm, message, Input } from 'antd'; // Import Popconfirm and message from antd
 import { useAuthContext } from '../../context/AuthContext';
+import postService from '../../services/postService';
 
 const { Search } = Input;
 
-const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, endDate, location, numberParticipants, testId, onJoinActivity, statusJoined, onTakeTest, statusTake }) => {
+const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, endDate, location, numberParticipants, testId, onJoinActivity, statusJoined, onTakeTest, statusTake, onListAttendees }) => {
     const { profile } = useAuthContext();
     const isStudent = profile?.role === 'student';
+    const navigate = useNavigate();
     
 
     const [showAttendanceInput, setShowAttendanceInput] = useState(false);
@@ -31,6 +33,12 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
         }
     };
 
+    const handleListAttendees = async () => {
+       if (onListAttendees) {
+        onListAttendees();
+       }
+    }
+
     const handleCheckAttendance = () => {
         setShowAttendanceInput(true);
     };
@@ -39,10 +47,20 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
         setAttendanceCode(event.target.value);
     };
 
-    const handleSubmitAttendance = () => {
-        console.log("Attendance Code:", attendanceCode);
-        setAttendanceCode('');
-        setShowAttendanceInput(true);
+    const handleSubmitAttendance = async (id, attendanceCode) => {
+        try {
+            // Call the checkAttendance service method with postId and attendanceCode
+            await postService.checkAttendance(id, attendanceCode);
+            // Show success message if attendance checked successfully
+            message.success('Attendance checked successfully');
+            // Reset attendance code input and hide input field
+            setAttendanceCode('');
+            setShowAttendanceInput(true);
+        } catch (error) {
+            // Show error message if any error occurs
+            message.error('Failed to check attendance. Please try again later.');
+            console.error('Error checking attendance:', error);
+        }
     };
 
     const handleCloseAttendanceInput = () => {
@@ -71,9 +89,9 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
                 <p>Number of Participants: {numberParticipants}</p>
             </div>
             <div className="button-container">
-                {!isStudent && (
+                {!isStudent && !showAttendanceInput && (
                     <>
-                        <Button className='list-attend-btn'>List Attendees</Button>
+                        <Button onClick={() => handleListAttendees()} className='list-attend-btn'>List Attendees</Button>
                         <Button className='edit-btn'>Edit</Button>
                     </>
                 )}
@@ -102,7 +120,7 @@ const PostForm = ({ id, name, facultyName, desc, startTime, startDate, endTime, 
                                     value={attendanceCode}
                                     maxLength={8}
                                     onChange={handleAttendanceInputChange}
-                                    onSearch={handleSubmitAttendance}
+                                    onSearch={handleSubmitAttendance(id, attendanceCode)}
                                     onPressEnter={handleInputKeyPress}
                                 />
                                 <Button className='close-btn' onClick={handleCloseAttendanceInput}><CloseOutlined /></Button>

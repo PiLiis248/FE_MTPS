@@ -1,0 +1,31 @@
+/* attendeesList.css */
+
+.attendees-container {
+    margin-top: 20px;
+  }
+  
+  .attendees-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .attendees-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .attendees-table th,
+  .attendees-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .attendees-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .attendees-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
