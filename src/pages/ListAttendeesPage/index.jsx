@@ -31,32 +31,37 @@ const ListAttendeesPage = () => {
   return (
     <div>
       <Link to={PATHS.HOME} className='back-btn'>Back Home Page</Link>
-      {currentList.attendees.map((attendeeData, index) => (
-        <div key={index}>
-          <table>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Student</th>
-                <th>Student Email</th>
-                <th>Time Join Activity</th>
-                <th>Test Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {attendeeData.attendees.map((attendee, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{attendee.name}</td>
-                  <td>{attendee.email}</td>
-                  <td>{attendee.timeJoined}</td>
-                  <td>{attendee.score}</td>
+      <ul className="attendees-list">
+        {currentList.attendees.map((attendeeData, index) => (
+          <li key={index} className="attendees-list-item">
+            <div className="attendees-list-header">
+              <span>Attendees: {attendeeData.attendees.length}</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Student</th>
+                  <th>Student Email</th>
+                  <th>Time Join Activity</th>
+                  <th>Test Score</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ))}
+              </thead>
+              <tbody>
+                {attendeeData.attendees.map((attendee, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{attendee.name}</td>
+                    <td>{attendee.email}</td>
+                    <td>{attendee.timeJoined}</td>
+                    <td>{attendee.score}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

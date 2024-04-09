@@ -1,56 +1,66 @@
-/* listAttendees.css */
-
-body {
+.back-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-  background-color: rgb(236, 251, 194);
-}
-/* Container styling */
-.list-container {
-  max-width: 800px;
-  margin: 10px auto;
-  padding: 20px;
+  font-size: 2rem;
+  margin: 5px;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 8px rgba(221, 221, 220, 0.259);
+  background-color: white;
 }
 
-/* Table styling */
+.back-btn:hover {
+  text-decoration: underline;
+  color: rgb(0, 0, 0);
+}
+
+
+.attendees-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px;
+}
+
+.attendees-list-item {
+  margin-bottom: 20px;
+  border-radius: 4px;
+  padding: 10px;
+
+}
+
+.attendees-list-header {
+  text-decoration: underline;
+  margin-bottom: 20px;
+  font-size: 2.3rem;
+}
+
+.attendees-list-header h3 {
+  margin: 0;
+}
+
 table {
-  width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  font-family: Arial, sans-serif;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
-/* Table header styling */
-thead {
-  background-color: #f2f2f2;
-}
-
-/* Table header cell styling */
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-/* Table body cell styling */
+th,
 td {
-  border: 1px solid #dddddd;
   text-align: left;
-  padding: 12px;
-  font-size: 14px;
-  background-color: #ffffff;
+  padding: 8px;
+  border-bottom: 1px solid #000000;
 }
 
-Alternating row background color
-tbody tr {
-  background-color: #f8f8f8;
+th {
+  font-size: 2rem;
+  background-color: black;
+  color: white;
 }
 
-/* Hover effect */
-tbody tr:hover {
-  background-color: #f0f0f0;
+tr {
+  font-size: 2rem;
+}
+
+tr:hover {
+  background-color: #ddd;
 }
