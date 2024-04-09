@@ -235,7 +235,7 @@ button {
 }
 /* Login page */
 .loginpage{
-    padding-top: 100px;
+    padding-top: 50px;
 }
 .loginpage .loginpage__wrapper{
     display: flex;
@@ -249,30 +249,9 @@ button {
     justify-content: center;
 }
 .loginpage .loginpage__wrapper .loginpage__wrapper-form .logo img{
-    max-width: 400px; /* Đặt kích thước mới cho ảnh */
+    max-width: 300px; /* Đặt kích thước mới cho ảnh */
     height: auto;
 }
-/* .loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox{
-    display: flex;
-    gap: 40px;
-    margin-top: 40px;
-    justify-content: center;
-}
-.loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox .listbox-item{
-    border: 1px solid white;
-    padding: 30px;
-    font-size: var(--fs-small);
-    color: white;
-}
-.loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox .listbox-item:nth-child(1){
-    background: rgb(191, 149, 156);
-}
-.loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox .listbox-item:nth-child(2) {
-    background: rgb(47, 139, 81);
-}
-.loginpage .loginpage__wrapper .loginpage__wrapper-form .listbox .listbox-item:nth-child(3) {
-    background: rgb(151, 124, 193);
-} */
 
 .homepage-container {
     display: flex;
