@@ -62,7 +62,14 @@ const StudentHomePage = () => {
           });
           setTotalPoints(calculatedTotalPoints);
           if (profile.role === "student") {
-            updateTrainingPoint(profile.id, calculatedTotalPoints);
+            console.log(profile.trainingPoint);
+            if (profile.trainingPoint + calculatedTotalPoints < 100) {
+              updateTrainingPoint(profile.id, calculatedTotalPoints);
+              setTotalPoints(profile.trainingPoint);
+            } else if (profile.trainingPoint + calculatedTotalPoints > 100) {
+              updateTrainingPoint(profile.id, 100);
+              setTotalPoints(profile.trainingPoint);
+            }
           }
         }
       }
@@ -144,18 +151,16 @@ const StudentHomePage = () => {
   const handleTakeTest = async (testId) => {
     navigate(`${PATHS.TEST}/${testId}`);
 
-        // Update the state to indicate that the test has been taken
-        setToke(prevState => ({
-            ...prevState,
-            [testId]: true
-        }));
+    // Update the state to indicate that the test has been taken
+    setToke((prevState) => ({
+      ...prevState,
+      [testId]: true,
+    }));
+  };
 
-    }
-
-   
-    const handleListAttendees = async (id) => {
-        navigate(`${PATHS.LIST_ATTENDEES}/${id}`)
-    }
+  const handleListAttendees = async (id) => {
+    navigate(`${PATHS.LIST_ATTENDEES}/${id}`);
+  };
 
   return (
     <div className="homepage-container">

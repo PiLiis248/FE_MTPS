@@ -58,9 +58,10 @@ const CreatePost = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const intValue = name === "point" ? parseInt(value) : value;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: intValue,
     }));
   };
   const handleCreateActivity = async (e) => {
@@ -201,6 +202,7 @@ const CreatePost = () => {
       testId: testId || null,
     }));
   }, [testId]);
+  console.log(formData);
   return (
     <div className="create-post-container">
       <SideBar className="sidebar-create" />
@@ -313,10 +315,10 @@ const CreatePost = () => {
               value={formData.point}
               onChange={handleChange}
             >
-              <option value="3">3</option>
-              <option value="5">5</option>
-              <option value="8">8</option>
-              <option value="10">10</option>
+              <option value={3}>3</option>
+              <option value={5}>5</option>
+              <option value={8}>8</option>
+              <option value={10}>10</option>
             </select>
           </div>
           <div className="form-group">
