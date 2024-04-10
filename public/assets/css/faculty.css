@@ -1,0 +1,19 @@
+.faculty-page{
+     margin-left: 380px;
+     height: 100%;
+     padding: 30px 70px;
+}
+.title-page{
+     font-family: 'pnb';
+     font-size: 30px;
+     text-align: center;
+     margin-bottom: 50px;
+}
+.group-title{
+     display: flex;
+     font-family: 'pnb';
+     font-size: 22px;
+}
+.group-title-name, .ant-list-item-meta-content{
+     flex: 1;
+}
