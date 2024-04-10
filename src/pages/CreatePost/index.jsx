@@ -46,7 +46,7 @@ const CreatePost = () => {
     startTime: "",
     endDate: "",
     endTime: "",
-    point: "",
+    point: 0,
     location: "",
     numberParticipants: "",
     stdJoin: [],
@@ -386,7 +386,7 @@ const CreatePost = () => {
           </div>
         </form>
       </div>
-      <Drawer title="Basic Drawer" onClose={onClose} open={open}>
+      <Drawer title="Create Question" onClose={onClose} open={open}>
         <div className="creation_page">
           <h2
             style={{

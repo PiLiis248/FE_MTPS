@@ -1,66 +1,31 @@
-.back-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  font-size: 2rem;
-  margin: 5px;
-  margin-bottom: 50px;
-  box-shadow: 0 4px 8px rgba(221, 221, 220, 0.259);
-  background-color: white;
-}
+/* attendeesList.css */
 
-.back-btn:hover {
-  text-decoration: underline;
-  color: rgb(0, 0, 0);
-}
-
-
-.attendees-list {
-  list-style: none;
-  padding: 0;
-  margin: 20px;
-}
-
-.attendees-list-item {
-  margin-bottom: 20px;
-  border-radius: 4px;
-  padding: 10px;
-
-}
-
-.attendees-list-header {
-  text-decoration: underline;
-  margin-bottom: 20px;
-  font-size: 2.3rem;
-}
-
-.attendees-list-header h3 {
-  margin: 0;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 8px;
-  border-bottom: 1px solid #000000;
-}
-
-th {
-  font-size: 2rem;
-  background-color: black;
-  color: white;
-}
-
-tr {
-  font-size: 2rem;
-}
-
-tr:hover {
-  background-color: #ddd;
-}
+.attendees-container {
+    margin-top: 20px;
+  }
+  
+  .attendees-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .attendees-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .attendees-table th,
+  .attendees-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .attendees-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .attendees-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  

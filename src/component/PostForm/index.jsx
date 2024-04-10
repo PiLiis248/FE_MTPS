@@ -24,13 +24,25 @@ const PostForm = ({
   statusJoined,
   onTakeTest,
   onListAttendees,
+  postId,
+  dataSource,
 }) => {
   const { profile } = useAuthContext();
   const isStudent = profile?.role === "student";
   const navigate = useNavigate();
-
+  const [editMode, setEditMode] = useState(false);
   const [showAttendanceInput, setShowAttendanceInput] = useState(false);
   const [attendanceCode, setAttendanceCode] = useState("");
+  const [editedData, setEditedData] = useState({
+    startTime: "",
+    startDate: "",
+    endTime: "",
+    endDate: "",
+    numberParticipants: "",
+  });
+  const handleEditButtonClick = () => {
+    setEditMode(true);
+  };
   const cancel = (e) => {
     console.log(e);
   };
@@ -83,6 +95,23 @@ const PostForm = ({
       handleSubmitAttendance();
     }
   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const handleUpdate = async () => {
+    try {
+      const response = await postService.updatePost(postId, editedData);
+      message.success(response.data.message); 
+      setEditMode(false); 
+    } catch (error) {
+      message.error("Failed to update post. Please try again later.");
+      console.error("Error updating post:", error);
+    }
+  };
 
   return (
     <div className="post-container">
@@ -92,14 +121,74 @@ const PostForm = ({
       <h3 className="post-title">{name}</h3>
       <p className="post-description">{desc}</p>
       <div className="post-details">
-        <p>
-          Start Event: {startTime}, {startDate}
-        </p>
-        <p>
-          End Event: {endTime}, {endDate}
-        </p>
-        <p>Location: {location}</p>
-        <p>Number of Participants: {numberParticipants}</p>
+        {editMode ? (
+          <>
+            <div className="start-gr">
+              <p>Start event</p>
+              <div className="start-gr-date">
+                <input
+                  type="date"
+                  id="startDate"
+                  name="startDate"
+                  value={editedData.startDate}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="start-gr-time">
+                <input
+                  type="time"
+                  id="startTime"
+                  name="startTime"
+                  value={editedData.startTime}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="end-gr">
+              <p>End event</p>
+              <div className="end-gr-date">
+                <input
+                  type="date"
+                  id="endDate"
+                  name="endDate"
+                  value={editedData.endDate}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="end-gr-time">
+                <input
+                  type="time"
+                  id="endTime"
+                  name="endTime"
+                  value={editedData.endTime}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <p>Location: {location}</p>
+            <div className="number-gr">
+              <p>Number of Participants:</p>
+              <input
+                type="number"
+                id="numberParticipants"
+                name="numberParticipants"
+                value={editedData.numberParticipants}
+                onChange={handleChange}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <p>
+              Start Event: {startTime}, {startDate}
+            </p>
+            <p>
+              End Event: {endTime}, {endDate}
+            </p>
+            <p>Location: {location}</p>
+            <p>Number of Participants: {numberParticipants}</p>
+          </>
+        )}
       </div>
       <div className="button-container">
         {!isStudent && !showAttendanceInput && (
@@ -110,7 +199,15 @@ const PostForm = ({
             >
               List Attendees
             </Button>
-            <Button className="edit-btn">Edit</Button>
+            {editMode ? (
+              <Button onClick={handleUpdate} className="edit-btn">
+                Save
+              </Button>
+            ) : (
+              <Button onClick={handleEditButtonClick} className="edit-btn">
+                Edit
+              </Button>
+            )}
           </>
         )}
         {testId
