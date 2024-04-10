@@ -24,6 +24,8 @@ const PostForm = ({
   statusJoined,
   onTakeTest,
   onListAttendees,
+  postId,
+  dataSource,
 }) => {
   const { profile } = useAuthContext();
   const isStudent = profile?.role === "student";
@@ -36,7 +38,6 @@ const PostForm = ({
     startDate: "",
     endTime: "",
     endDate: "",
-    location: "",
     numberParticipants: "",
   });
   const handleEditButtonClick = () => {
@@ -96,11 +97,22 @@ const PostForm = ({
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
+    setEditedData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+  const handleUpdate = async () => {
+    try {
+      const response = await postService.updatePost(postId, editedData);
+      message.success(response.data.message); 
+      setEditMode(false); 
+    } catch (error) {
+      message.error("Failed to update post. Please try again later.");
+      console.error("Error updating post:", error);
+    }
+  };
+
   return (
     <div className="post-container">
       <div className="post-faculty">
@@ -157,7 +169,6 @@ const PostForm = ({
             <div className="number-gr">
               <p>Number of Participants:</p>
               <input
-
                 type="number"
                 id="numberParticipants"
                 name="numberParticipants"
@@ -188,9 +199,15 @@ const PostForm = ({
             >
               List Attendees
             </Button>
-            <Button onClick={handleEditButtonClick} className="edit-btn">
-              Edit
-            </Button>
+            {editMode ? (
+              <Button onClick={handleUpdate} className="edit-btn">
+                Save
+              </Button>
+            ) : (
+              <Button onClick={handleEditButtonClick} className="edit-btn">
+                Edit
+              </Button>
+            )}
           </>
         )}
         {testId

@@ -16,7 +16,7 @@ const StudentHomePage = () => {
   const navigate = useNavigate();
   const [statusJoined, setStatusJoined] = useState(false);
 
-  const [totalPoints, setTotalPoints] = useState(0); 
+  const [totalPoints, setTotalPoints] = useState(0);
 
   const {
     data: postData,
@@ -189,9 +189,10 @@ const StudentHomePage = () => {
                     numberParticipants={pt.numberParticipants}
                     testId={pt.testId}
                     onJoinActivity={() => handleJoinActivity(pt.id, profile.id)}
-                    statusJoined={joined[pt.id] || false} 
+                    statusJoined={joined[pt.id] || false}
                     onTakeTest={() => handleTakeTest(pt.testId, profile.id)}
                     onListAttendees={() => handleListAttendees(pt.id)}
+                    postId={pt.id}
                   />
                 </div>
               </div>

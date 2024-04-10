@@ -78,13 +78,22 @@ const TestPage = () => {
   }
 
   return (
-    <div className="test-creation-page">
-      <hr />
-      <Link to={PATHS.HOME} className="back-btn">
-        Back Home Page
-      </Link>
+    <div
+      className="test-creation-page"
+      style={{ padding: "30px 50px", background: "#E8EFCF" }}
+    >
+      <div
+        className="button-back"
+        style={{ fontSize: "20px", fontFamily: "pnb", marginBottom: "40px" }}
+      >
+        <Link to={PATHS.HOME}>Back Home Page</Link>
+      </div>
 
-      <form onSubmit={handleSubmit} className="create-questions-container">
+      <form
+        onSubmit={handleSubmit}
+        className="create-questions-container"
+        style={{ padding: "0 60px" }}
+      >
         {Object.values(currentTest.questions).map(
           (question, index) =>
             !allAnswersCleared && (
@@ -97,15 +106,38 @@ const TestPage = () => {
               />
             )
         )}
-        <div className="button">
+        <div
+          className="button"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            fontSize: "20px",
+            columnGap: "200px",
+            marginTop: "30px",
+          }}
+        >
           <button
             type="button"
             onClick={handleClearAll}
             className="clear-all-button"
+            style={{
+              background: "#D24545",
+              padding: "10px",
+              borderRadius: "10px",
+              color: "white",
+            }}
           >
             Clear All
           </button>
-          <button type="submit" className="submit-button">
+          <button
+            type="submit"
+            className="submit-button"
+            style={{
+              background: "#9BCF53",
+              padding: "10px",
+              borderRadius: "10px",
+            }}
+          >
             Submit Test
           </button>
         </div>

@@ -1,14 +1,11 @@
 /* CSS for QuestionCard component */
 
 .question-card {
-    width: 90%; /* Set width to 100% to fit its container */
+    width: 70%; /* Set width to 100% to fit its container */
     background-color: #ffffff;
     border: 5px solid #dbef9b;
     border-radius: 8px;
-    padding-top: 22px;
-    padding-bottom: 16px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 20px;
     margin: 16px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
