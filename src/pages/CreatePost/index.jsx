@@ -1,5 +1,4 @@
 // CreatePost.js
-
 import {
   Button,
   Divider,
@@ -27,6 +26,7 @@ const CreatePost = () => {
   const [forms, setForms] = useState([]);
   const [target, setTarget] = useState("");
   const [formValues, setFormValues] = useState({});
+
   const showDrawer = () => {
     setOpen(true);
   };
@@ -112,7 +112,7 @@ const CreatePost = () => {
         <Form.Item label="Answers" className="form-answer">
           {["A", "B", "C", "D"].map((answerIndex) => (
             <Form.Item
-              key={answerIndex}
+              key={`${index}-${answerIndex}`}
               className={`form-answer-${index}-${answerIndex}`}
               name={`answer-${index}-${answerIndex}`}
               style={{
@@ -144,7 +144,7 @@ const CreatePost = () => {
           >
             {["A", "B", "C", "D"].map((answerIndex) => (
               <Option
-                key={answerIndex}
+                key={`${index}-${answerIndex}`}
                 value={`answer-${index}-${answerIndex}`}
               >
                 {`Answer ${answerIndex}`}
@@ -178,20 +178,24 @@ const CreatePost = () => {
     const numQuestions = Object.keys(formValues).filter((key) =>
       key.startsWith("question-")
     ).length;
+
     for (let i = 0; i < numQuestions; i++) {
-      const question = formValues[`question-${i}`];
-      const correctAnswer0 = formValues[`correct-answer-${i}`];
-      const correctOption = correctAnswer0 ? correctAnswer0.slice(-1) : "";
+      const questionKey = `question-${i}`;
+      const correctAnswerKey = `correct-answer-${i}`;
+      const question = formValues[questionKey];
+      const correctAnswer = formValues[correctAnswerKey];
+      const parts = correctAnswer.split("-");
+      const lastPart = parts[1];
+      const correctOption = correctAnswer ? lastPart : "";
       const options = [];
       for (let j = 0; j < 4; j++) {
-        const optionId = String.fromCharCode(65 + j);
-        const optionText = formValues[`answer-${optionId}-1`];
-        options.push({ id: optionId, text: optionText });
+        const answerKey = `answer-${String.fromCharCode(65 + j)}-${i}`;
+        const optionText = formValues[answerKey];
+        options.push({ id: String.fromCharCode(65 + j), text: optionText });
       }
 
       questions.push({ question, correctOption, options });
     }
-
     return questions;
   };
   /* END CREATE QUESTION FORM */
@@ -202,7 +206,6 @@ const CreatePost = () => {
       testId: testId || null,
     }));
   }, [testId]);
-  // console.log(formData);
   return (
     <div className="create-post-container">
       <SideBar className="sidebar-create" />
