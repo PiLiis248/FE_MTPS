@@ -144,15 +144,18 @@ const StudentHomePage = () => {
   const handleTakeTest = async (testId) => {
     navigate(`${PATHS.TEST}/${testId}`);
 
-    setToke((prevState) => ({
-      ...prevState,
-      [testId]: true,
-    }));
-  };
+        // Update the state to indicate that the test has been taken
+        setToke(prevState => ({
+            ...prevState,
+            [testId]: true
+        }));
 
-  const handleListAttendees = async (id) => {
-    navigate(`${PATHS.LIST_ATTENDEES}/${id}`);
-  };
+    }
+
+   
+    const handleListAttendees = async (id) => {
+        navigate(`${PATHS.LIST_ATTENDEES}/${id}`)
+    }
 
   return (
     <div className="homepage-container">

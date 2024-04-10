@@ -4,28 +4,36 @@ import PrivateRoute from "./component/PrivateRoute";
 import { PATHS } from "./constants/path";
 import MainLayout from "./layout/MainLayout";
 import LoginPage from "./pages/LoginPage";
-import StudentHomePage from "./pages/StudentHomePage"; // Your existing HomePage
-import TrainingPointDetail from "./pages/TrainingPointDetail"; // Import the Profile Page component, adjust the path as needed
+import StudentHomePage from "./pages/StudentHomePage";
+import TrainingPointDetail from "./pages/TrainingPointDetail";
 import CreatePost from "./pages/CreatePost";
 import TestPage from "./pages/TestPage";
 import ListAttendeesPage from "./pages/ListAttendeesPage";
+import FacultyPage from "./pages/FacultyPage"; // Import the FacultyPage component
+import { useAuthContext } from "./context/AuthContext";
+
 
 const App = () => {
+  const { profile } = useAuthContext();
+
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<LoginPage />} /> */}
         <Route path={PATHS.LOGIN} element={<LoginPage />} />
         <Route path="/" element={<PrivateRoute redirectPath={PATHS.LOGIN} />}>
           <Route element={<MainLayout />}>
-            <Route path={PATHS.HOME} element={<StudentHomePage />} />
-            <Route path={PATHS.DETAIL} element={<TrainingPointDetail />} />
-            <Route path={`${PATHS.TEST}/:testId`} element={<TestPage />} />
-            <Route path={PATHS.CREATE_POST} element={<CreatePost />} />
-            <Route
-              path={`${PATHS.LIST_ATTENDEES}/:postId`}
-              element={<ListAttendeesPage />}
-            />
+            {/* Check profile role */}
+            {profile && profile.role === "faculty" ? (
+              <Route path={PATHS.HOME} element={<FacultyPage />} />
+            ) : (
+              <>
+                <Route path={PATHS.HOME} element={<StudentHomePage />} />
+                <Route path={PATHS.DETAIL} element={<TrainingPointDetail />} />
+                <Route path={`${PATHS.TEST}/:testId`} element={<TestPage />} />
+                <Route path={PATHS.CREATE_POST} element={<CreatePost />} />
+                <Route path={`${PATHS.LIST_ATTENDEES}/:postId`} element={<ListAttendeesPage />} />
+              </>
+            )}
           </Route>
         </Route>
       </Routes>

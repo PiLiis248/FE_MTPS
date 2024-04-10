@@ -1,24 +1,25 @@
-import { List } from "antd";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import "../../../public/assets/css/listAttendees.css";
-import { PATHS } from "../../constants/path";
-import postService from "../../services/postService";
-const ListAttendeesPage = () => {
-  const { postId } = useParams();
-  const navigate = useNavigate();
-  const [currentList, setCurrentList] = useState(null);
-  const [currentData, setCurrentData] = useState(null);
+import React, { useEffect, useState } from 'react';
+import "../../../public/assets/css/listAttendees.css"
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { PATHS } from '../../constants/path';
+import { useAuthContext } from '../../context/AuthContext';
+import postService from '../../services/postService';
 
-  useEffect(() => {
-    const fetchListAttendees = async () => {
-      try {
-        const response = await postService.getAttendees(postId);
-        setCurrentList(response?.data?.filteredAttendees);
-      } catch (error) {
-        console.error("Error fetching list attendees data:", error);
-      }
-    };
+const ListAttendeesPage = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [currentList, setCurrentList] = useState(null);
+
+    useEffect(() => {
+        const fetchListAttendees = async () => {
+            try {
+                const response = await postService.getAttendees(id);
+                setCurrentList(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error fetching list attendees data:', error);
+            }
+        };
 
     fetchListAttendees();
   }, [postId]);
@@ -28,6 +29,7 @@ const ListAttendeesPage = () => {
       setCurrentData(attendeesArray);
     }
   }, [currentList, setCurrentData]);
+  //   console.log(currentData);
   return (
     <div className="listatten-page">
       <Link to={PATHS.HOME} className="back-btn">
