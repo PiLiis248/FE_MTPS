@@ -28,7 +28,6 @@ const ListAttendeesPage = () => {
       setCurrentData(attendeesArray);
     }
   }, [currentList, setCurrentData]);
-  //   console.log(currentData);
   return (
     <div className="listatten-page">
       <Link to={PATHS.HOME} className="back-btn">

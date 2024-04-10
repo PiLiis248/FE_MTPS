@@ -1,4 +1,7 @@
 
+.post-wrapper{
+    padding: 30px 60px;
+}
 
  .post-container {
     background-color: #ffffff;
@@ -6,10 +9,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: box-shadow 0.3s ease-in-out;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 100px ;
-    margin-right: 100px ;
     flex-direction: column;
     padding: 10px 0;
     display: flex;
@@ -119,6 +118,8 @@
 }
 
 .edit-btn,
+.save-btn, 
+.cancel-btn,
 .check-attendance-btn,
 .list-attend-btn {
     width: 190px;
@@ -149,6 +150,13 @@
 
 .list-attend-btn {
     background-color: #70c44f; /* Yellow */
+}
+button.ant-btn.css-dev-only-do-not-override-djtmh8.ant-btn-default.cancel-btn:hover{
+    background: #f44336;
+    color: white;
+}
+button.ant-btn.css-dev-only-do-not-override-djtmh8.ant-btn-default.cancel-btn{
+    margin-top: unset;
 }
 
 /* CSS for check attendance button */
