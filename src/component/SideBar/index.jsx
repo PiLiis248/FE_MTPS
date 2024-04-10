@@ -42,17 +42,15 @@ const Sidebar = () => {
             )}
             <ul className="sidebar-menu">
                 <li className="sidebar-item"><Link to={PATHS.HOME}>Home</Link></li>
-                {profile && profile.role === 'student' ? (
-                    <>
-                        <li className="sidebar-item"><Link to={PATHS.DETAIL}>Training Point Detail</Link></li>
-                    </>
-                ) : (
-                    <>
-                        <li className="sidebar-item"><Link to={PATHS.CREATE_POST}>Create Post</Link></li>
-                    </>
+                {profile && profile.role === 'student' && (
+                    <li className="sidebar-item"><Link to={PATHS.DETAIL}>Training Point Detail</Link></li>
+                )}
+                {profile && profile.role === 'assistant' && (
+                    <li className="sidebar-item"><Link to={PATHS.CREATE_POST}>Create Post</Link></li>
                 )}
                 <li className="sidebar-item" onClick={handleLogout}><Link to={PATHS.LOGIN}>Logout</Link></li>
             </ul>
+
         </div>
     );    
 };
