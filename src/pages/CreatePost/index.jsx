@@ -102,7 +102,7 @@ const CreatePost = () => {
         >
           <Input.TextArea
             rows={2}
-            style={{ width: "50%" }}
+            style={{ width: "80%" }}
             className="form-question-ques"
             onChange={(e) =>
               handleFormValueChange(index, "question", e.target.value)
@@ -117,7 +117,7 @@ const CreatePost = () => {
               name={`answer-${index}-${answerIndex}`}
               style={{
                 display: "inline-block",
-                width: "calc(50% - 8px)",
+                width: "calc(80% - 8px)",
                 marginRight: "30px",
               }}
             >
@@ -202,7 +202,7 @@ const CreatePost = () => {
       testId: testId || null,
     }));
   }, [testId]);
-  console.log(formData);
+  // console.log(formData);
   return (
     <div className="create-post-container">
       <SideBar className="sidebar-create" />
