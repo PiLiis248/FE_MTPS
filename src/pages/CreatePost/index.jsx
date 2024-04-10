@@ -185,7 +185,7 @@ const CreatePost = () => {
       const question = formValues[questionKey];
       const correctAnswer = formValues[correctAnswerKey];
       const parts = correctAnswer.split("-");
-      const lastPart = parts[1];
+      const lastPart = parts[parts.length - 1];
       const correctOption = correctAnswer ? lastPart : "";
       const options = [];
       for (let j = 0; j < 4; j++) {
