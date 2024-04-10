@@ -80,7 +80,6 @@ const PostForm = ({
       setAttendanceCode("");
       setShowAttendanceInput(true);
     } catch (error) {
-      message.error("Failed to check attendance. Please try again later.");
       console.error("Error checking attendance:", error);
     }
   };
