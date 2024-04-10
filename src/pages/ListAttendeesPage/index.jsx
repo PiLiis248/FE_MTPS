@@ -21,39 +21,43 @@ const ListAttendeesPage = () => {
             }
         };
 
-        fetchListAttendees();
-    }, [id]);
-
-
-    return (
-        <div>
-            <hr />
-            <Link to={PATHS.HOME} className='back-btn'>Back Home Page</Link>
-            <h2>List of Attendees</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Time Joined</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.values(currentList.attendees).map((attendee, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{attendee.name}</td>
-                            <td>{attendee.email}</td>
-                            <td>{attendee.timeJoined}</td>
-                            <td>{attendee.score}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+    fetchListAttendees();
+  }, [postId]);
+  useEffect(() => {
+    if (currentList) {
+      const attendeesArray = currentList.map((atten) => atten.attendees);
+      setCurrentData(attendeesArray);
+    }
+  }, [currentList, setCurrentData]);
+  //   console.log(currentData);
+  return (
+    <div className="listatten-page">
+      <Link to={PATHS.HOME} className="back-btn">
+        Back Home Page
+      </Link>
+      <h2 className="title_list">List of Attendees</h2>
+      {currentData && (
+        <List
+          itemLayout="horizontal"
+          dataSource={currentData}
+          renderItem={(attendees, index) => (
+            <div className="list-attendees" key={index}>
+              {attendees &&
+                attendees.map((item, index) => (
+                  <List.Item key={index}>
+                    <List.Item.Meta
+                      title={item.name}
+                      description={item.email}
+                    />
+                    <div className="testscore">{item.testScore}</div>
+                  </List.Item>
+                ))}
+            </div>
+          )}
+        />
+      )}
+    </div>
+  );
 };
 
 export default ListAttendeesPage;

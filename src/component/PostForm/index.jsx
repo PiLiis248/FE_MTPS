@@ -105,14 +105,24 @@ const PostForm = ({
   const handleUpdate = async () => {
     try {
       const response = await postService.updatePost(postId, editedData);
-      message.success(response.data.message); 
-      setEditMode(false); 
+      message.success(response.data.message);
+      setEditMode(false);
     } catch (error) {
       message.error("Failed to update post. Please try again later.");
       console.error("Error updating post:", error);
     }
   };
-
+  const handleCancelEdit = () => {
+    setEditMode(false); // Thoát khỏi chế độ chỉnh sửa
+    // Đặt lại giá trị của editedData về rỗng
+    setEditedData({
+      startTime: "",
+      startDate: "",
+      endTime: "",
+      endDate: "",
+      numberParticipants: "",
+    });
+  };
   return (
     <div className="post-container">
       <div className="post-faculty">
@@ -193,20 +203,32 @@ const PostForm = ({
       <div className="button-container">
         {!isStudent && !showAttendanceInput && (
           <>
-            <Button
-              onClick={() => handleListAttendees()}
-              className="list-attend-btn"
-            >
-              List Attendees
-            </Button>
+            <div className="button-gr-0">
+              <Button
+                onClick={() => handleListAttendees()}
+                className="list-attend-btn"
+              >
+                List Attendees
+              </Button>
+            </div>
             {editMode ? (
-              <Button onClick={handleUpdate} className="edit-btn">
-                Save
-              </Button>
+              <div
+                className="button-group"
+                style={{ display: "flex", columnGap: "10px" }}
+              >
+                <Button onClick={handleUpdate} className="save-btn">
+                  Save
+                </Button>
+                <Button onClick={handleCancelEdit} className="cancel-btn">
+                  Cancel
+                </Button>
+              </div>
             ) : (
-              <Button onClick={handleEditButtonClick} className="edit-btn">
-                Edit
-              </Button>
+              <div className="button-edit">
+                <Button onClick={handleEditButtonClick} className="edit-btn">
+                  Edit
+                </Button>
+              </div>
             )}
           </>
         )}
