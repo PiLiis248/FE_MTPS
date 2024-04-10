@@ -19,7 +19,7 @@ import { postService } from "../../services/postService";
 import testService from "../../services/testService";
 import { message } from "antd";
 const CreatePost = () => {
-  const { profile } = useAuthContext();
+  const { profile, role } = useAuthContext();
   const navigate = useNavigate();
   const [testId, setTestId] = useState();
   const [open, setOpen] = useState(false);

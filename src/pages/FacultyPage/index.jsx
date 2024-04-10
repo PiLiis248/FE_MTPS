@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
 import profileService from '../../services/profileService';
 import Sidebar from '../../component/SideBar';
-import studentService from '../../services/studentService';
+import studentService from '../../services/facultyService';
 
 const FacultyPage = () => {
     const { profile } = useAuthContext();

@@ -62,6 +62,7 @@ const AuthContext = createContext({});
 const AuthContextProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [profile, setProfile] = useState(null);
+  const [role, setRole] = useState(null);
 
   const handleLogin = async (loginData, callback) => {
     try {
@@ -99,6 +100,7 @@ const AuthContextProvider = ({ children }) => {
       const res = await authService.getProfile();
       if (res?.data) {
         setProfile(res.data);
+        setRole(res.data.role);
       }
     } catch (error) {
       console.error("Error fetching profile", error);
@@ -115,7 +117,7 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLogged, profile, handleLogin }}>
+    <AuthContext.Provider value={{ isLogged, profile, role,handleLogin }}>
       {children}
     </AuthContext.Provider>
   );
