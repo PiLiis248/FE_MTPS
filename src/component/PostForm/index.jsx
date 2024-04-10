@@ -284,12 +284,14 @@ const PostForm = ({
               </div>
             )}
             {!showAttendanceInput && (
-              <Button
-                className="check-attendance-btn"
-                onClick={handleCheckAttendance}
-              >
-                Check Attendance
-              </Button>
+              <div className="button-check">
+                <Button
+                  className="check-attendance-btn"
+                  onClick={handleCheckAttendance}
+                >
+                  Check Attendance
+                </Button>
+              </div>
             )}
           </React.Fragment>
         )}
