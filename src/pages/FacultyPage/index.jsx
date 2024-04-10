@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useAuthContext } from "../../context/AuthContext";
-import profileService from "../../services/profileService";
-import Sidebar from "../../component/SideBar";
-import studentService, { facultyService } from "../../services/facultyService";
-import "../../../public/assets/css/faculty.css";
 import { List } from "antd";
+import React, { useEffect, useState } from "react";
+import "../../../public/assets/css/faculty.css";
+import Sidebar from "../../component/SideBar";
+import { useAuthContext } from "../../context/AuthContext";
+import { facultyService } from "../../services/facultyService";
 const FacultyPage = () => {
   const { profile } = useAuthContext();
   const [students, setStudents] = useState([]);
@@ -23,10 +22,10 @@ const FacultyPage = () => {
       }
     };
 
-    if (profile.role === "faculty") {
+    if (profile && profile.role === "faculty") {
       fetchStudents();
     }
-  }, []);
+  }, [profile]);
   //   console.log(students);
   return (
     <div className="faculty-page">
