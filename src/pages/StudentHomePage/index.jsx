@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { message } from "antd";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../../public/assets/css/style.css"; // Adjust paths as necessary
 import Post from "../../component/PostForm";
+import Sidebar from "../../component/SideBar";
+import { PATHS } from "../../constants/path";
+import { useAuthContext } from "../../context/AuthContext";
 import useQuery from "../../hooks/useQuery";
 import postService from "../../services/postService";
-import testService from "../../services/testService";
 import profileService from "../../services/profileService"; // Import profileService
-import { useAuthContext } from "../../context/AuthContext";
-import Sidebar from "../../component/SideBar";
-import { message } from "antd";
-import { useNavigate } from "react-router-dom";
-import { PATHS } from "../../constants/path";
 
 const StudentHomePage = () => {
   const { profile } = useAuthContext();
@@ -17,9 +16,8 @@ const StudentHomePage = () => {
   const navigate = useNavigate();
   const [statusJoined, setStatusJoined] = useState(false);
 
-  const [totalPoints, setTotalPoints] = useState(0); // State to store total points
+  const [totalPoints, setTotalPoints] = useState(0); 
 
-  // Fetch posts using useQuery hook
   const {
     data: postData,
     loading: postLoading,
@@ -42,7 +40,6 @@ const StudentHomePage = () => {
           !!profile.activities &&
           Array.isArray(profile.activities)
         ) {
-          // Check if profile.activities is not null/undefined and is an array
           facultyName = profile.facultyName;
 
           postData.post.forEach((pt) => {
@@ -56,10 +53,6 @@ const StudentHomePage = () => {
             }
           });
           setPost(filteredPosts.length > 0 ? filteredPosts : null);
-
-          console.log(postData);
-
-          // Calculate total points
           let calculatedTotalPoints = 0;
           profile.activities.forEach((activityId) => {
             const post = postData.post.find((pt) => pt.id === activityId);
@@ -68,8 +61,6 @@ const StudentHomePage = () => {
             }
           });
           setTotalPoints(calculatedTotalPoints);
-
-          // Update training point on the backend
           if (profile.role === "student") {
             updateTrainingPoint(profile.id, calculatedTotalPoints);
           }
@@ -92,9 +83,7 @@ const StudentHomePage = () => {
       );
     }
   };
-
   const [joined, setJoined] = useState({});
-
   const handleJoinActivity = async (postId, stuId) => {
     try {
       const postToUpdate = post.find((pt) => pt.id === postId);
@@ -200,7 +189,7 @@ const StudentHomePage = () => {
                     numberParticipants={pt.numberParticipants}
                     testId={pt.testId}
                     onJoinActivity={() => handleJoinActivity(pt.id, profile.id)}
-                    statusJoined={joined[pt.id] || false} // Use the joined state for the specific post
+                    statusJoined={joined[pt.id] || false} 
                     onTakeTest={() => handleTakeTest(pt.testId, profile.id)}
                     onListAttendees={() => handleListAttendees(pt.id)}
                   />

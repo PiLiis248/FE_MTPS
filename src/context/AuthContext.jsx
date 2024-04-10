@@ -48,11 +48,10 @@
 //       {children}
 //     </AuthContext.Provider>
 //   );
-  
+
 // };
 // export default AuthContextProvider;
 // export const useAuthContext = () => useContext(AuthContext);
-
 
 import { createContext, useContext, useEffect, useState } from "react";
 import authService from "../services/authService";
@@ -68,11 +67,11 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await authService.login(loginData);
       const {
-        token: { accessToken, refreshToken },
+        token: { accessToken },
       } = res?.data || {};
-      
+
       // Set tokens in local storage
-      tokenMethod.set({ accessToken, refreshToken });
+      tokenMethod.set({ accessToken });
 
       // Set logged in state
       setIsLogged(true);

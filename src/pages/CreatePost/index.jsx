@@ -46,7 +46,7 @@ const CreatePost = () => {
     startTime: "",
     endDate: "",
     endTime: "",
-    point: "",
+    point: 0,
     location: "",
     numberParticipants: "",
     stdJoin: [],

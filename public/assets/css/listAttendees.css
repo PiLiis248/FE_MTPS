@@ -1,5 +1,29 @@
 /* attendeesList.css */
-
+.listatten-page{
+  padding: 40px 70px;
+}
+.back-btn{
+  font-family: 'pnb';
+  font-size: 20px;
+}
+.title_list{
+  font-family: 'pnb';
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.list-attendees .ant-list-item-meta-title{
+  font-size: 23px !important;
+  font-family: 'pnb';
+}
+.list-attendees .ant-list-item-meta-description{
+  font-size: 23px !important;
+}
+.list-attendees .testscore{
+  font-size: 23px !important;
+    font-family: 'pnb';
+}
 .attendees-container {
     margin-top: 20px;
   }

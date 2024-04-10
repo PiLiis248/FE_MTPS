@@ -189,3 +189,24 @@
     background: rgb(10, 190, 91);
     color: white;
 }
+.start-gr{
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+}
+.start-gr-time, .end-gr-time{
+    margin-left: 50px;
+}
+.end-gr{
+    display: flex;
+    align-items: center;
+    column-gap: 35px;
+}
+.number-gr input{
+    border: 1px solid;
+}
+.number-gr{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}

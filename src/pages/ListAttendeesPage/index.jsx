@@ -1,59 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import "../../../public/assets/css/listAttendees.css"
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { PATHS } from '../../constants/path';
-import { useAuthContext } from '../../context/AuthContext';
-import postService from '../../services/postService';
-
+import { List } from "antd";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import "../../../public/assets/css/listAttendees.css";
+import { PATHS } from "../../constants/path";
+import postService from "../../services/postService";
 const ListAttendeesPage = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const [currentList, setCurrentList] = useState(null);
+  const { postId } = useParams();
+  const navigate = useNavigate();
+  const [currentList, setCurrentList] = useState(null);
+  const [currentData, setCurrentData] = useState(null);
 
-    useEffect(() => {
-        const fetchListAttendees = async () => {
-            try {
-                const response = await postService.getAttendees(id);
-                setCurrentList(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error fetching list attendees data:', error);
-            }
-        };
+  useEffect(() => {
+    const fetchListAttendees = async () => {
+      try {
+        const response = await postService.getAttendees(postId);
+        setCurrentList(response?.data?.filteredAttendees);
+      } catch (error) {
+        console.error("Error fetching list attendees data:", error);
+      }
+    };
 
-        fetchListAttendees();
-    }, [id]);
-
-
-    return (
-        <div>
-            <hr />
-            <Link to={PATHS.HOME} className='back-btn'>Back Home Page</Link>
-            <h2>List of Attendees</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Time Joined</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.values(currentList.attendees).map((attendee, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{attendee.name}</td>
-                            <td>{attendee.email}</td>
-                            <td>{attendee.timeJoined}</td>
-                            <td>{attendee.score}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+    fetchListAttendees();
+  }, [postId]);
+  useEffect(() => {
+    if (currentList) {
+      const attendeesArray = currentList.map((atten) => atten.attendees);
+      setCurrentData(attendeesArray);
+    }
+  }, [currentList, setCurrentData]);
+  //   console.log(currentData);
+  return (
+    <div className="listatten-page">
+      <Link to={PATHS.HOME} className="back-btn">
+        Back Home Page
+      </Link>
+      <h2 className="title_list">List of Attendees</h2>
+      {currentData && (
+        <List
+          itemLayout="horizontal"
+          dataSource={currentData}
+          renderItem={(attendees, index) => (
+            <div className="list-attendees" key={index}>
+              {attendees &&
+                attendees.map((item, index) => (
+                  <List.Item key={index}>
+                    <List.Item.Meta
+                      title={item.name}
+                      description={item.email}
+                    />
+                    <div className="testscore">{item.testScore}</div>
+                  </List.Item>
+                ))}
+            </div>
+          )}
+        />
+      )}
+    </div>
+  );
 };
 
 export default ListAttendeesPage;
