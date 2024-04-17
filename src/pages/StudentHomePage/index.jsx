@@ -1,4 +1,4 @@
-import { List, Progress, Table, message } from "antd";
+import { List, Progress, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../public/assets/css/style.css"; // Adjust paths as necessary
@@ -17,7 +17,6 @@ const StudentHomePage = () => {
   const [newData, setNewData] = useState([]);
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
-  const [statusJoined, setStatusJoined] = useState(false);
   const [totalPoints, setTotalPoints] = useState(0);
 
   const {
@@ -182,6 +181,7 @@ const StudentHomePage = () => {
       handleGetPoint(profile.id);
     }
   }, [profile]);
+
   useEffect(() => {
     if (dataPoint) {
       const newData = Object.entries(dataPoint)
@@ -200,6 +200,73 @@ const StudentHomePage = () => {
       setNewData(newData);
     }
   }, [dataPoint]);
+  const calculateCategoryPoints = async (category) => {
+    let totalPointsByCategory = 0;
+
+    if (category && Array.isArray(category.listPost)) {
+      const promises = category.listPost.map(async (it) => {
+        const postId = it[0];
+
+        try {
+          const response = await postService.getPostSpecific(postId);
+          const postData = response.data;
+          totalPointsByCategory += postData.point;
+        } catch (error) {
+          console.error(`Lỗi khi lấy dữ liệu cho postID ${postId}:`, error);
+        }
+      });
+      await Promise.all(promises);
+    }
+
+    return totalPointsByCategory;
+  };
+
+  const calculateProgress = async (dataPoint) => {
+    const maxPoints = 20;
+
+    const categories = Object.keys(dataPoint).filter((key) => {
+      return (
+        key !== "studentId" &&
+        key !== "_id" &&
+        key !== "reward" &&
+        key !== "pioneering" &&
+        key !== "discipline"
+      );
+    });
+
+    const progressData = await Promise.all(
+      categories.map(async (categoryName) => {
+        const categoryData = dataPoint[categoryName];
+        if (categoryData && Array.isArray(categoryData.listPost)) {
+          const totalPointsByCategory = await calculateCategoryPoints(
+            categoryData
+          );
+          console.log(totalPointsByCategory);
+          const percent = (totalPointsByCategory / maxPoints) * 100;
+          return {
+            name: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
+            percent,
+          };
+        }
+        return {
+          name: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
+          percent: 0,
+        };
+      })
+    );
+
+    return progressData;
+  };
+
+  useEffect(() => {
+    const updateProgressData = async () => {
+      if (dataPoint) {
+        const progressData = await calculateProgress(dataPoint);
+        setNewData(progressData);
+      }
+    };
+    updateProgressData();
+  }, [dataPoint]);
   return (
     <div className="homepage-container">
       <Sidebar />
@@ -217,17 +284,12 @@ const StudentHomePage = () => {
           }}
           itemLayout="horizontal"
           dataSource={newData}
-          renderItem={(item, index) => {
-            const category = dataPoint[item.name.toLowerCase()];
-            const totalPoint = category ? category.total : 0;
-            const percent = (totalPoint / 20) * 100;
-            return (
-              <List.Item>
-                <List.Item.Meta title={item.name} />
-                <Progress type="circle" percent={percent} size={40} />
-              </List.Item>
-            );
-          }}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta title={item.name} />
+              <Progress type="circle" percent={item.percent} size={40} />
+            </List.Item>
+          )}
         />
       </div>
       <div className="main-content">

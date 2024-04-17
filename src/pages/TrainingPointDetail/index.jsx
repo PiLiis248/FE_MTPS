@@ -79,7 +79,6 @@ const TrainingPointDetail = () => {
       setExtraData(dataLastCategories);
       setDataSource(preloadedData);
       const sumExtra = extraData.reduce((acc, item) => acc + item.point, 0);
-
       const sumPoint = totalPointsArray.reduce(
         (acc, points) => acc + points,
         0
@@ -87,7 +86,6 @@ const TrainingPointDetail = () => {
       const sumAll = sumPoint + sumExtra;
       setSumPoint(sumAll);
     };
-
     fetchData();
   }, [newData]);
   const expandedRowRender = (record) => {
