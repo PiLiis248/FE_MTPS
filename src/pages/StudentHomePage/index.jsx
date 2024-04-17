@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { List, Progress, Table, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../public/assets/css/style.css"; // Adjust paths as necessary
@@ -12,10 +12,12 @@ import profileService from "../../services/profileService"; // Import profileSer
 
 const StudentHomePage = () => {
   const { profile } = useAuthContext();
+  const [dataPoint, setDataPoint] = useState(null);
+  const [studentID, setStudentID] = useState(null);
+  const [newData, setNewData] = useState([]);
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
   const [statusJoined, setStatusJoined] = useState(false);
-
   const [totalPoints, setTotalPoints] = useState(0);
 
   const {
@@ -62,7 +64,6 @@ const StudentHomePage = () => {
           });
           setTotalPoints(calculatedTotalPoints);
           if (profile.role === "student") {
-            console.log(profile.trainingPoint);
             if (profile.trainingPoint + calculatedTotalPoints < 100) {
               updateTrainingPoint(profile.id, calculatedTotalPoints);
               setTotalPoints(profile.trainingPoint);
@@ -162,9 +163,73 @@ const StudentHomePage = () => {
     navigate(`${PATHS.LIST_ATTENDEES}/${id}`);
   };
 
+  const handleGetPoint = async (studentID) => {
+    try {
+      const res = await profileService.getPoint(studentID);
+      if (res && res.data) {
+        setDataPoint(res.data);
+      } else {
+        console.error("Student not found or data missing");
+      }
+    } catch (error) {
+      console.error("Error in handleGetPoint:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+  useEffect(() => {
+    if (profile && profile.id) {
+      setStudentID(profile.id);
+      handleGetPoint(profile.id);
+    }
+  }, [profile]);
+  useEffect(() => {
+    if (dataPoint) {
+      const newData = Object.entries(dataPoint)
+        .filter(
+          ([key]) =>
+            key !== "studentId" &&
+            key !== "_id" &&
+            key !== "discipline" &&
+            key !== "reward" &&
+            key !== "pioneering"
+        )
+        .map(([name, point], index) => ({
+          key: index + 1,
+          name: name.charAt(0).toUpperCase() + name.slice(1),
+        }));
+      setNewData(newData);
+    }
+  }, [dataPoint]);
   return (
     <div className="homepage-container">
       <Sidebar />
+      <div className="table-mini">
+        <List
+          className="list-noti"
+          style={{
+            position: "fixed",
+            bottom: "60px",
+            left: "40px",
+            width: "280px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            padding: "10px",
+          }}
+          itemLayout="horizontal"
+          dataSource={newData}
+          renderItem={(item, index) => {
+            const category = dataPoint[item.name.toLowerCase()];
+            const totalPoint = category ? category.total : 0;
+            const percent = (totalPoint / 20) * 100;
+            return (
+              <List.Item>
+                <List.Item.Meta title={item.name} />
+                <Progress type="circle" percent={percent} size={40} />
+              </List.Item>
+            );
+          }}
+        />
+      </div>
       <div className="main-content">
         <div className="progress-box">
           {profile && profile.role === "student" && (

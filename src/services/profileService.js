@@ -1,14 +1,20 @@
-import React from 'react';
-import axiosInstance from '../utils/axiosInstance';
+import React from "react";
+import axiosInstance from "../utils/axiosInstance";
 
 export const profileService = {
-    changePassword(id, currentPassword, newPassword) {
-        return axiosInstance.put(`/change_password`, { id, currentPassword, newPassword });
-    },
-    updateTrainingPoint(id, totalPoints) {
-        return axiosInstance.put(`/update_training_point`, { id, totalPoints });
-    }
+  changePassword(id, currentPassword, newPassword) {
+    return axiosInstance.put(`/change_password`, {
+      id,
+      currentPassword,
+      newPassword,
+    });
+  },
+  updateTrainingPoint(id, totalPoints) {
+    return axiosInstance.put(`/update_training_point`, { id, totalPoints });
+  },
+  getPoint(id) {
+    return axiosInstance.post("/point_category", { id });
+  },
 };
-
 
 export default profileService;
