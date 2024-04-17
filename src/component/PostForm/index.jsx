@@ -1,5 +1,5 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { Button, Input, Popconfirm, message } from "antd"; // Import Popconfirm and message from antd
+import { Button, Input, Popconfirm, Tag, message } from "antd"; // Import Popconfirm and message from antd
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../public/assets/css/post.css";
@@ -26,6 +26,7 @@ const PostForm = ({
   onListAttendees,
   postId,
   dataSource,
+  category,
 }) => {
   const { profile } = useAuthContext();
   const isStudent = profile?.role === "student";
@@ -90,7 +91,7 @@ const PostForm = ({
 
   const handleInputKeyPress = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent default form submission behavior
+      event.preventDefault(); 
       handleSubmitAttendance();
     }
   };
@@ -112,8 +113,7 @@ const PostForm = ({
     }
   };
   const handleCancelEdit = () => {
-    setEditMode(false); // Thoát khỏi chế độ chỉnh sửa
-    // Đặt lại giá trị của editedData về rỗng
+    setEditMode(false);
     setEditedData({
       startTime: "",
       startDate: "",
@@ -122,10 +122,26 @@ const PostForm = ({
       numberParticipants: "",
     });
   };
+  const getTagColor = (category) => {
+    switch (category) {
+      case "academic":
+        return "#f50";
+      case "volunteer":
+        return "#3cd037";
+      case "mentalPhysical":
+        return "#0c1bc2e8";
+      default:
+        return "#000";
+    }
+  };
+  const tagColor = getTagColor(category);
   return (
     <div className="post-container">
       <div className="post-faculty">
         <span>{facultyName}</span>
+        <div className="tag-cate">
+          <Tag color={tagColor}>{category}</Tag>
+        </div>
       </div>
       <h3 className="post-title">{name}</h3>
       <p className="post-description">{desc}</p>

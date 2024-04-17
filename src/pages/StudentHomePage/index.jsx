@@ -1,4 +1,4 @@
-import { List, Progress, message } from "antd";
+import { List, Progress, Select, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../public/assets/css/style.css"; // Adjust paths as necessary
@@ -18,6 +18,7 @@ const StudentHomePage = () => {
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
   const [totalPoints, setTotalPoints] = useState(0);
+  const [postBackup, setPostBackup] = useState(null);
 
   const {
     data: postData,
@@ -54,6 +55,7 @@ const StudentHomePage = () => {
             }
           });
           setPost(filteredPosts.length > 0 ? filteredPosts : null);
+          setPostBackup(filteredPosts.length > 0 ? filteredPosts : null);
           let calculatedTotalPoints = 0;
           profile.activities.forEach((activityId) => {
             const post = postData.post.find((pt) => pt.id === activityId);
@@ -267,6 +269,32 @@ const StudentHomePage = () => {
     };
     updateProgressData();
   }, [dataPoint]);
+  const options = [
+    { value: "Academic", label: "Academic" },
+    { value: "Volunteer", label: "Volunteer" },
+    { value: "MentalPhysical", label: "MentalPhysical" },
+  ];
+  const handleChange = async (value) => {
+    if (value.length === 0) {
+      setPost(postBackup);
+    } else {
+      const lowercaseCategories = value.map((category) => {
+        if (category === "MentalPhysical") {
+          return "mentalPhysical";
+        }
+        return category.toLowerCase();
+      });
+
+      try {
+        const response = await postService.getPostByCategory(
+          lowercaseCategories
+        );
+        setPost(response.data);
+      } catch (error) {
+        console.error("Error fetching posts by category:", error);
+      }
+    }
+  };
   return (
     <div className="homepage-container">
       <Sidebar />
@@ -306,6 +334,20 @@ const StudentHomePage = () => {
             <div className="progress-text">{totalPoints}%</div>
           )}
         </div>
+        <div
+          className="filter-bar"
+          style={{ width: "40%", marginLeft: "20px", marginTop: "20px" }}
+        >
+          <Select
+            mode="tags"
+            style={{
+              width: "100%",
+            }}
+            placeholder="Select categories"
+            onChange={handleChange}
+            options={options}
+          />
+        </div>
         <div className="posts-container">
           {post &&
             post.reverse().map((pt) => (
@@ -328,6 +370,7 @@ const StudentHomePage = () => {
                     onTakeTest={() => handleTakeTest(pt.testId, profile.id)}
                     onListAttendees={() => handleListAttendees(pt.id)}
                     postId={pt.id}
+                    category={pt.category}
                   />
                 </div>
               </div>

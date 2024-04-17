@@ -20,6 +20,14 @@ export const postService = {
   checkAttendance(postId, studentId) {
     return axiosInstance.put("/check_attendance", { postId, studentId });
   },
+  getPostByCategory(categories) {
+    const categoriesQuery = Array.isArray(categories)
+      ? categories.join(",")
+      : categories;
+    return axiosInstance.get(`/postByCate`, {
+      params: { categories: categoriesQuery },
+    });
+  },
 };
 
 export default postService;
