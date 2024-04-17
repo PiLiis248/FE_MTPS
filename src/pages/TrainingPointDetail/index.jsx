@@ -16,7 +16,8 @@ const TrainingPointDetail = () => {
   const [dataSource, setDataSource] = useState([]);
   const [studentID, setStudentID] = useState(null);
   const [newData, setNewData] = useState([]);
-  const [totalPoints, setTotalPoints] = useState(0);
+  const [extraData, setExtraData] = useState([]);
+  const [sumPoint, setSumPoint] = useState(0);
   const posts = postData?.post || [];
   const { profile } = useAuthContext();
 
@@ -41,14 +42,14 @@ const TrainingPointDetail = () => {
     }
   }, [profile, profile?.id]);
 
-  // const totalPoints = calculateTotalPoints();
   useEffect(() => {
-    // Tải trước dữ liệu cho các bản ghi trong bảng chính
     const fetchData = async () => {
+      const totalPointsArray = [];
       const preloadedData = {};
+      const dataLastCategories = [];
       for (const record of newData) {
         const { post } = record;
-        if (post && post.listPost) {
+        if (typeof post === "object" && post.listPost) {
           const postList = [];
           for (const postID of post.listPost) {
             try {
@@ -64,51 +65,73 @@ const TrainingPointDetail = () => {
               );
             }
           }
-          const totalPoints = postList.reduce(
-            (acc, item) => acc + item.point,
-            0
-          );
-          // console.log(totalPoints);
+          let totalPoints = postList.reduce((acc, item) => acc + item.point, 0);
+          totalPoints = Math.min(totalPoints, 20);
+          totalPointsArray.push(totalPoints);
           preloadedData[record.key] = postList;
+        } else {
+          dataLastCategories.push({
+            key: record.categories,
+            point: post,
+          });
         }
       }
+      setExtraData(dataLastCategories);
       setDataSource(preloadedData);
+      const sumExtra = extraData.reduce((acc, item) => acc + item.point, 0);
+
+      const sumPoint = totalPointsArray.reduce(
+        (acc, points) => acc + points,
+        0
+      );
+      const sumAll = sumPoint + sumExtra;
+      setSumPoint(sumAll);
     };
 
     fetchData();
   }, [newData]);
-
   const expandedRowRender = (record) => {
-    const postList = dataSource[record.key] || [];
-
-    const columns = [
-      {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-      },
-      {
-        title: "Point",
-        dataIndex: "point",
-        key: "point",
-      },
-    ];
-    let totalPointForRecord = 0;
-    for (const post of postList) {
-      totalPointForRecord += post.point;
+    if (
+      record.categories === "Discipline" ||
+      record.categories === "Reward" ||
+      record.categories === "Pioneering"
+    ) {
+      const extraColumns = [
+        {
+          title: "Point",
+          dataIndex: "point",
+          key: "point",
+        },
+      ];
+      const data = [{ key: record.key, point: record.post }];
+      return (
+        <Table columns={extraColumns} dataSource={data} pagination={false} />
+      );
+    } else {
+      const postList = dataSource[record.key] || [];
+      const columns = [
+        {
+          title: "Name",
+          dataIndex: "name",
+          key: "name",
+        },
+        {
+          title: "Point",
+          dataIndex: "point",
+          key: "point",
+        },
+      ];
+      return (
+        <Table columns={columns} dataSource={postList} pagination={false} />
+      );
     }
-    if (totalPointForRecord > 20) {
-      totalPointForRecord = 20;
-    }
-    setTotalPoints((prevTotal) => prevTotal + totalPointForRecord);
-    return <Table columns={columns} dataSource={postList} pagination={false} />;
   };
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Categories",
+      dataIndex: "categories",
+      key: "categories",
     },
   ];
   const listData = [];
@@ -118,7 +141,7 @@ const TrainingPointDetail = () => {
         .filter(([key, value]) => key !== "studentId" && key !== "_id")
         .map(([name, post], index) => ({
           key: index + 1,
-          name: name.charAt(0).toUpperCase() + name.slice(1),
+          categories: name.charAt(0).toUpperCase() + name.slice(1),
           post,
         }));
       setNewData(newData);
@@ -150,7 +173,7 @@ const TrainingPointDetail = () => {
           }}
           dataSource={newData}
         />
-        <div className="total-point">Total point: {totalPoints}</div>
+        <div className="total-point">Total point: {sumPoint}</div>
       </div>
     </div>
   );
