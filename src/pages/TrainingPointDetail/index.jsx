@@ -6,6 +6,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import useQuery from "../../hooks/useQuery";
 import postService from "../../services/postService";
 import profileService from "../../services/profileService";
+import CheckableTag from "antd/es/tag/CheckableTag";
 const TrainingPointDetail = () => {
   const {
     data: postData,
@@ -41,7 +42,6 @@ const TrainingPointDetail = () => {
       handleGetPoint(profile.id);
     }
   }, [profile, profile?.id]);
-
   useEffect(() => {
     const fetchData = async () => {
       const totalPointsArray = [];
@@ -49,14 +49,14 @@ const TrainingPointDetail = () => {
       const dataLastCategories = [];
       for (const record of newData) {
         const { post } = record;
-        if (typeof post === "object" && post.listPost) {
+        if (Array.isArray(post)) {
           const postList = [];
-          for (const postID of post.listPost) {
+          for (const postID of post) {
             try {
-              const response = await postService.getPostSpecific(postID[0]);
+              const response = await postService.getPostSpecific(postID);
               if (response && response.data) {
                 const { name, point } = response.data;
-                postList.push({ key: postID[0], name, point });
+                postList.push({ key: postID, name, point });
               }
             } catch (error) {
               console.error(
@@ -106,6 +106,7 @@ const TrainingPointDetail = () => {
         <Table columns={extraColumns} dataSource={data} pagination={false} />
       );
     } else {
+      // console.log(dataSource);
       const postList = dataSource[record.key] || [];
       const columns = [
         {
@@ -119,6 +120,7 @@ const TrainingPointDetail = () => {
           key: "point",
         },
       ];
+
       return (
         <Table columns={columns} dataSource={postList} pagination={false} />
       );
@@ -135,6 +137,7 @@ const TrainingPointDetail = () => {
   const listData = [];
   useEffect(() => {
     if (dataPoint) {
+      // console.log(dataPoint);
       const newData = Object.entries(dataPoint)
         .filter(([key, value]) => key !== "studentId" && key !== "_id")
         .map(([name, post], index) => ({
@@ -152,13 +155,14 @@ const TrainingPointDetail = () => {
             item.name !== "Pioneering"
         )
         .forEach((pt) => {
-          if (pt.post && pt.post.listPost) {
-            listData.push(pt.post.listPost);
+          if (pt.post && pt.post) {
+            listData.push(pt.post);
+            // console.log(listData);
           }
         });
     }
   }, [dataPoint]);
-
+  // console.log(listData);
   return (
     <div className="homepage-container">
       <Sidebar />

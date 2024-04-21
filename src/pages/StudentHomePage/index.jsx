@@ -84,7 +84,6 @@ const StudentHomePage = () => {
         userId,
         totalPoints
       );
-      console.log(response.data.message);
     } catch (error) {
       console.error(
         "Error updating training point:",
@@ -204,10 +203,9 @@ const StudentHomePage = () => {
   }, [dataPoint]);
   const calculateCategoryPoints = async (category) => {
     let totalPointsByCategory = 0;
-
-    if (category && Array.isArray(category.listPost)) {
-      const promises = category.listPost.map(async (it) => {
-        const postId = it[0];
+    if (category && Array.isArray(category)) {
+      const promises = category.map(async (it) => {
+        const postId = it;
 
         try {
           const response = await postService.getPostSpecific(postId);
@@ -239,11 +237,11 @@ const StudentHomePage = () => {
     const progressData = await Promise.all(
       categories.map(async (categoryName) => {
         const categoryData = dataPoint[categoryName];
-        if (categoryData && Array.isArray(categoryData.listPost)) {
+        if (categoryData && Array.isArray(categoryData)) {
           const totalPointsByCategory = await calculateCategoryPoints(
             categoryData
           );
-          console.log(totalPointsByCategory);
+          // console.log(totalPointsByCategory);
           const percent = (totalPointsByCategory / maxPoints) * 100;
           return {
             name: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
@@ -259,10 +257,10 @@ const StudentHomePage = () => {
 
     return progressData;
   };
-
   useEffect(() => {
     const updateProgressData = async () => {
       if (dataPoint) {
+        // console.log(dataPoint);
         const progressData = await calculateProgress(dataPoint);
         setNewData(progressData);
       }
@@ -298,56 +296,52 @@ const StudentHomePage = () => {
   return (
     <div className="homepage-container">
       <Sidebar />
-      <div className="table-mini">
-        <List
-          className="list-noti"
-          style={{
-            position: "fixed",
-            bottom: "60px",
-            left: "40px",
-            width: "280px",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            padding: "10px",
-          }}
-          itemLayout="horizontal"
-          dataSource={newData}
-          renderItem={(item) => (
-            <List.Item>
-              <List.Item.Meta title={item.name} />
-              <Progress type="circle" percent={item.percent} size={40} />
-            </List.Item>
-          )}
-        />
-      </div>
-      <div className="main-content">
-        <div className="progress-box">
-          {profile && profile.role === "student" && (
-            <div className="progress-bar">
-              <div
-                className="progress"
-                style={{ width: `${totalPoints}%` }}
-              ></div>
-            </div>
-          )}
-          {!!profile && profile.role === "student" && (
-            <div className="progress-text">{totalPoints}%</div>
-          )}
-        </div>
-        <div
-          className="filter-bar"
-          style={{ width: "40%", marginLeft: "20px", marginTop: "20px" }}
-        >
-          <Select
-            mode="tags"
+      {profile && profile.role === "student" ? (
+        <div className="table-mini">
+          <List
+            className="list-noti"
             style={{
-              width: "100%",
+              position: "fixed",
+              bottom: "60px",
+              left: "40px",
+              width: "280px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              padding: "10px",
             }}
-            placeholder="Select categories"
-            onChange={handleChange}
-            options={options}
+            itemLayout="horizontal"
+            dataSource={newData}
+            renderItem={(item) => (
+              <List.Item>
+                <List.Item.Meta title={item.name} />
+                <Progress type="circle" percent={item.percent} size={40} />
+              </List.Item>
+            )}
           />
         </div>
+      ) : (
+        <div></div>
+      )}
+      <div className="main-content">
+        {profile && profile.role === "student" ? (
+          <div
+            className="filter-bar"
+            style={{ width: "40%", marginLeft: "20px", marginTop: "20px" }}
+          >
+            <Select
+              mode="tags"
+              style={{
+                width: "100%",
+              }}
+              placeholder="Select categories"
+              onChange={handleChange}
+              options={options}
+            />
+          </div>
+        ) : (
+          <div> </div>
+        )}
+
         <div className="posts-container">
           {post &&
             post.reverse().map((pt) => (
