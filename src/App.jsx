@@ -12,6 +12,7 @@ import ListAttendeesPage from "./pages/ListAttendeesPage";
 import FacultyPage from "./pages/FacultyPage"; // Import the FacultyPage component
 import { useAuthContext } from "./context/AuthContext";
 import ViewPage from "./pages/ViewPage";
+import UpdatePoint from "./pages/UpdatePoint";
 
 const App = () => {
   const { profile } = useAuthContext();
@@ -32,6 +33,8 @@ const App = () => {
                 <Route path={`${PATHS.TEST}/:testId`} element={<TestPage />} />
                 <Route path={PATHS.CREATE_POST} element={<CreatePost />} />
                 <Route path={PATHS.VIEWEXPIRED} element={<ViewPage />} />
+                <Route path={PATHS.UPDATE_POINT} element={<UpdatePoint />} />
+
                 <Route
                   path={`${PATHS.LIST_ATTENDEES}/:postId`}
                   element={<ListAttendeesPage />}

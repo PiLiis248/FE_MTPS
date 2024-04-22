@@ -69,6 +69,9 @@ const Sidebar = () => {
             <li className="sidebar-item">
               <Link to={PATHS.VIEWEXPIRED}>View Expired</Link>
             </li>
+            <li className="sidebar-item">
+              <Link to={PATHS.UPDATE_POINT}>Update Point</Link>
+            </li>
           </>
         )}
         <li className="sidebar-item" onClick={handleLogout}>

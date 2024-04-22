@@ -167,7 +167,8 @@ const StudentHomePage = () => {
     try {
       const res = await profileService.getPoint(studentID);
       if (res && res.data) {
-        setDataPoint(res.data);
+        const { __v, ...dataPoint } = res.data;
+        setDataPoint(dataPoint);
       } else {
         console.error("Student not found or data missing");
       }
@@ -192,7 +193,8 @@ const StudentHomePage = () => {
             key !== "_id" &&
             key !== "discipline" &&
             key !== "reward" &&
-            key !== "pioneering"
+            key !== "pioneering" &&
+            key !== "__v"
         )
         .map(([name, point], index) => ({
           key: index + 1,

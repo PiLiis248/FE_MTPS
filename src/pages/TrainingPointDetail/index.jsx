@@ -19,6 +19,7 @@ const TrainingPointDetail = () => {
   const [newData, setNewData] = useState([]);
   const [extraData, setExtraData] = useState([]);
   const [sumPoint, setSumPoint] = useState(0);
+  const [pointTable, setPointTable] = useState(0);
   const posts = postData?.post || [];
   const { profile } = useAuthContext();
 
@@ -49,31 +50,40 @@ const TrainingPointDetail = () => {
       const dataLastCategories = [];
       for (const record of newData) {
         const { post } = record;
+        // console.log(post);
         if (Array.isArray(post)) {
           const postList = [];
-          for (const postID of post) {
-            try {
-              const response = await postService.getPostSpecific(postID);
-              if (response && response.data) {
-                const { name, point } = response.data;
-                postList.push({ key: postID, name, point });
+          const isArrayObject = post.every(
+            (item) => typeof item === "object" && !Array.isArray(item)
+          );
+          if (isArrayObject) {
+            for (const postItem of post) {
+              // console.log(postItem);
+              dataLastCategories.push({
+                key: postItem.name,
+                point: postItem.point,
+              });
+            }
+          } else {
+            for (const postID of post) {
+              try {
+                const response = await postService.getPostSpecific(postID);
+                if (response && response.data) {
+                  const { name, point } = response.data;
+                  postList.push({ key: postID, name, point });
+                }
+              } catch (error) {
+                console.error(
+                  `Error fetching post data for postID: ${postID[0]}`,
+                  error
+                );
               }
-            } catch (error) {
-              console.error(
-                `Error fetching post data for postID: ${postID[0]}`,
-                error
-              );
             }
           }
           let totalPoints = postList.reduce((acc, item) => acc + item.point, 0);
           totalPoints = Math.min(totalPoints, 20);
           totalPointsArray.push(totalPoints);
           preloadedData[record.key] = postList;
-        } else {
-          dataLastCategories.push({
-            key: record.categories,
-            point: post,
-          });
         }
       }
       setExtraData(dataLastCategories);
@@ -87,7 +97,7 @@ const TrainingPointDetail = () => {
       setSumPoint(sumAll);
     };
     fetchData();
-  }, [newData]);
+  }, [newData, extraData]);
   const expandedRowRender = (record) => {
     if (
       record.categories === "Discipline" ||
@@ -96,17 +106,41 @@ const TrainingPointDetail = () => {
     ) {
       const extraColumns = [
         {
+          title: "Name",
+          dataIndex: "name",
+          key: "name",
+        },
+        {
           title: "Point",
           dataIndex: "point",
           key: "point",
         },
       ];
-      const data = [{ key: record.key, point: record.post }];
+      const data = record.post.map((item, index) => ({
+        key: index,
+        name: item.name,
+        point: item.point,
+      }));
+      const totalPoints = data.reduce((sum, item) => sum + item.point, 0);
+      const totalColumn = {
+        title: "Total",
+        dataIndex: "total",
+        key: "total",
+      };
+      const dataWithTotal = [
+        ...data,
+        { key: "total", name: "Total", point: totalPoints, total: totalPoints },
+      ];
+
+      const columnsWithTotal = [...extraColumns, totalColumn];
       return (
-        <Table columns={extraColumns} dataSource={data} pagination={false} />
+        <Table
+          columns={columnsWithTotal}
+          dataSource={dataWithTotal}
+          pagination={false}
+        />
       );
     } else {
-      // console.log(dataSource);
       const postList = dataSource[record.key] || [];
       const columns = [
         {
@@ -126,7 +160,6 @@ const TrainingPointDetail = () => {
       );
     }
   };
-
   const columns = [
     {
       title: "Categories",
@@ -137,16 +170,17 @@ const TrainingPointDetail = () => {
   const listData = [];
   useEffect(() => {
     if (dataPoint) {
-      // console.log(dataPoint);
       const newData = Object.entries(dataPoint)
-        .filter(([key, value]) => key !== "studentId" && key !== "_id")
+        .filter(
+          ([key, value]) =>
+            key !== "studentId" && key !== "_id" && key !== "__v"
+        )
         .map(([name, post], index) => ({
           key: index + 1,
           categories: name.charAt(0).toUpperCase() + name.slice(1),
           post,
         }));
       setNewData(newData);
-
       newData
         .filter(
           (item) =>
@@ -157,12 +191,10 @@ const TrainingPointDetail = () => {
         .forEach((pt) => {
           if (pt.post && pt.post) {
             listData.push(pt.post);
-            // console.log(listData);
           }
         });
     }
   }, [dataPoint]);
-  // console.log(listData);
   return (
     <div className="homepage-container">
       <Sidebar />

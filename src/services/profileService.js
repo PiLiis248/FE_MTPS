@@ -15,6 +15,17 @@ export const profileService = {
   getPoint(id) {
     return axiosInstance.post("/point_category", { id });
   },
+  searchStudent(studentId, faculty) {
+    return axiosInstance.post("/searchStudentWithPoint", {
+      studentId,
+      faculty,
+    });
+  },
+  getStudent(faculty) {
+    return axiosInstance.post("/studentByF", {
+      faculty,
+    });
+  },
 };
 
 export default profileService;
