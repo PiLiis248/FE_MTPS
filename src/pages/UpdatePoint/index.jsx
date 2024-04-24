@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../component/SideBar";
-import { Input, Space, Table } from "antd";
+import { Button, Input, Modal, Space, Table, message } from "antd";
 import profileService from "../../services/profileService";
 import { useAuthContext } from "../../context/AuthContext";
 
@@ -10,10 +10,36 @@ const UpdatePoint = () => {
   const [studentDataPoint, setStudentDataPoint] = useState(null);
   const [studentInfo, setStudentInfo] = useState([]);
   const [studentPoint, setStudentPoint] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState();
   const [role, setRole] = useState();
+  const [modalStudentId, setModalStudentId] = useState("");
+  const [modalName, setModalName] = useState("");
+  const [modalPoint, setModalPoint] = useState("");
   const { profile } = useAuthContext();
-
+  const showModal = (studentId) => {
+    setModalStudentId(studentId);
+    setIsModalOpen(true);
+  };
+  const handleOk = async () => {
+    if (modalStudentId && modalName && modalPoint) {
+      try {
+        await profileService.updateDiscipline(
+          modalStudentId,
+          modalName,
+          parseFloat(modalPoint)
+        );
+        message.success("Discipline updated successfully");
+      } catch (error) {
+        console.error("Error updating discipline:", error);
+        message.error("Error updating discipline");
+      }
+    }
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   useEffect(() => {
     const fetchStudentData = async () => {
       if (profile?.facultyName) {
@@ -76,6 +102,7 @@ const UpdatePoint = () => {
     }
   };
   const tableData = studentData ? studentData : studentInfo;
+  // console.log(studentInfo);
   const expandedRowRender = (record) => {
     const columns = [
       {
@@ -122,7 +149,9 @@ const UpdatePoint = () => {
     {
       title: "Action",
       key: "operation",
-      render: () => <a>Edit</a>,
+      render: (text, record) => (
+        <Button onClick={() => showModal(record.id)}>Edit</Button>
+      ),
     },
   ];
   return (
@@ -145,6 +174,26 @@ const UpdatePoint = () => {
           dataSource={tableData}
         />
       </div>
+
+      <Modal
+        title="Update"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Input
+          className="input-name"
+          placeholder="Enter content"
+          value={modalName}
+          onChange={(e) => setModalName(e.target.value)}
+        ></Input>
+        <Input
+          className="input-point"
+          placeholder="Enter point"
+          value={modalPoint}
+          onChange={(e) => setModalPoint(e.target.value)}
+        ></Input>
+      </Modal>
     </div>
   );
 };

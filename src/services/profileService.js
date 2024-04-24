@@ -26,6 +26,9 @@ export const profileService = {
       faculty,
     });
   },
+  updateDiscipline(studentId, name, point) {
+    return axiosInstance.post("/update-discipline", { studentId, name, point });
+  },
 };
 
 export default profileService;

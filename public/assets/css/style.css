@@ -432,4 +432,7 @@ button {
     margin-left: 430px;
     padding: 20px 40px;
 }
+input.ant-input.css-dev-only-do-not-override-djtmh8.ant-input-outlined.input-name{
+    margin: 20px 0;
+}
 /* Update Page */
