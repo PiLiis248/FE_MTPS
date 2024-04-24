@@ -1,31 +1,70 @@
 /* attendeesList.css */
+.listatten-page {
+  padding: 40px;
+}
+
+.back-btn {
+  font-size: 18px;
+  font-family: 'pnb';
+}
+
+.title_list {
+  font-size: 21px;
+  text-align: center;
+  color: rgb(8, 165, 18);
+  font-family: 'pnr';
+}
+
+.title-group {
+  display: flex;
+}
+
+.title-name {
+  flex: 3;
+}
+
+.test-score {
+  flex: 2;
+}
+
+.ant-list-item-meta.meta-student {
+  flex: 3 !important;
+}
+
+.testscore {
+  flex: 2;
+}
 
 .attendees-container {
-    margin-top: 20px;
-  }
+  margin-top: 50px;
+  margin-left: 300px;
+}
   
-  .attendees-container h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .attendees-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .attendees-table th,
-  .attendees-table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .attendees-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .attendees-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
+.attendees-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.attendees-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendees-table th,
+.attendees-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.attendees-table th {
+  background-color: #f2f2f2;
+}
+
+.attendees-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+:where(.css-dev-only-do-not-override-djtmh8).ant-spin-nested-loading .ant-spin-container {
+  margin-right: 310px;
+}

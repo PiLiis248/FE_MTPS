@@ -4,11 +4,13 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { PATHS } from '../../constants/path';
 import { useAuthContext } from '../../context/AuthContext';
 import postService from '../../services/postService';
+import { List } from 'antd';
 
 const ListAttendeesPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [currentList, setCurrentList] = useState(null);
+    const [currentData, setCurrentData] = useState(null);
 
     useEffect(() => {
         const fetchListAttendees = async () => {
@@ -22,13 +24,16 @@ const ListAttendeesPage = () => {
         };
 
     fetchListAttendees();
-  }, [postId]);
+  }, [id]);
+  console.log(currentList);
   useEffect(() => {
     if (currentList) {
-      const attendeesArray = currentList.map((atten) => atten.attendees);
+      const aten = currentList.filteredAttendees;
+      console.log(aten);
+      const attendeesArray = aten.map((atten) => atten.attendees);
       setCurrentData(attendeesArray);
     }
-  }, [currentList, setCurrentData]);
+  }, [currentList]);
   //   console.log(currentData);
   return (
     <div className="listatten-page">
@@ -37,15 +42,23 @@ const ListAttendeesPage = () => {
       </Link>
       <h2 className="title_list">List of Attendees</h2>
       {currentData && (
-        <List
+        <List className='attendees-container'
           itemLayout="horizontal"
           dataSource={currentData}
           renderItem={(attendees, index) => (
             <div className="list-attendees" key={index}>
+              <div className="title-group">
+                <div className="title-name">
+                  Student
+                </div>
+                <div className="test-score">
+                  Test Score
+                </div>
+              </div>
               {attendees &&
                 attendees.map((item, index) => (
-                  <List.Item key={index}>
-                    <List.Item.Meta
+                  <List.Item key={index} className='list-student'>
+                    <List.Item.Meta className='meta-student'
                       title={item.name}
                       description={item.email}
                     />
