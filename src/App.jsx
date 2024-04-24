@@ -36,7 +36,7 @@ const App = () => {
                 <Route path={PATHS.UPDATE_POINT} element={<UpdatePoint />} />
 
                 <Route
-                  path={`${PATHS.LIST_ATTENDEES}/:postId`}
+                  path={`${PATHS.LIST_ATTENDEES}/:id`}
                   element={<ListAttendeesPage />}
                 />
               </>

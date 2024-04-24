@@ -70,7 +70,7 @@ const Sidebar = () => {
               <Link to={PATHS.VIEWEXPIRED}>View Expired</Link>
             </li>
             <li className="sidebar-item">
-              <Link to={PATHS.UPDATE_POINT}>Update Point</Link>
+              <Link to={PATHS.UPDATE_POINT}>Update Discipline Point</Link>
             </li>
           </>
         )}

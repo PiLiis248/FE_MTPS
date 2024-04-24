@@ -189,7 +189,7 @@ const UpdatePoint = () => {
         ></Input>
         <Input
           className="input-point"
-          placeholder="Enter point"
+          placeholder="Enter negative point: -3..."
           value={modalPoint}
           onChange={(e) => setModalPoint(e.target.value)}
         ></Input>

@@ -26,6 +26,8 @@ const CreatePost = () => {
   const [forms, setForms] = useState([]);
   const [target, setTarget] = useState("");
   const [formValues, setFormValues] = useState({});
+  const [facultyName, setFacultyName] = useState(profile ? profile.facultyName : '');
+  
 
   const showDrawer = () => {
     setOpen(true);
@@ -33,13 +35,18 @@ const CreatePost = () => {
   const onClose = () => {
     setOpen(false);
   };
-
-  const initialFacultyName =
-    localStorage.getItem("facultyName") || (profile ? profile.facultyName : "");
+  
+  useEffect(() => {
+    if (profile && profile.facultyName) {
+      setFacultyName(profile.facultyName);
+    }
+  }, [profile]);
+  
+  
 
   const [formData, setFormData] = useState({
     name: "",
-    facultyName: initialFacultyName,
+    facultyName: facultyName,
     desc: "",
     status: true,
     startDate: "",
@@ -49,12 +56,10 @@ const CreatePost = () => {
     point: 0,
     location: "",
     numberParticipants: "",
+    category: "",
     stdJoin: [],
     testId: null,
   });
-  useEffect(() => {
-    localStorage.setItem("facultyName", formData.facultyName);
-  }, [formData.facultyName]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -335,6 +340,21 @@ const CreatePost = () => {
               value={formData.numberParticipants}
               onChange={handleChange}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="category">
+              <strong>Post category:</strong>
+            </label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+            >
+              <option value="academic">Academic</option>
+              <option value="volunteer">Volunteer</option>
+              <option value="mentalPhysical">Mental Physical</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="status">
