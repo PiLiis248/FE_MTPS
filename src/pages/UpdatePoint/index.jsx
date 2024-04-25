@@ -73,6 +73,21 @@ const UpdatePoint = () => {
       setStudentPoint(arrayPoint);
     }
   }, [data]);
+
+  const handleChangeMinusPoint = (e) => {
+    const value = e.target.value;
+    // Check if the entered value is a valid number
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue)) {
+      // Automatically prepend the negative sign if the value is a valid number
+      setModalPoint(`-${Math.abs(parsedValue)}`); // Use Math.abs to handle cases where the user accidentally adds an additional minus sign
+    } else {
+      // If the entered value is not a valid number, just update the state with the entered value
+      setModalPoint(value);
+    }
+  };
+
+  
   const handleChange = async (e) => {
     const value = e.target.value;
     setSearchTerm(value);
@@ -147,10 +162,10 @@ const UpdatePoint = () => {
       key: "name",
     },
     {
-      title: "Action",
+      title: "Discipline Point",
       key: "operation",
       render: (text, record) => (
-        <Button onClick={() => showModal(record.id)}>Edit</Button>
+        <Button onClick={() => showModal(record.id)}>Update</Button>
       ),
     },
   ];
@@ -183,15 +198,15 @@ const UpdatePoint = () => {
       >
         <Input
           className="input-name"
-          placeholder="Enter content"
+          placeholder="Enter violation"
           value={modalName}
           onChange={(e) => setModalName(e.target.value)}
         ></Input>
         <Input
           className="input-point"
-          placeholder="Enter negative point: -3..."
+          placeholder="Enter minus point: 3, 5, ..."
           value={modalPoint}
-          onChange={(e) => setModalPoint(e.target.value)}
+          onChange={handleChangeMinusPoint}
         ></Input>
       </Modal>
     </div>
