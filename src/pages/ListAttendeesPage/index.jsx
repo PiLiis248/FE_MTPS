@@ -52,7 +52,7 @@ const ListAttendeesPage = () => {
                   Student
                 </div>
                 <div className="test-score">
-                  Test Score
+                  Post result
                 </div>
               </div>
               {attendees &&
