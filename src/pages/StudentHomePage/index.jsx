@@ -274,21 +274,41 @@ const StudentHomePage = () => {
     { value: "MentalPhysical", label: "MentalPhysical" },
   ];
   // console.log(postBackup);
+  // const handleChange = async (value) => {
+  //   if (value.length === 0) {
+  //     setPost(postBackup);
+  //   } else {
+  //     const lowercaseCategories = value.map((category) => {
+  //       if (category === "MentalPhysical") {
+  //         return "mentalPhysical";
+  //       }
+  //       return category.toLowerCase();
+  //     });
+
+  //     try {
+  //       const response = await postService.getPostByCategory(
+  //         lowercaseCategories
+  //       );
+  //       setPost(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching posts by category:", error);
+  //     }
+  //   }
+  // };
   const handleChange = async (value) => {
     if (value.length === 0) {
       setPost(postBackup);
     } else {
-      const lowercaseCategories = value.map((category) => {
-        if (category === "MentalPhysical") {
-          return "mentalPhysical";
-        }
-        return category.toLowerCase();
-      });
+      const selectedCategory = value[0];
+      console.log(selectedCategory);
+      const lowercaseCategory =
+        selectedCategory === "MentalPhysical"
+          ? "mentalPhysical"
+          : selectedCategory.toLowerCase();
 
       try {
-        const response = await postService.getPostByCategory(
-          lowercaseCategories
-        );
+        const response = await postService.getPostByCategory(lowercaseCategory);
+        console.log(response.data);
         setPost(response.data);
       } catch (error) {
         console.error("Error fetching posts by category:", error);
@@ -345,7 +365,7 @@ const StudentHomePage = () => {
         )}
         <div className="posts-container">
           {post &&
-            post.reverse().map((pt) => (
+            post.map((pt) => (
               <div key={pt.id} className="post-wrapper">
                 <div className="post-item">
                   <Post
