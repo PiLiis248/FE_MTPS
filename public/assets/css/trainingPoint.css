@@ -1,4 +1,6 @@
-
+.training-point-detail .ant-spin-container{
+  margin-right: unset !important;
+}
 .training-point-detail {
   padding: 20px;
 }
@@ -18,68 +20,3 @@
   margin-top: 30px;
   font-family: 'pnb';
 }
-/* .training-point-detail h2 {
-  text-align: center;
-  color: #333;
-}
-
-.training-point-detail table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  border-radius: 8px;
-  overflow: hidden; 
-}
-
-.training-point-detail th, .training-point-detail td {
-  font-size: 21px;
-  text-align: left;
-  padding: 12px 15px; 
-  border-bottom: 1px solid #f0f0f0; 
-}
-
-.training-point-detail th {
-  background-color: #1a1b1d; 
-  color: #ffffff;
-  font-weight: bold;
-}
-
-
-.training-point-detail tr:nth-child(odd) {
-  background-color: #f9f9f9;
-}
-
-
-
-.training-point-detail td {
-  position: relative;
-}
-
-.training-point-detail td::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background: #b4f5bb; 
-  transition: width 0.3s;
-}
-
-.training-point-detail td:hover::after {
-  width: 100%;
-}
-
-
-.training-point-detail tr:last-child td {
-  font-weight: bold;
-}
-
-
-.training-point-detail tr:last-child td {
-  border-bottom: none;
-} */
-
-
