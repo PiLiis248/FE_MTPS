@@ -25,7 +25,6 @@ const StudentHomePage = () => {
     loading: postLoading,
     error: postError,
   } = useQuery(postService.getPost);
-
   useEffect(() => {
     if (postData && postData.post && profile) {
       let filteredPosts = [];
@@ -51,9 +50,11 @@ const StudentHomePage = () => {
             ) {
               if (!profile.activities.includes(pt.id)) {
                 filteredPosts.push(pt);
+                console.log(filteredPosts);
               }
             }
           });
+         
           setPost(filteredPosts.length > 0 ? filteredPosts : null);
           setPostBackup(filteredPosts.length > 0 ? filteredPosts : null);
           let calculatedTotalPoints = 0;
@@ -274,6 +275,7 @@ const StudentHomePage = () => {
     { value: "Volunteer", label: "Volunteer" },
     { value: "MentalPhysical", label: "MentalPhysical" },
   ];
+  // console.log(postBackup);
   const handleChange = async (value) => {
     if (value.length === 0) {
       setPost(postBackup);
@@ -343,7 +345,6 @@ const StudentHomePage = () => {
         ) : (
           <div> </div>
         )}
-
         <div className="posts-container">
           {post &&
             post.reverse().map((pt) => (

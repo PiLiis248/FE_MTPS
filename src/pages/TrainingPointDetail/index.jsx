@@ -20,7 +20,6 @@ const TrainingPointDetail = () => {
   const [extraData, setExtraData] = useState([]);
   const [sumPoint, setSumPoint] = useState(0);
   const [pointTable, setPointTable] = useState(0);
-  const posts = postData?.post || [];
   const { profile } = useAuthContext();
 
   const handleGetPoint = async (studentID) => {

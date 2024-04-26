@@ -68,3 +68,6 @@
 :where(.css-dev-only-do-not-override-djtmh8).ant-spin-nested-loading .ant-spin-container {
   margin-right: 310px;
 }
+.ant-list.ant-list-split.list-noti.css-dev-only-do-not-override-djtmh8 .ant-spin-container{
+  margin-right: unset;
+}
