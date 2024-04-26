@@ -435,4 +435,7 @@ button {
 input.ant-input.css-dev-only-do-not-override-djtmh8.ant-input-outlined.input-name{
     margin: 20px 0;
 }
+.update-page-main .ant-spin-container{
+    margin-right: unset !important;
+}
 /* Update Page */
