@@ -94,9 +94,25 @@ const TrainingPointDetail = () => {
       );
       const sumAll = sumPoint + sumExtra;
       setSumPoint(sumAll);
+      updateTrainingPoint(profile.id, sumAll);
     };
     fetchData();
   }, [newData, extraData]);
+
+  const updateTrainingPoint = async (userId, totalPoints) => {
+    try {
+      const response = await profileService.updateTrainingPoint(
+        userId,
+        totalPoints
+      );
+    } catch (error) {
+      console.error(
+        "Error updating training point:",
+        error.response.data.error
+      );
+    }
+  };
+
   const expandedRowRender = (record) => {
     if (
       record.categories === "Discipline" ||

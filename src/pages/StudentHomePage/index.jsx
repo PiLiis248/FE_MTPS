@@ -20,6 +20,7 @@ const StudentHomePage = () => {
   const [totalPoints, setTotalPoints] = useState(0);
   const [postBackup, setPostBackup] = useState(null);
 
+  
   const {
     data: postData,
     loading: postLoading,
@@ -29,8 +30,8 @@ const StudentHomePage = () => {
     if (postData && postData.post && profile) {
       let filteredPosts = [];
       let facultyName = null;
-
       if (profile.role === "assistant") {
+        
         const filteredPosts = postData.post.filter(
           (pt) => pt.facultyName === profile.facultyName
         );
@@ -45,13 +46,10 @@ const StudentHomePage = () => {
 
           postData.post.forEach((pt) => {
             if (
-              pt.status === true ||
-              (pt.status === false && pt.facultyName === facultyName)
+              (pt.status === true || (pt.status === false && pt.facultyName === facultyName)) &&
+              !profile.activities.includes(pt.id)
             ) {
-              if (!profile.activities.includes(pt.id)) {
-                filteredPosts.push(pt);
-                console.log(filteredPosts);
-              }
+              filteredPosts.push(pt);
             }
           });
          

@@ -62,7 +62,7 @@ const ListAttendeesPage = () => {
                       title={item.name}
                       description={item.email}
                     />
-                    <div className="testscore">{item.testScore}</div>
+                    <div className="testscore">{item.postResult}</div>
                   </List.Item>
                 ))}
             </div>
