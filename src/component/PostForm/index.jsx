@@ -104,19 +104,12 @@ const PostForm = ({
       handleSubmitAttendance();
     }
   };
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setEditedData((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedData((prevState) => ({
       ...prevState,
-      [name]: value || prevState[name], // Keep old value if new value is empty
+      [name]: value,
     }));
   };
 
