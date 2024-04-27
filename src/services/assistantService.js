@@ -1,13 +1,13 @@
 import React from "react";
 import axiosInstance from "../utils/axiosInstance";
 
-export const facultyService = {
+export const assistantService = {
   getAllStudents() {
-    return axiosInstance.get("/faculty_student");
+    return axiosInstance.get("/assistant_student");
   },
   getExpiredPost() {
     return axiosInstance.get("/expiredpost");
   },
 };
 
-export default facultyService;
+export default assistantService;

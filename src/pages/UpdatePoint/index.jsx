@@ -1,8 +1,8 @@
+import { Button, Input, Modal, Table, message } from "antd";
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../component/SideBar";
-import { Button, Input, Modal, Space, Table, message } from "antd";
-import profileService from "../../services/profileService";
 import { useAuthContext } from "../../context/AuthContext";
+import profileService from "../../services/profileService";
 
 const UpdatePoint = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,9 +37,13 @@ const UpdatePoint = () => {
     }
     setIsModalOpen(false);
   };
+
   const handleCancel = () => {
+    setModalName("");
+    setModalPoint("");
     setIsModalOpen(false);
   };
+
   useEffect(() => {
     const fetchStudentData = async () => {
       if (profile?.facultyName) {
@@ -110,14 +114,13 @@ const UpdatePoint = () => {
         }
       } catch (error) {
         console.error("Error searching student:", error);
-        message.error("Error occurred while searching for student");
+        // message.error("Error occurred while searching for student");
       }
     } else {
       setStudentData(null);
     }
   };
   const tableData = studentData ? studentData : studentInfo;
-  // console.log(studentInfo);
   const expandedRowRender = (record) => {
     const columns = [
       {
@@ -177,6 +180,7 @@ const UpdatePoint = () => {
           className="update-input"
           style={{ width: "30%", marginBottom: "40px" }}
           value={searchTerm}
+          placeholder="Search student by ID"
           onChange={handleChange}
         />
         <Table
@@ -198,7 +202,7 @@ const UpdatePoint = () => {
       >
         <Input
           className="input-name"
-          placeholder="Enter violation"
+          placeholder="Enter content"
           value={modalName}
           onChange={(e) => setModalName(e.target.value)}
         ></Input>

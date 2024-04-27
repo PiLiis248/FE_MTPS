@@ -177,7 +177,7 @@ const StudentHomePage = () => {
     }
   };
   useEffect(() => {
-    if (profile && profile.id) {
+    if (profile && profile.id && profile.role === "student") {
       setStudentID(profile.id);
       handleGetPoint(profile.id);
     }
@@ -242,7 +242,6 @@ const StudentHomePage = () => {
           const totalPointsByCategory = await calculateCategoryPoints(
             categoryData
           );
-          // console.log(totalPointsByCategory);
           const percent = (totalPointsByCategory / maxPoints) * 100;
           return {
             name: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
@@ -261,7 +260,6 @@ const StudentHomePage = () => {
   useEffect(() => {
     const updateProgressData = async () => {
       if (dataPoint) {
-        // console.log(dataPoint);
         const progressData = await calculateProgress(dataPoint);
         setNewData(progressData);
       }
@@ -273,28 +271,8 @@ const StudentHomePage = () => {
     { value: "Volunteer", label: "Volunteer" },
     { value: "MentalPhysical", label: "MentalPhysical" },
   ];
-  // console.log(postBackup);
-  // const handleChange = async (value) => {
-  //   if (value.length === 0) {
-  //     setPost(postBackup);
-  //   } else {
-  //     const lowercaseCategories = value.map((category) => {
-  //       if (category === "MentalPhysical") {
-  //         return "mentalPhysical";
-  //       }
-  //       return category.toLowerCase();
-  //     });
 
-  //     try {
-  //       const response = await postService.getPostByCategory(
-  //         lowercaseCategories
-  //       );
-  //       setPost(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching posts by category:", error);
-  //     }
-  //   }
-  // };
+
   const handleChange = async (value) => {
     if (value.length === 0) {
       setPost(postBackup);

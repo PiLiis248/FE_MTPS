@@ -9,7 +9,6 @@ import TrainingPointDetail from "./pages/TrainingPointDetail";
 import CreatePost from "./pages/CreatePost";
 import TestPage from "./pages/TestPage";
 import ListAttendeesPage from "./pages/ListAttendeesPage";
-import FacultyPage from "./pages/FacultyPage"; // Import the FacultyPage component
 import { useAuthContext } from "./context/AuthContext";
 import ViewPage from "./pages/ViewPage";
 import UpdatePoint from "./pages/UpdatePoint";
@@ -23,11 +22,6 @@ const App = () => {
         <Route path={PATHS.LOGIN} element={<LoginPage />} />
         <Route path="/" element={<PrivateRoute redirectPath={PATHS.LOGIN} />}>
           <Route element={<MainLayout />}>
-            {/* Check profile role */}
-            {profile && profile.role === "faculty" ? (
-              <Route path={PATHS.HOME} element={<FacultyPage />} />
-            ) : (
-              <>
                 <Route path={PATHS.HOME} element={<StudentHomePage />} />
                 <Route path={PATHS.DETAIL} element={<TrainingPointDetail />} />
                 <Route path={`${PATHS.TEST}/:testId`} element={<TestPage />} />
@@ -39,8 +33,6 @@ const App = () => {
                   path={`${PATHS.LIST_ATTENDEES}/:id`}
                   element={<ListAttendeesPage />}
                 />
-              </>
-            )}
           </Route>
         </Route>
       </Routes>

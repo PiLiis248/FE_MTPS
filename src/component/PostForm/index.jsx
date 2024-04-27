@@ -43,6 +43,15 @@ const PostForm = ({
   });
   const handleEditButtonClick = () => {
     setEditMode(true);
+
+    setEditedData({
+      startTime,
+      startDate,
+      endTime,
+      endDate,
+      numberParticipants,
+    });
+    
   };
   const cancel = (e) => {
     console.log(e);
@@ -95,18 +104,28 @@ const PostForm = ({
       handleSubmitAttendance();
     }
   };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditedData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value || prevState[name], // Keep old value if new value is empty
     }));
   };
+
   const handleUpdate = async () => {
     try {
       const response = await postService.updatePost(postId, editedData);
       message.success(response.data.message);
       setEditMode(false);
+      window.location.reload();
     } catch (error) {
       message.error("Failed to update post. Please try again later.");
       console.error("Error updating post:", error);

@@ -6,27 +6,51 @@ import { useAuthContext } from "../../context/AuthContext";
 import useQuery from "../../hooks/useQuery";
 import postService from "../../services/postService";
 import profileService from "../../services/profileService";
-import CheckableTag from "antd/es/tag/CheckableTag";
+
 const TrainingPointDetail = () => {
-  const {
-    data: postData,
-    loading: postLoading,
-    error: postError,
-  } = useQuery(postService.getPost);
+  const { data: postData, loading: postLoading, error: postError } = useQuery(
+    postService.getPost
+  );
+
   const [dataPoint, setDataPoint] = useState(null);
   const [dataSource, setDataSource] = useState([]);
   const [studentID, setStudentID] = useState(null);
   const [newData, setNewData] = useState([]);
   const [extraData, setExtraData] = useState([]);
   const [sumPoint, setSumPoint] = useState(0);
-  const [pointTable, setPointTable] = useState(0);
   const { profile } = useAuthContext();
+
 
   const handleGetPoint = async (studentID) => {
     try {
       const res = await profileService.getPoint(studentID);
       if (res && res.data) {
         setDataPoint(res.data);
+        const newData = Object.keys(res.data)
+          .filter(
+            (key) =>
+              key !== "studentId" && key !== "_id" && key !== "__v"
+          )
+          .map((name, index) => ({
+            key: index + 1,
+            categories: name.charAt(0).toUpperCase() + name.slice(1),
+            post: res.data[name],
+          }));
+        setNewData(newData);
+        const listData = newData
+          .filter(
+            (item) =>
+              item.name !== "Discipline" &&
+              item.name !== "Reward" &&
+              item.name !== "Pioneering"
+          )
+          .reduce((acc, pt) => {
+            if (pt.post && pt.post) {
+              return [...acc, ...pt.post];
+            }
+            return acc;
+          }, []);
+
       } else {
         console.error("Student not found or data missing");
       }
@@ -42,6 +66,7 @@ const TrainingPointDetail = () => {
       handleGetPoint(profile.id);
     }
   }, [profile, profile?.id]);
+
   useEffect(() => {
     const fetchData = async () => {
       const totalPointsArray = [];
@@ -49,7 +74,6 @@ const TrainingPointDetail = () => {
       const dataLastCategories = [];
       for (const record of newData) {
         const { post } = record;
-        // console.log(post);
         if (Array.isArray(post)) {
           const postList = [];
           const isArrayObject = post.every(
@@ -57,7 +81,6 @@ const TrainingPointDetail = () => {
           );
           if (isArrayObject) {
             for (const postItem of post) {
-              // console.log(postItem);
               dataLastCategories.push({
                 key: postItem.name,
                 point: postItem.point,
@@ -182,34 +205,7 @@ const TrainingPointDetail = () => {
       key: "categories",
     },
   ];
-  const listData = [];
-  useEffect(() => {
-    if (dataPoint) {
-      const newData = Object.entries(dataPoint)
-        .filter(
-          ([key, value]) =>
-            key !== "studentId" && key !== "_id" && key !== "__v"
-        )
-        .map(([name, post], index) => ({
-          key: index + 1,
-          categories: name.charAt(0).toUpperCase() + name.slice(1),
-          post,
-        }));
-      setNewData(newData);
-      newData
-        .filter(
-          (item) =>
-            item.name !== "Discipline" &&
-            item.name !== "Reward" &&
-            item.name !== "Pioneering"
-        )
-        .forEach((pt) => {
-          if (pt.post && pt.post) {
-            listData.push(pt.post);
-          }
-        });
-    }
-  }, [dataPoint]);
+  
   return (
     <div className="homepage-container">
       <Sidebar />
