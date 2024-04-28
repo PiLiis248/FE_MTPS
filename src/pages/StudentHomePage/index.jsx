@@ -20,7 +20,6 @@ const StudentHomePage = () => {
   const [totalPoints, setTotalPoints] = useState(0);
   const [postBackup, setPostBackup] = useState(null);
 
-  
   const {
     data: postData,
     loading: postLoading,
@@ -31,7 +30,6 @@ const StudentHomePage = () => {
       let filteredPosts = [];
       let facultyName = null;
       if (profile.role === "assistant") {
-        
         const filteredPosts = postData.post.filter(
           (pt) => pt.facultyName === profile.facultyName
         );
@@ -46,13 +44,14 @@ const StudentHomePage = () => {
 
           postData.post.forEach((pt) => {
             if (
-              (pt.status === true || (pt.status === false && pt.facultyName === facultyName)) &&
+              (pt.status === true ||
+                (pt.status === false && pt.facultyName === facultyName)) &&
               !profile.activities.includes(pt.id)
             ) {
               filteredPosts.push(pt);
             }
           });
-         
+
           setPost(filteredPosts.length > 0 ? filteredPosts : null);
           setPostBackup(filteredPosts.length > 0 ? filteredPosts : null);
           let calculatedTotalPoints = 0;
@@ -272,22 +271,22 @@ const StudentHomePage = () => {
     { value: "MentalPhysical", label: "MentalPhysical" },
   ];
 
-
-  const handleChange = async (value) => {
-    if (value.length === 0) {
+  const handleChange = async (values) => {
+    if (values.length === 0) {
       setPost(postBackup);
     } else {
-      const selectedCategory = value[0];
-      console.log(selectedCategory);
-      const lowercaseCategory =
-        selectedCategory === "MentalPhysical"
-          ? "mentalPhysical"
-          : selectedCategory.toLowerCase();
-
+      console.log(values);
       try {
-        const response = await postService.getPostByCategory(lowercaseCategory);
-        console.log(response.data);
-        setPost(response.data);
+        const posts = [];
+        for (let value of values) {
+          const lowercaseCategory =
+            value === "MentalPhysical" ? "mentalPhysical" : value.toLowerCase();
+          const response = await postService.getPostByCategory(
+            lowercaseCategory
+          );
+          posts.push(...response.data);
+        }
+        setPost(posts);
       } catch (error) {
         console.error("Error fetching posts by category:", error);
       }
