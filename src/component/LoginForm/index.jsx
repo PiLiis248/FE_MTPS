@@ -1,14 +1,12 @@
 // export default LoginForm;
 
 import React from "react";
-import Button from "../Button";
-import { Input } from "../Input";
-import { MESSAGE } from "../../utils/validate";
 import { useForm } from "react-hook-form";
-import authService from "../../services/authService";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import { useAuthContext } from "../../context/AuthContext";
-
+import { MESSAGE } from "../../utils/validate";
+import Button from "../Button";
+import { Input } from "../Input";
 
 
 const LoginForm = () => {
@@ -20,7 +18,7 @@ const navigate = useNavigate();
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const navigate = useNavigate(); // Initialize useNavigate hook
+ 
 
   const onSubmit = async (data) => {
     try {
@@ -29,9 +27,7 @@ const navigate = useNavigate();
       if (!!loginData) {
         navigate ("/home")
       }
-      // console.log("Login successful:", loginData);
-      // Assuming login is successful and you've handled token storage etc.
-      // navigate("/"); // Redirect to homepage
+    
     } catch (error) {
       console.error("Login error:", error);
       // Handle login errors here

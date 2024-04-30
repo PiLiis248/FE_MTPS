@@ -14,8 +14,7 @@ import ViewPage from "./pages/ViewPage";
 import UpdatePoint from "./pages/UpdatePoint";
 
 const App = () => {
-  const { profile } = useAuthContext();
-
+  
   return (
     <BrowserRouter>
       <Routes>

@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import "../../../public/assets/css/listAttendees.css"
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { PATHS } from '../../constants/path';
-import { useAuthContext } from '../../context/AuthContext';
 import postService from '../../services/postService';
 import { List } from 'antd';
 
 const ListAttendeesPage = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [currentList, setCurrentList] = useState(null);
     const [currentData, setCurrentData] = useState(null);
 

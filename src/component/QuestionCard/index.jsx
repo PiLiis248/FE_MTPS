@@ -1,7 +1,7 @@
 // QuestionCard.js
 
 import React, { useEffect, useState } from 'react';
-import '../../../public/assets/css/test.css'; // Import the test.css file
+import '../../../public/assets/css/test.css'; 
 
 const QuestionCard = ({ question, index, handleChange, counter }) => {
     const { question: questionText, options, correctAnswer } = question;
