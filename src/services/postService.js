@@ -1,4 +1,3 @@
-
 import axiosInstance from "../utils/axiosInstance";
 
 export const postService = {
@@ -14,8 +13,13 @@ export const postService = {
     return axiosInstance.get(`/list_attendees/${id}`);
   },
 
-  updatePost(postId, updatedPostData) {
-    return axiosInstance.put(`/update_post_data`, { postId, updatedPostData });
+  updatePosts(postId, updatedPostData, updatedTestData, location) {
+    return axiosInstance.put(`/update_post`, {
+      postId,
+      updatedPostData,
+      updatedTestData,
+      location,
+    });
   },
 
   createPost(formData) {
@@ -25,7 +29,7 @@ export const postService = {
   checkAttendance(postId, studentId) {
     return axiosInstance.put("/check_attendance", { postId, studentId });
   },
-  
+
   getPostByCategory(categories) {
     const categoriesQuery = Array.isArray(categories)
       ? categories.join(",")

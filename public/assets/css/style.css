@@ -439,3 +439,49 @@ input.ant-input.css-dev-only-do-not-override-djtmh8.ant-input-outlined.input-nam
     margin-right: unset !important;
 }
 /* Update Page */
+/* View Page */
+.view-page-list .content {
+    margin-left: unset;
+    padding: unset;
+    display: flex;
+    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.view-page-list .content .content__name {
+    width: 300px;
+    flex: 2;
+}
+
+.view-page-list .content .content__time {
+    flex: 2;
+    /* width: 300px; */
+}
+
+.view-page-list .content .content__atten {
+    flex: 1;
+    /* width: 300px; */
+}
+
+.view-page-list .ant-list-item-meta {
+    /* width: 300px; */
+    flex: 2 !important;
+}
+
+.view-page-list .info {
+    flex: 2 !important;
+    /* width: 300px; */
+}
+
+.view-page-list .other {
+    flex: 1 !important;
+    /* width: 300px; */
+
+}
+
+.view-page-list .ant-spin-container ul .ant-list-item {
+    display: flex;
+}
+
+/* View Page */

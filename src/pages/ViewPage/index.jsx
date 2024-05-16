@@ -21,18 +21,23 @@ const ViewPage = () => {
     }
   }, [postData]);
 
-   // Function to handle clicking "List Attendees" button
-   const handleListAttendees = (id) => {
+  // Function to handle clicking "List Attendees" button
+  const handleListAttendees = (id) => {
     navigate(`${PATHS.LIST_ATTENDEES}/${id}`);
   };
 
   return (
-    <div className="view-page">
+    <div
+      className="view-page"
+      style={{ marginLeft: "430px", padding: "30px 40px" }}
+    >
       <Sidebar className="sidebar-create" />
-      <div
-        className="view-page-list"
-        style={{ marginLeft: "380px", padding: "30px 60px" }}
-      >
+      <div className="view-page-list">
+        <div className="content">
+          <div className="content__name">Post name</div>
+          <div className="content__time">Time event</div>
+          <div className="content__atten">List Attendees</div>
+        </div>
         <List
           itemLayout="horizontal"
           dataSource={dataSource}
@@ -70,19 +75,18 @@ const ViewPage = () => {
                     {item?.postFields.endTime}
                   </div>
                 </div>
-                <div>
-                  <Button
-                    onClick={() => handleListAttendees(item.id)}
-                    type="primary"
-                    style={{
-                      marginLeft: '100px', 
-                      backgroundColor: 'yellow', 
-                      color: 'black',
-                    }}
-                  >
-                    List Attendees
-                  </Button>
-                </div>
+              </div>
+              <div className="other">
+                <Button
+                  onClick={() => handleListAttendees(item?.postFields.id)}
+                  type="primary"
+                  style={{
+                    backgroundColor: "yellow",
+                    color: "black",
+                  }}
+                >
+                  List Attendees
+                </Button>
               </div>
             </List.Item>
           )}

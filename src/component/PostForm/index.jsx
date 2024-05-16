@@ -1,10 +1,11 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { Button, Input, Popconfirm, Tag, message } from "antd"; // Import Popconfirm and message from antd
+import { Button, Input, Popconfirm, Select, Tag, message } from "antd"; // Import Popconfirm and message from antd
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../public/assets/css/post.css";
 import { useAuthContext } from "../../context/AuthContext";
 import postService from "../../services/postService";
+import testService from "../../services/testService";
 
 const { Search } = Input;
 
@@ -30,8 +31,9 @@ const PostForm = ({
 }) => {
   const { profile } = useAuthContext();
   const isStudent = profile?.role === "student";
-  const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
+  const [isLocation, setIsLocation] = useState(false);
+  const [testData, setTestData] = useState([]);
   const [showAttendanceInput, setShowAttendanceInput] = useState(false);
   const [attendanceCode, setAttendanceCode] = useState("");
   const [editedData, setEditedData] = useState({
@@ -51,7 +53,21 @@ const PostForm = ({
       endDate,
       numberParticipants,
     });
-    
+
+    if (location === "online") {
+      const getTest = async (id) => {
+        try {
+          const response = await testService.getTest(id);
+          setTestData(response.data.questions);
+        } catch (error) {
+          console.error("Error fetching test:", error);
+        }
+      };
+      getTest(id);
+      setIsLocation(true);
+    } else {
+      setTestData([]);
+    }
   };
   const cancel = (e) => {
     console.log(e);
@@ -100,11 +116,11 @@ const PostForm = ({
 
   const handleInputKeyPress = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault(); 
+      event.preventDefault();
       handleSubmitAttendance();
     }
   };
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedData((prevState) => ({
@@ -113,17 +129,6 @@ const PostForm = ({
     }));
   };
 
-  const handleUpdate = async () => {
-    try {
-      const response = await postService.updatePost(postId, editedData);
-      message.success(response.data.message);
-      setEditMode(false);
-      window.location.reload();
-    } catch (error) {
-      message.error("Failed to update post. Please try again later.");
-      console.error("Error updating post:", error);
-    }
-  };
   const handleCancelEdit = () => {
     setEditMode(false);
     setEditedData({
@@ -145,6 +150,34 @@ const PostForm = ({
       default:
         return "#000";
     }
+  };
+  const handleChangeQuestion = (index, value) => {
+    const updatedTestData = [...testData];
+    updatedTestData[index].question = value;
+    setTestData(updatedTestData);
+  };
+  const handleChangeOption = (qIndex, optIndex, value) => {
+    const updatedTestData = [...testData];
+    updatedTestData[qIndex].options[optIndex].text = value;
+    setTestData(updatedTestData);
+  };
+  const handleChangeCorrectOption = (index, value) => {
+    const updatedTestData = [...testData];
+    updatedTestData[index].correctOption = value;
+    setTestData(updatedTestData);
+  };
+  const handleSave = () => {
+    const updatedTestData = { questions: testData };
+    postService
+      .updatePosts(id, editedData, updatedTestData, location)
+      .then((res) => {
+        message.success("Data updated successfully");
+        setEditMode(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error updating data:", error);
+      });
   };
   const tagColor = getTagColor(category);
   return (
@@ -213,6 +246,69 @@ const PostForm = ({
                 onChange={handleChange}
               />
             </div>
+            {isLocation ? (
+              <div className="question">
+                {testData &&
+                  testData.map((question, qIndex) => (
+                    <div key={qIndex} className="question__item">
+                      <div className="quenstion__item-q">
+                        Question {qIndex + 1}:{" "}
+                        <Input
+                          style={{ width: "85%" }}
+                          value={question.question}
+                          onChange={(e) =>
+                            handleChangeQuestion(qIndex, e.target.value)
+                          }
+                        />
+                      </div>
+
+                      <div className="quenstion__item-option">
+                        Answers:
+                        <div className="anwsergr">
+                          {question.options.map((option, optIndex) => (
+                            <>
+                              <div key={optIndex} className="anwsergr__item">
+                                <div className="answergr__item-label">
+                                  {option.id}
+                                </div>
+                                <div className="answergr__item-answer">
+                                  <Input
+                                    value={option.text}
+                                    onChange={(e) =>
+                                      handleChangeOption(
+                                        qIndex,
+                                        optIndex,
+                                        e.target.value
+                                      )
+                                    }
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="quenstion__item-correct">
+                        Correct Option:
+                        <Select
+                          style={{ width: "80px" }}
+                          defaultValue={question.correctOption}
+                          onChange={(value) =>
+                            handleChangeCorrectOption(qIndex, value)
+                          }
+                        >
+                          <Option value="A">A</Option>
+                          <Option value="B">B</Option>
+                          <Option value="C">C</Option>
+                          <Option value="D">D</Option>
+                        </Select>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            ) : (
+              <></>
+            )}
           </>
         ) : (
           <>
@@ -243,7 +339,7 @@ const PostForm = ({
                 className="button-group"
                 style={{ display: "flex", columnGap: "10px" }}
               >
-                <Button onClick={handleUpdate} className="save-btn">
+                <Button onClick={handleSave} className="save-btn">
                   Save
                 </Button>
                 <Button onClick={handleCancelEdit} className="cancel-btn">

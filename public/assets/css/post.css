@@ -218,3 +218,55 @@ button.ant-btn.css-dev-only-do-not-override-djtmh8.ant-btn-default.cancel-btn{
     column-gap: 10px;
     align-items: center;
 }
+/* Edit section */
+.question {
+    margin-top: 20px;
+    border: 1px solid #cccccc;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.question__item {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.quenstion__item-q {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quenstion__item-option {
+    display: flex;
+    flex-direction: column;
+}
+
+.anwsergr {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+
+}
+
+.anwsergr .anwsergr__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.anwsergr .anwsergr__item .answergr__item-answer {
+    flex: 1;
+}
+
+.quenstion__item-correct {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Edit section */
