@@ -234,9 +234,6 @@ button {
     width: 30px;
 }
 /* Login page */
-.loginpage{
-    padding-top: 50px;
-}
 .loginpage .loginpage__wrapper{
     display: flex;
     justify-content: center;

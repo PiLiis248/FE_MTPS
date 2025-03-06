@@ -24,7 +24,7 @@ const navigate = useNavigate();
     try {
       
       const loginData = await handleLogin(data);
-      if (!!loginData) {
+      if (!loginData) {
         navigate ("/home")
       }
     
